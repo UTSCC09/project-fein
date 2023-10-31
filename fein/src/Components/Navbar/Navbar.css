@@ -1,0 +1,30 @@
+.navbar_element {
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+}
+
+.navbar_element:hover {
+    color: #fff;
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.nav_logo {
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    align-self: center;
+    transition: all 0.2s ease-in-out;
+}
+
+.nav_logo:hover {
+    color: #fff;
+    transform: scale(1.1);
+    cursor: pointer;
+}
