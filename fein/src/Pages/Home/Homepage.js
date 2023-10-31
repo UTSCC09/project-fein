@@ -12,9 +12,12 @@ export function HomePage() {
     return (
         <div className="basic_background">
             <Navbar />
-            <div className="flex">
+            <div className="flex-column">
                 <h1 class="w-full text-3xl font-bold text-white text-center mt-8"> Welcome to FEIN </h1>
             </div>
+            
+
+
             
         </div>
     );
