@@ -2,7 +2,7 @@
     color: #fff;
     font-size: 1.2rem;
     font-weight: 500;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0.5rem;
     text-decoration: none;
     transition: all 0.2s ease-in-out;
     align-self: center;
@@ -19,7 +19,8 @@
     font-weight: 600;
     text-decoration: none;
     color: #fff;
-    padding: 2rem;
+    margin-left: 1rem;
+    padding: 1rem;
     align-self: center;
     transition: all 0.2s ease-in-out;
 }
@@ -32,13 +33,13 @@
 
 .search_bar {
     border: none;
-    border-radius: 5px;
+    border-radius: 40px;
     padding: 0.5rem 1rem;
-    font-size: 1rem;
-    font-weight: 500;
-    margin: 0.5rem 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin: 0.8rem 0;
     width: 50%;
-    
-    background-color:#6d8691;
+    background-color:#e1eefc;
+    color: rgb(0, 0, 0);
     transition: all 0.2s ease-in-out;
 }

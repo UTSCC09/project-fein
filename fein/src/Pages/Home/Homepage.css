@@ -1,13 +1,13 @@
 .basic_background {
-    background-color: #6d8691;
+    background-color: #e1eefc;
     min-height: 100vh; 
     position: relative;
 }
 
 .title {
     font-size: 3rem;
-    color: #fff;
+    color: #000000;
     text-align: center;
-    margin-top: 10%;
-    font-family: 'Montserrat', sans-serif;
+    margin-top: 15px;
+    font-family: 'Raleway', sans-serif
 }

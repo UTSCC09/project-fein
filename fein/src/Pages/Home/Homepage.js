@@ -7,6 +7,7 @@ import UilReact from "@iconscout/react-unicons/icons/uil-react";
 // Component imports
 
 import { Navbar } from "../../Components/Navbar/Navbar.js";
+import { Slider } from "../../Components/Navbar/Slider/Slider.js";
 
 
 export function HomePage() {
@@ -14,11 +15,9 @@ export function HomePage() {
         <div className="basic_background">
             <Navbar />
             <div className="flex-column">
-                <h1 class="w-full text-3xl font-bold text-white text-center mt-8"> Welcome to FEIN </h1>
+                <h1 class="title"> Welcome to FEIN </h1>
             </div>
-            
-
-
+            <Slider />
             
         </div>
     );
