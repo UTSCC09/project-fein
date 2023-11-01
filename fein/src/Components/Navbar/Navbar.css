@@ -5,6 +5,7 @@
     padding: 0.5rem 1rem;
     text-decoration: none;
     transition: all 0.2s ease-in-out;
+    align-self: center;
 }
 
 .navbar_element:hover {
@@ -18,13 +19,26 @@
     font-weight: 600;
     text-decoration: none;
     color: #fff;
-    padding: 0.5rem 1rem;
+    padding: 2rem;
     align-self: center;
     transition: all 0.2s ease-in-out;
 }
 
 .nav_logo:hover {
-    color: #fff;
+    color: #747474;
     transform: scale(1.1);
     cursor: pointer;
+}
+
+.search_bar {
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 0.5rem 0;
+    width: 50%;
+    
+    background-color:#6d8691;
+    transition: all 0.2s ease-in-out;
 }
