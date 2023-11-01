@@ -8,8 +8,16 @@
     align-self: center;
 }
 
-.navbar_element:hover {
+
+.navbar_icon {
     color: #fff;
+    height: 24px;
+    width: 24px;
+    transition: all 0.2s ease-in-out;
+}
+
+.navbar_icon:hover {
+    color: #51ff00;
     transform: scale(1.1);
     cursor: pointer;
 }
@@ -26,7 +34,7 @@
 }
 
 .nav_logo:hover {
-    color: #747474;
+    color: #51ff00;
     transform: scale(1.1);
     cursor: pointer;
 }
