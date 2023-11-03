@@ -15,7 +15,11 @@ export function HomePage() {
         <div className="basic_background">
             <Navbar />
             <div className="flex-column">
-                <h1 class="title"> Welcome to FEIN </h1>
+                <div className="flex flex-row justify-center">
+                    <h1 class="title"> Welcome to </h1>
+                    <h1 class="title_2">Fein</h1>
+                </div>
+                
             </div>
             <Slider />
             

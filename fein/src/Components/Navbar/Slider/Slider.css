@@ -1,7 +1,6 @@
 .slider {
-    width: 45%;
-    height: 80vh;
-    margin-left: 5%;
+    width: 600px;
+    height: 600px;
     padding: 30px;
     display: flex;
     flex-direction: column;
