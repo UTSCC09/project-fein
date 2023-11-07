@@ -42,3 +42,21 @@
     font-size: 14px;
     color: #000000;
 }
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+#login-link {
+    color: #3bbb00;
+}
+
+#login-link:hover {
+    color: #2f9400;
+}
