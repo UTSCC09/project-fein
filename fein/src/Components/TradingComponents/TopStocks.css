@@ -9,7 +9,7 @@
     padding: 20px;
     width: 30%;
     display: flex;
-    flex-direction: column
+    flex-direction: column;
 }
 
 .top_stocks_container {
@@ -31,5 +31,6 @@
 
 .top_stocks_button:hover {
     transform: scale(1.02);
+    color: rgb(77, 77, 77);
     cursor: pointer;
 }

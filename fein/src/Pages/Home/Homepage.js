@@ -22,6 +22,8 @@ export function HomePage() {
                 </div>
                 <div className="flex flex-row w-full">
                     <TopStocks />
+                    
+
                 </div>
             </div>
         </div>
