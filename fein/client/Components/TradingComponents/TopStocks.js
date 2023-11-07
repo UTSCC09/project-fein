@@ -81,7 +81,7 @@ export function TopStocks(stocks) {
     return(
         <div class="top_section">
             <h1 class="top_stocks">
-                Current Top Stocks For You
+                Top Stocks For You
             </h1>
             <div class="top_stocks_container">
                 {displayStocks?.map((stock) => (
