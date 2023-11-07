@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link, Route } from 'react-router-dom'
 import './LoginForm.css';
 import { HomeIcon, MagnifyingGlassIcon, UserIcon } from '@heroicons/react/24/outline'
 
@@ -23,8 +24,9 @@ export function LoginForm() {
                 required
             />
             <button type="submit" className="btn">Login</button>
-            <div className='form-footer'>No account? Make one here</div>
+            <div className='form-footer'>No account? Make one <Link id='signup-link' to='/signup'>here</Link> </div>
         </form>
+
     );
 }
 
