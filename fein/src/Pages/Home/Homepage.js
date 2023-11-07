@@ -13,17 +13,16 @@ import { TopStocks } from "../../Components/TradingComponents/TopStocks.js";
 
 export function HomePage() {
     return (
-        <div className="basic_background">
+        <div className="">
             <Navbar />
-            <div className="flex-column">
+            <div class="">
                 <div className="flex flex-row justify-center">
                     <h1 class="title"> Welcome to </h1>
                     <h1 class="title_2">FEIN</h1>
                 </div>
                 <div className="flex flex-row w-full">
                     <TopStocks />
-                    
-
+                
                 </div>
             </div>
         </div>
