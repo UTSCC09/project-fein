@@ -7,7 +7,8 @@ import UilReact from "@iconscout/react-unicons/icons/uil-react";
 // Component imports
 
 import { Navbar } from "../../Components/Navbar/Navbar.js";
-import { Slider } from "../../Components/Navbar/Slider/Slider.js";
+import { Slider } from "../../Components/Slider/Slider.js";
+import { TopStocks } from "../../Components/TradingComponents/TopStocks.js";
 
 
 export function HomePage() {
@@ -17,12 +18,12 @@ export function HomePage() {
             <div className="flex-column">
                 <div className="flex flex-row justify-center">
                     <h1 class="title"> Welcome to </h1>
-                    <h1 class="title_2">Fein</h1>
+                    <h1 class="title_2">FEIN</h1>
                 </div>
-                
+                <div className="flex flex-row w-full">
+                    <TopStocks />
+                </div>
             </div>
-            <Slider />
-            
         </div>
     );
 } 

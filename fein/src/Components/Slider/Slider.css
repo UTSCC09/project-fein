@@ -2,10 +2,20 @@
     width: 600px;
     height: 600px;
     padding: 30px;
+    margin-left: 256px;
+    margin-top: 56px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    background-color: #ffffff;
+    border-radius: 10px;
+}
+
+.slider:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+    color: #41ce00;
 }
 
 .slider_image {
