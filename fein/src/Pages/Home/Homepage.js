@@ -15,14 +15,14 @@ export function HomePage() {
     return (
         <div className="">
             <Navbar />
-            <div class="">
-                <div className="flex flex-row justify-center">
+            <div className="flex flex-col">
+                <div className="flex flex-row self-center">
                     <h1 class="title"> Welcome to </h1>
                     <h1 class="title_2">FEIN</h1>
                 </div>
                 <div className="flex flex-row w-full">
                     <TopStocks />
-                
+
                 </div>
             </div>
         </div>
