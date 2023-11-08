@@ -1,7 +1,6 @@
 import React from 'react';
 import './Navbar.css';
 import { HomeIcon, MagnifyingGlassIcon, UserIcon, Cog6ToothIcon } from '@heroicons/react/24/outline'
-import { Menu } from '@mui/material/Menu'
 
 export function Navbar() {
     return (
