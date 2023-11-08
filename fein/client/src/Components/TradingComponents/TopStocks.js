@@ -20,7 +20,7 @@ const MockStocks = [
         week52Low: 100,
         ytdChange: 100,
         website: "https://www.apple.com/",
-        logo: "https://assets.stickpng.com/images/580b57fcd9996e24bc43c516.png"
+        logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/1720px-Apple_logo_black.svg.png"
     }, 
     {
         id: 2, 

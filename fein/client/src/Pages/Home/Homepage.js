@@ -20,9 +20,9 @@ export function HomePage() {
                     <h1 class="title"> Welcome to </h1>
                     <h1 class="title_2">FEIN</h1>
                 </div>
-                <div className="flex flex-row w-full">
+                <div className="flex flex-row">
                     <TopStocks />
-
+                    {/* <button class="trade_button"> Start Trading Now!</button> */}
                 </div>
             </div>
         </div>

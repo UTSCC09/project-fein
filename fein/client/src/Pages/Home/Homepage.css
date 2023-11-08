@@ -24,3 +24,13 @@
 .title_2:hover {
     color: #41ce00;
 }
+
+.trade_button {
+    width: 20%;
+    align-self: center;
+    justify-self: center;
+}
+
+.trade_button:hover {
+    transform: scale(1.02);
+}
