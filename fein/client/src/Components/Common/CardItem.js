@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import './CardItem.css';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export function CardItem({props}) {
 
