@@ -6,6 +6,8 @@
     background-color: #fff;
     border: 1px solid #ccc;
     text-align: center;
+    align-self: center;
+    justify-self: center;
 }
 
 .form-header {

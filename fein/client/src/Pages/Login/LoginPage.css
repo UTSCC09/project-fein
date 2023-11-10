@@ -8,3 +8,19 @@
     align-items: center;
     animation: fadeIn 0.5s ease;
 }
+
+.fein_logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-decoration: none;
+    color: #000000;
+    margin-left: 1rem;
+    padding: 1rem;
+    align-self: center;
+    transition: all 0.1s ease-in-out;
+}
+
+.fein_logo:hover {
+    color: #101010;
+    cursor: pointer;
+}

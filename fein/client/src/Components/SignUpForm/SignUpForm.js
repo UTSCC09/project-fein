@@ -16,7 +16,7 @@ export function SignUpForm() {
                 required
             />
             <input
-                type="text"
+                type="password"
                 id="post-password"
                 className="form-element"
                 placeholder="Password"
