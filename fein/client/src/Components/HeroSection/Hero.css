@@ -5,6 +5,11 @@
     margin-bottom: 40px;
 }
 
+.hero_dark {
+    background-color: #1a1a1a;
+    color: #fff;
+}
+
 .hero_text {
     font-size: 2rem;
     font-weight: 600;

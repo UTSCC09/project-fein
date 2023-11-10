@@ -1,8 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext } from 'react';
 import './Hero.css';
 
 import { CardItem } from "../Common/CardItem.js";
 import { Card } from '@mui/material';
+import ThemeContext from '../../Context/ThemeContext.js';
 
 
 const prop1 = {
@@ -18,9 +19,10 @@ const prop2 = {
 }
 
 export function Hero() {
+    const {darkMode} = useContext(ThemeContext);
     return(
         <div>
-            <div className="hero">
+            <div className={{darkMode} ? "hero" : "hero_dark"}>
                 <div className="hero_text">
                     <h1 className="hero_title">Investing made easy. Investing made free.</h1>
                     <p className="hero_subtitle">Fein is a free, easy-to-use stock trading platform.</p>

@@ -1,119 +1,17 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import './TopStocks.css';
 
 
 import { TopStockItem } from "./TopStockItem";
+import { MockStocks } from "../../MockData/MockStocks";
 
-const MockStocks = [
-    {
-        id: 1, 
-        name: "Apple Inc.",
-        ticker: "AAPL",
-        price: 130.21,
-        change: 0.12,
-        changePercent: 0.09,
-        volume: 100000,
-        avgVolume: 100000,
-        marketCap: 1000000000000,
-        peRatio: 100,
-        week52High: 100,
-        week52Low: 100,
-        ytdChange: 100,
-        website: "https://www.apple.com/",
-        logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/1720px-Apple_logo_black.svg.png"
-    }, 
-    {
-        id: 2, 
-        name: "Tesla Inc.",
-        ticker: "TSLA",
-        price: 130.21,
-        change: 0.12,
-        changePercent: 0.09,
-        volume: 100000,
-        avgVolume: 100000,
-        marketCap: 1000000000000,
-        peRatio: 100,
-        week52High: 100,
-        week52Low: 100,
-        ytdChange: 100,
-        website: "https://www.tesla.com/",
-        logo: "https://upload.wikimedia.org/wikipedia/commons/e/e8/Tesla_logo.png"
-    },
-    {
-        id: 3,
-        name: "Microsoft Corporation",
-        ticker: "MSFT",
-        price: 130.21,
-        change: 0.12,
-        changePercent: 0.09,
-        volume: 100000,
-        avgVolume: 100000,
-        marketCap: 1000000000000,
-        peRatio: 100,
-        week52High: 100,
-        week52Low: 100,
-        ytdChange: 100,
-        website: "https://www.microsoft.com/",
-        logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/1024px-Microsoft_logo.svg.png"
-    },
-    {
-        id: 4,
-        name: "Facebook Inc.",
-        ticker: "FB",
-        price: 130.21,
-        change: 0.12,
-        changePercent: 0.09,
-        volume: 100000,
-        avgVolume: 100000,
-        marketCap: 1000000000000,
-        peRatio: 100,
-        week52High: 100,
-        week52Low: 100,
-        ytdChange: 100,
-        website: "https://www.facebook.com/",
-        logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/600px-Facebook_Logo_%282019%29.png"
-    },
-    {
-        id: 5,
-        name: "Walmart Inc.",
-        ticker: "FB",
-        price: 130.21,
-        change: 0.12,
-        changePercent: 0.09,
-        volume: 100000,
-        avgVolume: 100000,
-        marketCap: 1000000000000,
-        peRatio: 100,
-        week52High: 100,
-        week52Low: 100,
-        ytdChange: 100,
-        website: "https://www.walmart.com/",
-        logo: "https://s3.amazonaws.com/www-inside-design/uploads/2018/04/walmart-square.jpg"
-    },
-    {
-        id: 6,
-        name: "Amazon Inc.",
-        ticker: "FB",
-        price: 130.21,
-        change: 0.12,
-        changePercent: 0.09,
-        volume: 100000,
-        avgVolume: 100000,
-        marketCap: 1000000000000,
-        peRatio: 100,
-        week52High: 100,
-        week52Low: 100,
-        ytdChange: 100,
-        website: "https://www.amazon.com/",
-        logo: "https://upload.wikimedia.org/wikipedia/commons/4/4a/Amazon_icon.svg"
-    }
-];
-
+import ThemeContext from "../../Context/ThemeContext";
 
 export function TopStocks(stocks) {
-    const displayStocks = MockStocks.slice(0, 7);
+    const displayStocks = MockStocks.result.slice(0, 7);
+    const { darkMode } = useContext(ThemeContext);
     return(
-        <div class="top_section">
+        <div class={darkMode ? "top_section_dark" : "top_section"}>
             <h1 class="top_stocks">
                 Top Stocks For You
             </h1>
@@ -123,7 +21,7 @@ export function TopStocks(stocks) {
                 ))}
             </div>
 
-            <button class="top_stocks_button">
+            <button class={darkMode ? "top_stocks_button_dark" : "top_stocks_button"}>
                 See More
             </button>
 

@@ -9,12 +9,35 @@
     padding-right: 15px;
     border-radius: 10px;
     background-color: #e4e4e4;
+    color: black;
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.4);
     transition: 0.3s;
     width: 100%;
 }
 
+.stock_item_dark {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px;
+    padding: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.4);
+    transition: 0.3s;
+    width: 100%;
+    background-color: rgb(75, 75, 75);
+    color: white;
+}
+
 .stock_item:hover {
+    transform: scale(1.02);
+    cursor: pointer;
+}
+
+.stock_item_dark:hover {
     transform: scale(1.02);
     cursor: pointer;
 }

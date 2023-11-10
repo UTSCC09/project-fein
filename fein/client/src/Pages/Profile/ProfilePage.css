@@ -1,3 +1,17 @@
+.profile_page {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+.profile_page_dark {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #1e1f1e;
+    color: white;
+}
+
+
 .username_title {
     font-size: 36px;
     font-weight: 600;

@@ -16,7 +16,8 @@ export const MockStocks = {
             week52Low: 100,
             ytdChange: 100,
             website: "https://www.apple.com/",
-            logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/1720px-Apple_logo_black.svg.png"
+            logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/1720px-Apple_logo_black.svg.png",
+            quantity: 1
         }, 
         {
             id: 2, 
@@ -34,7 +35,8 @@ export const MockStocks = {
             week52Low: 100,
             ytdChange: 100,
             website: "https://www.tesla.com/",
-            logo: "https://upload.wikimedia.org/wikipedia/commons/e/e8/Tesla_logo.png"
+            logo: "https://upload.wikimedia.org/wikipedia/commons/e/e8/Tesla_logo.png",
+            quantity: 5
         },
         {
             id: 3,
@@ -52,7 +54,8 @@ export const MockStocks = {
             week52Low: 100,
             ytdChange: 100,
             website: "https://www.microsoft.com/",
-            logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/1024px-Microsoft_logo.svg.png"
+            logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/1024px-Microsoft_logo.svg.png",
+            quantity: 4
         },
         {
             id: 4,
@@ -70,7 +73,8 @@ export const MockStocks = {
             week52Low: 100,
             ytdChange: 100,
             website: "https://www.facebook.com/",
-            logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/600px-Facebook_Logo_%282019%29.png"
+            logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/600px-Facebook_Logo_%282019%29.png",
+            quantity: 2
         },
         {
             id:5,
@@ -88,7 +92,8 @@ export const MockStocks = {
             week52Low: 100,
             ytdChange: 100,
             website: "https://www.amazon.com/",
-            logo: "https://upload.wikimedia.org/wikipedia/commons/4/4a/Amazon_icon.svg"
+            logo: "https://upload.wikimedia.org/wikipedia/commons/4/4a/Amazon_icon.svg",
+            quantity: 3
         },
         
     ]

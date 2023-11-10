@@ -9,6 +9,7 @@ module.exports = {
         navbar: "#2b363b",
         basic: "#1D1F1C",
         highlight: "#36ab00",
+        darkMode: "#1e1f1e",
       }
     },
   },
