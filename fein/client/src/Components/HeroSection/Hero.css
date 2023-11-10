@@ -1,0 +1,25 @@
+.hero {
+    height: 60vh;
+}
+
+.hero_text {
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 0.5rem 0;
+    text-align: center;
+    font-family: 'Raleway', sans-serif;
+}
+
+.hero_title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.hero_subtitle {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin: 1rem 0;
+    text-align: center;
+}
+

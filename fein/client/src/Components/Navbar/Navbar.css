@@ -1,8 +1,15 @@
+.no_style {
+    text-decoration: none;
+    align-self: center;
+}
+
 .navbar_element {
     color: #fff;
     font-size: 1.2rem;
     font-weight: 500;
     padding: 0.5rem 0.5rem;
+    width: 40px;
+    height: 40px;
     text-decoration: none;
     transition: all 0.2s ease-in-out;
     align-self: center;
@@ -46,8 +53,28 @@
     font-size: 0.9rem;
     font-weight: 600;
     margin: 0.8rem 0;
-    width: 50%;
+    width: 40%;
     background-color:#e1eefc;
     color: rgb(0, 0, 0);
     transition: all 0.2s ease-in-out;
+}
+
+.search_bar:focus {
+    width: 50%;
+}
+
+.sign {
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: #fff;
+    padding: 10px;
+    align-self: center;
+    transition: all 0.2s ease-in-out;
+}
+
+.sign:hover {
+    color: #51ff00;
+    transform: scale(1.1);
+    cursor: pointer;
 }
