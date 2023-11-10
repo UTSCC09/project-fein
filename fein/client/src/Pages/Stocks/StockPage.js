@@ -12,10 +12,10 @@ export function StockPage() {
     const { id } = useParams();
 
     return(
-        <>
+        <div>
             <Navbar />
             <Dashboard />
-        </>
+        </div>
 
     );
 }

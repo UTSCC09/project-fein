@@ -18,7 +18,7 @@ import ThemeContext from "../../Context/ThemeContext.js";
 export function HomePage() {
     const { darkMode } = useContext(ThemeContext);
     return (
-        <div className={`${darkMode ? "bg-darkMode text-white" : "bg-white text-black"}`}>
+        <div className={`transition-all ease-in-out ${darkMode ? "bg-darkMode text-white" : "bg-white text-black"}`}>
             <Navbar />
             <div className="flex flex-col">
                 <div className="flex flex-row self-center">
@@ -29,7 +29,7 @@ export function HomePage() {
                 <div className="flex flex-row mt-12">
                     <TopStocks />
                     <Summary />
-                    {/* <button class="trade_button"> Start Trading Now!</button> */}
+
                 </div>
                 <Footer />
             </div>

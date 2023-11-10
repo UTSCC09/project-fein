@@ -13,7 +13,7 @@ export function ProfilePage() {
     const { darkMode } = useContext(ThemeContext);
 
     return (
-        <div class={darkMode ? "profile_page_dark" : "profile_page"}>
+        <div class={`transition-all ease-in-out ${darkMode ? "profile_page_dark" : "profile_page"}`}>
             <Navbar />
             <img class="banner_image" src={banner} alt="Your Banner"></img>
             <div className="flex-grow">

@@ -8,7 +8,7 @@
     display: flex;
     flex-direction: column;
     background-color: #1e1f1e;
-    color: white;
+    color: rgb(255, 255, 255);
 }
 
 
@@ -19,16 +19,15 @@
     margin-top: 10px;
     margin-bottom: 5px;
     margin-left: 10%;
-    
 }
 
 .username_description {
     font-size: 18px;
     font-weight: 600;
     justify-self: center;
-
     margin-bottom: 20px;
     margin-left: 10%;
+
 }
 
 .trade_information {

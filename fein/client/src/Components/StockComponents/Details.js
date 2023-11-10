@@ -1,7 +1,12 @@
 import React from 'react';
 import Card from './Card';
+import ThemeContext from '../../Context/ThemeContext';
+import { useContext } from 'react';
 
 const Details = ({ details }) => {
+
+    const { darkMode } = useContext(ThemeContext);
+
     const detailsList =  {
         name: "Name", 
         country: "Country",
@@ -21,7 +26,7 @@ const Details = ({ details }) => {
             <ul className="w-full h-full flex flex-col justify-between divide-y-1">
                 {Object.keys(detailsList).map((key) => {
                     return (
-                        <li className="flex-1 flex justify-between items-center" key={key}>
+                        <li className={`flex-1 flex justify-between items-center ${darkMode ? "text-gray-300" : "text-black"}`} key={key}>
                                 <span>{detailsList[key]}</span>
                                 <span>{key === "marketCapitalization" ? `${convertMilliontoBillion(details[key])}B` : details[key]}</span>
                         </li>

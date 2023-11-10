@@ -10,6 +10,7 @@ module.exports = {
         basic: "#1D1F1C",
         highlight: "#36ab00",
         darkMode: "#1e1f1e",
+        darkModeCard: "#4b4b4b"
       }
     },
   },
