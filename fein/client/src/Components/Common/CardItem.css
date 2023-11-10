@@ -1,0 +1,48 @@
+.card_item {
+    display: flex;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.4);
+    width: 40%;
+    height: 300px;
+    justify-self: center;
+    align-self: center;
+    justify-content: center;
+    padding: 20px;
+
+}
+
+.card_title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-left: 28px;
+    margin-right: 28px;
+    padding: 4px;
+    width: 40%;
+    justify-self: center;
+    align-self: center;
+    text-align: center;
+}
+
+.card_button {
+    text-align: center;
+    font-family: 'Raleway', sans-serif;
+    font-size: 18px;
+    width: 20%;
+    padding: 10px;
+    align-self: center;
+    justify-self: center;
+    color: white;
+    border: 1px solid #3cbb01;
+    background-color: #3cbb01;
+    border-radius: 5px;
+    transition: all 0.05s ease-in-out;
+    font-weight: bolder;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+}
+
+.card_button:hover {
+    transform: scale(1.05);
+    background-color: #ffffff;
+    color: #3cbb01;
+    cursor: pointer;
+}

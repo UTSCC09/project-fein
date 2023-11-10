@@ -1,0 +1,82 @@
+.all_stocks {
+    margin: 20px;
+    margin-left: 10%;
+    margin-right: 20%;
+    display: flex;
+    flex-direction: column;
+    width: 55%;
+    height: 80vh;
+}
+
+.all_stocks_header {
+    font-family: 'Ralway', sans-serif;
+    font-size: 2rem;
+    font-weight: 600;
+    padding: 10px;
+    text-align: left;
+    width: 20%;
+    align-self: center;
+}
+
+.all_stocks_subheader {
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    padding: 10px;
+}
+
+.all_stocks_nav {
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    text-align: center;
+}
+
+.all_stocks_nav:hover {
+    color: #3cbb01;
+    cursor: pointer;
+}
+
+.all_stocks_page {
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    text-align: center;
+}
+
+.search_bar {
+    border: none;
+    align-self: center;
+    border-radius: 40px;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin: 0.8rem 0;
+    width: 30%;
+    height: 40px;
+    background-color:#e1eefc;
+    color: rgb(0, 0, 0);
+    transition: all 0.2s ease-in-out;
+    border: 1px solid #000000;
+    outline: none;
+}
+
+.search_bar:focus {
+    width: 40%;
+}
+
+.search_icon {
+    width: 24px;
+    height: 24px;
+    justify-self: center;
+    align-self: center;
+    margin: 4px;
+}
+
+.search_icon:hover {
+    color: #51ff00;
+    cursor: pointer;
+    
+}

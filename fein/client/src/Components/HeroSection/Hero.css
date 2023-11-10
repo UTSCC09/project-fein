@@ -1,5 +1,8 @@
 .hero {
-    height: 60vh;
+    height: 40vh;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 40px;
 }
 
 .hero_text {
@@ -11,7 +14,7 @@
 }
 
 .hero_title {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: 600;
     text-align: center;
 }

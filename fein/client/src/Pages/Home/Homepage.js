@@ -23,7 +23,7 @@ export function HomePage() {
                     <h1 class="title_2">FEIN</h1>
                 </div>
                 <Hero />
-                <div className="flex flex-row">
+                <div className="flex flex-row mt-12">
                     <TopStocks />
                     <Summary />
                     {/* <button class="trade_button"> Start Trading Now!</button> */}

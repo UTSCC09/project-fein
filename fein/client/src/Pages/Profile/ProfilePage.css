@@ -1,0 +1,31 @@
+.username_title {
+    font-size: 36px;
+    font-weight: 600;
+    justify-self: center;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    margin-left: 10%;
+    
+}
+
+.username_description {
+    font-size: 18px;
+    font-weight: 600;
+    justify-self: center;
+
+    margin-bottom: 20px;
+    margin-left: 10%;
+}
+
+.trade_information {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.banner_image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}

@@ -1,7 +1,9 @@
-import React, {useState, useEffect} from 'react';
-import './Summary.css';
+import React, { useState, useEffect } from "react";
+import './AllStocks.css';
+import { Link } from "react-router-dom";
 
-import { YourStocks } from './YourStocks';
+import { StockItem } from "./StockItem";
+import  { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 
 const MockStocks = [
     {
@@ -74,22 +76,26 @@ const MockStocks = [
     }
 ];
 
-export function Summary() {
+export function AllStocks() {
+    const displayStocks = MockStocks.slice(0, 10);
     return (
-        <div class="summary_container">
-            <div className="flex flex-row ">
-                <h1 class="summary_header"> Summary </h1>
-            </div>
+        <div className="all_stocks">
             <div className="flex flex-row">
-                <YourStocks stocks={MockStocks}/>
-                <div className="flex flex-col space-y-32">
-                    <div class="your_portfolio"> Highest Profit </div>
-                    <div class="your_portfolio"> Highest Loss </div>
-                    <div class="your_portfolio"> Favorite Stock </div>
-                </div>
+                <h1 className="all_stocks_header">All Stocks</h1>
+                <div className="flex px-4 py-2 w-full justify-start text">
+                <MagnifyingGlassIcon class="search_icon" />
+                <input class="search_bar" type="text" placeholder="Search" />
+            </div>
+            </div>
+            <h2 className="all_stocks_subheader">Top 10 Stocks</h2>
+            {displayStocks?.map((stock) => (
+                <StockItem {...stock} />
+            ))}
+            <div className="flex flex-row w-full justify-between">
+                <button class="all_stocks_nav"> Back </button>
+                <h1 className="all_stocks_page"> Page 1 of 1 </h1>
+                <button class="all_stocks_nav"> Next </button>
             </div>
         </div>
-    )
-
-
+    );
 }

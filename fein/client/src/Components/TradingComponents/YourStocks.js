@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import './YourStocks.css';
 
-import { TopStockItem } from "./TopStockItem";
+import { StockCard } from "./StockCard";
 
 export function YourStocks({stocks}) {
     if (!stocks) {
@@ -15,11 +15,11 @@ export function YourStocks({stocks}) {
     const displayStocks = stocks.slice(0, 3);
     return (
         <div className="flex flex-row">
-            <h1 className="your_stocks_title"> Your investments: </h1>
             <div className="flex flex-col">
-                <div className="flex flex-row">
+                <h1 className="your_stocks_title"> Your investments: </h1>
+                <div className="flex flex-col">
                     {displayStocks?.map((stock) => (
-                        <TopStockItem {...stock} />
+                        <StockCard {...stock} />
                     ))}
                 </div>
             </div>

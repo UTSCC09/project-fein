@@ -1,13 +1,17 @@
-import React, {useState, useEffect} from 'react';
-import './Summary.css';
+import React, {useState, useEffect} from "react";
+import './ProfilePage.css';
 
-import { YourStocks } from './YourStocks';
+import { Navbar } from "../../Components/Navbar/Navbar.js";
+import { Footer } from "../../Components/Footer/Footer.js";
+import { YourInvestments } from "./YourInvestments.js";
+import banner from "../../Assets/banner.jpeg";
 
 const MockStocks = [
     {
         id: 1, 
         name: "Apple Inc.",
         ticker: "AAPL",
+        quantity: 10,
         price: 130.21,
         change: 0.12,
         changePercent: 0.09,
@@ -25,6 +29,7 @@ const MockStocks = [
         id: 2, 
         name: "Tesla Inc.",
         ticker: "TSLA",
+        quantity: 10,
         price: 130.21,
         change: 0.12,
         changePercent: 0.09,
@@ -42,6 +47,7 @@ const MockStocks = [
         id: 3,
         name: "Microsoft Corporation",
         ticker: "MSFT",
+        quantity: 10,
         price: 130.21,
         change: 0.12,
         changePercent: 0.09,
@@ -59,6 +65,7 @@ const MockStocks = [
         id: 4,
         name: "Facebook Inc.",
         ticker: "FB",
+        quantity: 10,
         price: 130.21,
         change: 0.12,
         changePercent: 0.09,
@@ -74,22 +81,21 @@ const MockStocks = [
     }
 ];
 
-export function Summary() {
+export function ProfilePage() {
     return (
-        <div class="summary_container">
-            <div className="flex flex-row ">
-                <h1 class="summary_header"> Summary </h1>
-            </div>
-            <div className="flex flex-row">
-                <YourStocks stocks={MockStocks}/>
-                <div className="flex flex-col space-y-32">
-                    <div class="your_portfolio"> Highest Profit </div>
-                    <div class="your_portfolio"> Highest Loss </div>
-                    <div class="your_portfolio"> Favorite Stock </div>
+        <div className="flex flex-col">
+            <Navbar />
+            <img class="banner_image" src={banner} alt="Your Banner"></img>
+            <div className="flex-grow">
+                <div className="flex flex-col">
+                    <h1 className="username_title"> Username </h1>
+                    <h1 className="username_description"> Description </h1>
                 </div>
+                <div class="trade_information">
+                    <YourInvestments stocks={MockStocks}/>
+                </div>
+                
             </div>
         </div>
-    )
-
-
+    );
 }

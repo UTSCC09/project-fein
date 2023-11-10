@@ -16,3 +16,17 @@
     font-weight: 600;
     padding-left: 10px;
 }
+
+.your_portfolio {
+    font-family: 'Raleway', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    margin-left: 28px;
+    padding: 4px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-top: 20px;
+    justify-self: center;
+    align-self: center;
+    text-align: center;
+}
