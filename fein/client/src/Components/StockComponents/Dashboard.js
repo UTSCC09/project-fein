@@ -3,7 +3,7 @@ import Details from './Details';
 import Overview from './Overview';
 import Chart from './Chart';
 
-import { MockStocks } from '../../MockData/MockStocks';
+import { MockStocks, mockCompanyDetails } from '../../MockData/MockStocks';
 
 
 const child = {
@@ -30,7 +30,7 @@ const Dashboard = () => {
                 />
             </div>
             <div className="row-span-2 xl:row-span-3">
-                <Details details={MockStocks}/>
+                <Details details={mockCompanyDetails[0]}/>
             </div>
             <div className="col-span-1 md:col-span-2 xl:col-span-3 row-span-1 flex">
                 <div className="h-1/3 self-center justify-center w-full flex">

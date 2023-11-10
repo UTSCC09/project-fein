@@ -6,8 +6,8 @@ export function StockCard(stock) {
 
     const navigate = useNavigate();
     const handleClick = () => {
-        navigate(`/trading/stock`);
-        // ${stock.ticker}
+        navigate(`/trading/stock/${stock.ticker}`);
+        
     }
 
     return (
