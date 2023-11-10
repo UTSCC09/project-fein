@@ -8,6 +8,7 @@ module.exports = {
       backgroundColor: {
         navbar: "#2b363b",
         basic: "#1D1F1C",
+        highlight: "#36ab00",
       }
     },
   },

@@ -1,13 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import './Navbar.css';
-import { HomeIcon, MagnifyingGlassIcon, UserIcon, Cog6ToothIcon } from '@heroicons/react/24/outline'
+import { HomeIcon, MagnifyingGlassIcon, UserIcon, Cog6ToothIcon, ArrowTrendingUpIcon } from '@heroicons/react/24/outline'
 import { BasicMenu } from './BasicMenu';
 import { Switch} from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { FormGroup } from '@mui/material/FormGroup';
+import SearchBar from '../Common/SearchBar';
+
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
 
 const label = { inputProps: { 'aria-label': 'Switch demo' } };
@@ -60,7 +59,6 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 }));
 
 
-
 export function Navbar() {
     const navigate = useNavigate();
 
@@ -83,15 +81,13 @@ export function Navbar() {
 
     const handleChange = (event) => {
         setState({ ...state, [event.target.name]: event.target.checked });
-        
     };
 
     return (
-        <nav className="flex bg-navbar sticky top-0">
+        <nav className="flex bg-navbar sticky top-0 z-50">
             <div onClick={handleLogoClick} class="nav_logo"> FEIN </div>
             <div className="flex px-4 py-2 w-full justify-start text">
-                <div class="navbar_element"><MagnifyingGlassIcon class="navbar_icon" /></div>
-                <input class="nav_search_bar" type="text" placeholder="Search" />
+                <SearchBar nav={true}/>
             </div>
             { !user ? (
                 <div className="flex px-4 py-2 w-full justify-end">

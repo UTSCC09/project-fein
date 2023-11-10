@@ -62,12 +62,24 @@
     padding: 1rem;
     align-self: center;
     transition: all 0.1s ease-in-out;
+    display: flex;
 }
 
 .nav_logo:hover {
     color: #51ff00;
     transform: scale(1.1);
     cursor: pointer;
+}
+
+.nav_trend {
+    font-size: 1rem;
+    font-weight: 600;
+    height: 24px;
+    width: 24px;
+    text-decoration: none;
+    color: #fff;
+    align-self: center;
+    transition: all 0.2s ease-in-out;
 }
 
 .nav_search_bar {
