@@ -2,8 +2,16 @@ import React, {useState, useEffect} from 'react';
 import './YourStocks.css';
 
 import { StockCard } from "./StockCard";
+import {useNavigate} from 'react-router-dom';
 
 export function YourStocks({stocks}) {
+
+    const navigate = useNavigate();
+
+    const handleProfileClick = () => {
+        navigate('/profile');
+    }
+
     if (!stocks) {
         return (
             <div className="flex flex-row">
@@ -22,6 +30,7 @@ export function YourStocks({stocks}) {
                         <StockCard {...stock} />
                     ))}
                 </div>
+                <div onClick={handleProfileClick} class="view_profile"> View More in Your Profile </div>
             </div>
 
         </div>

@@ -83,9 +83,9 @@ export function Summary() {
             <div className="flex flex-row">
                 <YourStocks stocks={MockStocks}/>
                 <div className="flex flex-col space-y-32">
-                    <div class="your_portfolio"> Highest Profit </div>
-                    <div class="your_portfolio"> Highest Loss </div>
-                    <div class="your_portfolio"> Favorite Stock </div>
+                    <div class="your_portfolio"> Highest Profit: </div>
+                    <div class="your_portfolio"> Highest Loss: </div>
+                    <div class="your_portfolio"> Favorite Stock: </div>
                 </div>
             </div>
         </div>

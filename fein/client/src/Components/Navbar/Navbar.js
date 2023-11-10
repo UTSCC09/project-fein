@@ -8,6 +8,7 @@ import { FormGroup } from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import { useNavigate } from 'react-router-dom';
 
 const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
@@ -58,7 +59,22 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   },
 }));
 
+
+
 export function Navbar() {
+    const navigate = useNavigate();
+
+    const handleLogoClick = () => {
+        navigate('/');
+    }
+    
+    const handleTradeClick = () => {
+        navigate('/trading');
+    }
+
+    const handleProfileClick = () => {
+        navigate('/profile');
+    }
 
     const [user, setUser] = useState(null);
     const [state,  setState] = useState({
@@ -72,24 +88,24 @@ export function Navbar() {
 
     return (
         <nav className="flex bg-navbar sticky top-0">
-            <a href="/" class="nav_logo"> FEIN </a>
+            <div onClick={handleLogoClick} class="nav_logo"> FEIN </div>
             <div className="flex px-4 py-2 w-full justify-start text">
                 <div class="navbar_element"><MagnifyingGlassIcon class="navbar_icon" /></div>
                 <input class="nav_search_bar" type="text" placeholder="Search" />
             </div>
             { !user ? (
                 <div className="flex px-4 py-2 w-full justify-end">
-                    <a href="/trading" class="navbar_trading"> Trade </a>
+                    <div onClick={handleTradeClick} class="navbar_trading"> Trade </div>
                     <div className="self-center">
                         <FormControlLabel
                             control={<MaterialUISwitch sx={{ m: 1 }} checked={state.darkMode} name="darkMode" onChange={handleChange} />}
                             label=""
                         />
                     </div>
-                    <a href="/" class="navbar_element">
+                    <div onClick={handleLogoClick} class="navbar_element">
                         <HomeIcon className="navbar_icon" />
-                    </a>
-                    <a href="/profile" class="navbar_element"><UserIcon className="navbar_icon"/></a>
+                    </div>
+                    <a onClick={handleProfileClick} class="navbar_element"><UserIcon className="navbar_icon"/></a>
                     <div class="navbar_element"><BasicMenu/></div>
                 </div>
             ) : (

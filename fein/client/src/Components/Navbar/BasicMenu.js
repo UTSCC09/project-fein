@@ -3,6 +3,7 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { Cog6ToothIcon } from '@heroicons/react/24/outline'
+import {useNavigate} from 'react-router-dom';
 
 import './Navbar.css';
 
@@ -13,6 +14,12 @@ export function BasicMenu() {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const navigate = useNavigate();
+  const handleSettingsClose = () => {
+    navigate('/settings');
     setAnchorEl(null);
   };
 
@@ -38,7 +45,7 @@ export function BasicMenu() {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose}>Settings</MenuItem>
+        <MenuItem onClick={handleSettingsClose}>Settings</MenuItem>
         <MenuItem onClick={handleClose}>Accessibility</MenuItem>
         <MenuItem onClick={handleClose}>Logout</MenuItem>
       </Menu>

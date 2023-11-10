@@ -72,12 +72,46 @@ const MockStocks = [
         ytdChange: 100,
         website: "https://www.facebook.com/",
         logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/600px-Facebook_Logo_%282019%29.png"
+    },
+    {
+        id: 5,
+        name: "Walmart Inc.",
+        ticker: "FB",
+        price: 130.21,
+        change: 0.12,
+        changePercent: 0.09,
+        volume: 100000,
+        avgVolume: 100000,
+        marketCap: 1000000000000,
+        peRatio: 100,
+        week52High: 100,
+        week52Low: 100,
+        ytdChange: 100,
+        website: "https://www.walmart.com/",
+        logo: "https://s3.amazonaws.com/www-inside-design/uploads/2018/04/walmart-square.jpg"
+    },
+    {
+        id: 6,
+        name: "Amazon Inc.",
+        ticker: "FB",
+        price: 130.21,
+        change: 0.12,
+        changePercent: 0.09,
+        volume: 100000,
+        avgVolume: 100000,
+        marketCap: 1000000000000,
+        peRatio: 100,
+        week52High: 100,
+        week52Low: 100,
+        ytdChange: 100,
+        website: "https://www.amazon.com/",
+        logo: "https://upload.wikimedia.org/wikipedia/commons/4/4a/Amazon_icon.svg"
     }
 ];
 
 
 export function TopStocks(stocks) {
-    const displayStocks = MockStocks.slice(0, 5);
+    const displayStocks = MockStocks.slice(0, 7);
     return(
         <div class="top_section">
             <h1 class="top_stocks">

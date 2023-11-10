@@ -2,5 +2,18 @@
     font-size: 18px;
     font-weight: 600;
     justify-self: center;
+}
 
+.view_profile {
+    font-size: 18px;
+    font-weight: 600;
+    justify-self: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    align-self: center;
+}
+
+.view_profile:hover {
+    color: #3db903;
+    cursor: pointer;
 }

@@ -36,7 +36,7 @@
 .navbar_trading:hover {
     background-color: white;
     color: #3cbb01;
-
+    cursor: pointer;
 }
 
 
