@@ -10,7 +10,27 @@
     padding-left: 15px;
     padding-right: 15px;
     border-radius: 10px;
-    background-color: #ffffff;
+    background-color: #e2e2e2;
+    color: black;
+    box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.4);
+    transition: 0.3s;
+    width: 70%;
+    height: 100%;
+}
+
+.stock_card_dark{
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    justify-self: center;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px;
+    padding: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 10px;
+    background-color: #e2e2e2;
     color: black;
     box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.4);
     transition: 0.3s;

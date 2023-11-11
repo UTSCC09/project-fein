@@ -1,9 +1,10 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext } from "react";
 import './StockCard.css';
 import { useNavigate } from "react-router-dom";
+import ThemeContext from "../../Context/ThemeContext";
 
 export function StockCard(stock) {
-
+    const { darkMode } = useContext(ThemeContext);
     const navigate = useNavigate();
     const handleClick = () => {
         navigate(`/trading/stock/${stock.ticker}`);
