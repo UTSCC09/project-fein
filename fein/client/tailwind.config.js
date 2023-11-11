@@ -11,7 +11,10 @@ module.exports = {
         highlight: "#36ab00",
         darkMode: "#1e1f1e",
         darkModeCard: "#3d3d3d"
-      }
+      },
+      fontFamily: {
+        fein: ["Raleway", "sans-serif"],
+      },
     },
   },
   plugins: [],

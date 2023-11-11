@@ -29,7 +29,6 @@ export function HomePage() {
                 <div className="flex flex-row mt-12">
                     <TopStocks />
                     <Summary />
-
                 </div>
                 <Footer />
             </div>
