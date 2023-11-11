@@ -26,7 +26,7 @@ const Details = ({ details }) => {
             <ul className="w-full h-full flex flex-col justify-between divide-y-1">
                 {Object.keys(detailsList).map((key) => {
                     return (
-                        <li className={`flex-1 flex justify-between items-center ${darkMode ? "text-gray-300" : "text-black"}`} key={key}>
+                        <li className={`flex-1 flex justify-between items-center ${darkMode ? "text-black" : "text-black"}`} key={key}>
                                 <span>{detailsList[key]}</span>
                                 <span>{key === "marketCapitalization" ? `${convertMilliontoBillion(details[key])}B` : details[key]}</span>
                         </li>
