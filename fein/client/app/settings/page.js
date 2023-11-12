@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import './Settings.css';
 
-import { Navbar } from "../../Components/Navbar/Navbar.js";
+import { Navbar } from "../Components/Navbar/Navbar.js";
 
 export function Settings() {
     return(
