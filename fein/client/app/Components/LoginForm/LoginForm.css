@@ -1,0 +1,64 @@
+/* CSS for login form styling */
+#login-form {
+    max-width: 80%;
+    margin: 0 auto;
+    padding: 5%;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    text-align: center;
+    align-self: center;
+    justify-self: center;
+}
+
+.form-header {
+    /* margin-top: 10%; */
+    margin-bottom: 7%;
+    font-size: 3rem;
+    color: #000000;
+    font-family: 'Raleway', sans-serif;
+}
+
+.form-element {
+    width: 100%;
+    padding: 3%;
+    margin: 2% 0;
+    border: 1px solid #bfb8b8;
+    border-radius: 4px;
+}
+
+.btn {
+    width: 100%;
+    padding: 3%;
+    background-color: #3bbb00;
+    color: #fff;
+    transition: background-color 0.3s;
+    margin-top: 2%;
+}
+
+.btn:hover {
+    background-color: #2f9400;
+}
+
+.form-footer {
+    margin-top: 7%;
+    font-size: 14px;
+    color: #000000;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+#signup-link {
+    color: #3bbb00;
+}
+
+#signup-link:hover {
+    color: #2f9400;
+}
