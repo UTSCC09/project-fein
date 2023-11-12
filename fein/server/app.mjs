@@ -7,7 +7,7 @@ import session from "express-session";
 import { parse, serialize } from "cookie";
 import { genSalt, hash, compare } from "bcrypt";
 import validator from "validator";
-import { url } from "inspector";
+
 
 const PORT = 4000;
 const app = express();

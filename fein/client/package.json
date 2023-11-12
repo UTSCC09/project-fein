@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "env-cmd next dev",
+    "build": "env-cmd next build",
+    "start": "env-cmd next start",
     "lint": "next lint"
   },
   "dependencies": {
@@ -15,6 +15,7 @@
     "@heroicons/react": "^2.0.18",
     "@iconscout/react-unicons": "^2.0.2",
     "@mui/material": "^5.14.17",
+    "env-cmd": "^10.1.0",
     "express": "^4.18.2",
     "next": "14.0.2",
     "react": "^18.2.0",
