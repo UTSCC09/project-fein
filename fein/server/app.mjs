@@ -198,7 +198,7 @@ app.get('/api/price/:symbol/', isAuthenticated, function (req, res, next) {   //
 });
 
 app.get('/api/candle/:symbol/:resolution/:from/:to/', isAuthenticated, function (req, res, next) {   //gonna implement caching for this later
-    const url = `${base_path}/stock/candle?symbol=${req.params.symbol}&resolution=${req.params.resolution}&from=${req.params.resolution}&to=${req.params.to}&token=cl71pi9r01qvnckae940cl71pi9r01qvnckae94g`
+    const url = `${base_path}/stock/candle?symbol=${req.params.symbol}&resolution=${req.params.resolution}&from=${req.params.from}&to=${req.params.to}&token=cl71pi9r01qvnckae940cl71pi9r01qvnckae94g`
     fetch(url)
         .then(x => {
             if (!x.ok) {
