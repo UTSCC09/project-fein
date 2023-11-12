@@ -2,7 +2,7 @@ import { rmSync } from "fs";
 import { join } from "path";
 import { createServer } from "http";
 import express from "express";
-import Datastore from "nedb";
+import { MongoClient } from "mongodb"
 
 const PORT = 4000;
 const app = express();
@@ -14,6 +14,12 @@ app.use(express.json());
 //   autoload: true,
 //   timestampData: true,
 // });
+
+const mongo_client = new MongoClient(process.env.MONGO_DB_CONNECTION_STRING);
+const database = mongo_client.db('Fein');
+
+const users = database.collection('users');
+const positions = database.collection('positions');
 
 function getItems(page, limit) {
     limit = Math.max(5, (limit) ? parseInt(limit) : 5);

@@ -4,7 +4,9 @@
   "description": "",
   "main": "app.mjs",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prod": "env-cmd node app.mjs",
+    "dev": "env-cmd nodemon app.mjs",
+    "test": "npx mocha"
   },
   "author": "",
   "license": "ISC",
