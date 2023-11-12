@@ -1,10 +1,11 @@
 'use client'
 
 import "./Homepage.css"
-import React, { useEffect, useState, useContext } from "react";
-import Link from "next/link";
+import React from "react";
 
 // Component imports
+
+import { useEffect } from "react";
 
 import { Navbar } from "./Components/Navbar/Navbar.js";
 import { TopStocks } from "./Components/TradingComponents/TopStocks.js";
@@ -15,7 +16,8 @@ import { Footer } from "./Components/Footer/Footer.js";
 import { useThemeContext } from "./Context/ThemeContext.js";
 
 export default function HomePage() {
-    const { darkMode, setDarkMode } = useThemeContext();
+    const { darkMode } = useThemeContext();
+
     return (
         <main className={`transition-all ease-in-out ${darkMode ? "bg-darkMode text-white" : "bg-white text-black"}`}>
             <Navbar />
