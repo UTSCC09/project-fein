@@ -48,7 +48,7 @@
     color: white;
     border: 1px solid #3cbb01;
     background-color: #3cbb01;
-    border-radius: 5px;
+    border-radius: 10px;
     transition: all 0.05s ease-in-out;
     font-weight: bolder;
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);

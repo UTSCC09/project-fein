@@ -27,7 +27,7 @@ export function Navbar() {
             </div>
             { !user ? (
                 <div className="flex px-4 py-2 w-full justify-end">
-                    <Link href="/trading" class="navbar_trading"> Trade </Link>
+                    <Link href="/trading" class="navbar_trading"> Trade Now </Link>
                     <div className="self-center">
                         <FormControlLabel
                             control={<MaterialUISwitch sx={{ m: 1 }} name="darkMode" checked={darkMode} onChange={toggleDarkMode}/>}
@@ -42,8 +42,8 @@ export function Navbar() {
                 </div>
             ) : (
                 <div className="flex px-4 py-2 w-full justify-end">
-                    <div className="sign"> Signin </div>
-                    <div class="sign"> Signup </div>
+                    <Link href="/login" className="sign"> Signin </Link>
+                    <Link href="/signup" class="sign"> Signup </Link>
                 </div>
             )}
         </nav>

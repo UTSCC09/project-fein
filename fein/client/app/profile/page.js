@@ -22,7 +22,7 @@ export default function ProfilePage() {
             <Image class="banner_image" src={banner} alt="Your Banner"></Image>
             <div className="flex-grow">
                 <div className="flex flex-col">
-                    <h1 className="username_title"> Username </h1>
+                    <h1 className="username_title"> John Doe </h1>
                     <h1 className="username_description"> Description </h1>
                 </div>
                 <div class="trade_information">

@@ -1,7 +1,7 @@
 'use client'
 
 import "./Homepage.css"
-import React from "react";
+import React, {useState} from "react";
 
 // Component imports
 
@@ -17,6 +17,7 @@ import { useThemeContext } from "./Context/ThemeContext.js";
 
 export default function HomePage() {
     const { darkMode } = useThemeContext();
+    const [user, setUser] = useState(null);
 
     return (
         <main className={`transition-all ease-in-out ${darkMode ? "bg-darkMode text-white" : "bg-white text-black"}`}>

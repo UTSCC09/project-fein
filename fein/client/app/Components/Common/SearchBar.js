@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import './SearchBar.css'
 import { MockStocks } from '../../MockData/MockStocks'
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
+import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import SearchResults from './SearchResults';
 
 const SearchBar = (nav) => {
@@ -37,12 +37,8 @@ const SearchBar = (nav) => {
                     )
                 }
             </button>
-            {input && results.length > 0 ? <SearchResults results={results}/> : null}
-
-            
+            {input && results.length > 0 ?  <SearchResults results={results}/> : null}
         </>
-
-
     );
 }
 
