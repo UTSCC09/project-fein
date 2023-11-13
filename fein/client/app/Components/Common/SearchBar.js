@@ -5,17 +5,28 @@ import './SearchBar.css'
 import { MockStocks } from '../../MockData/MockStocks'
 import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import SearchResults from './SearchResults';
+import { supportedStocks } from '../../../api/api.mjs';
 
 const SearchBar = (nav) => {
     const [input, setInput] = useState('');
-    const [results, setResults] = useState(MockStocks.result);
+    const [results, setResults] = useState([]);
 
     const clear = () => {
         setInput('');
         setResults([]);
     };
-    const updateResults = () => {
-        setResults(MockStocks.result)
+    const updateResults = async () => {
+        try {
+            if(input) {
+                console.log("input: " + input);
+                const searchResults = await supportedStocks(input);
+                const result = searchResults.result;
+                setResults(result);
+            }
+        } catch(error) {
+            setResults([]);
+            console.log(error);
+        }
     };
 
     return (
