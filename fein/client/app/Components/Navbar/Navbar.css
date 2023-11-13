@@ -107,6 +107,9 @@
     padding: 10px;
     align-self: center;
     transition: all 0.2s ease-in-out;
+    background-color: #3cbb01;
+    margin: 0 10px;
+    border-radius: 10px;
 }
 
 .sign:hover {
