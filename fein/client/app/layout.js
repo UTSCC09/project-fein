@@ -1,6 +1,7 @@
 import { Inter } from 'next/font/google'
 import './globals.css'
 import ThemeContextProvider from './Context/ThemeContext'
+import StockContextProvider from './Context/StockContext';
 
 import { Navbar } from "./Components/Navbar/Navbar.js";
 
@@ -9,7 +10,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <ThemeContextProvider>
-          {children}
+          <StockContextProvider>
+            {children}
+          </StockContextProvider>
         </ThemeContextProvider>
       </body>
     </html>
