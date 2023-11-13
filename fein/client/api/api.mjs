@@ -34,5 +34,5 @@ export function companyPrice(symbol) {
 }
 
 export function companyCandle(symbol, resolution, from, to) {
-    return send("GET", "/api/price/" + symbol + "/" + resolution + "/" + from + "/" + to + "/");
+    return send("GET", "/api/candle/" + symbol + "/" + resolution + "/" + from + "/" + to + "/");
 }
