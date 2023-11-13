@@ -18,8 +18,7 @@ const child = {
     subtitle: 'Search for a stock to get started',
 }
 
-const Dashboard = () => {
-    const { stockSymbol, setStockSymbol } = useStockContext();
+function Dashboard(symbol) {
     const { darkMode } = useThemeContext();
     const [stockDetails, setStockDetails] = useState({});
     const [quote, setQuote] = useState({});
@@ -27,7 +26,7 @@ const Dashboard = () => {
     useEffect(() => {
         const updateStockDetails = async () => {
             try {
-                const result = await companyProfile(stockSymbol);
+                const result = await companyProfile(symbol.symbol);
                 setStockDetails(result);
             } catch(error) {
                 setStockDetails({});
@@ -36,7 +35,7 @@ const Dashboard = () => {
         };
         const updateStockOverview = async () => {
             try {
-                const result = await companyPrice(stockSymbol);
+                const result = await companyPrice(symbol.symbol);
                 setQuote(result);
             } catch(error) {
                 setQuote({});
@@ -45,7 +44,7 @@ const Dashboard = () => {
         };
         updateStockDetails();
         updateStockOverview();
-    }, [stockSymbol]);
+    }, [symbol.symbol]);
 
 
     return (
@@ -59,7 +58,7 @@ const Dashboard = () => {
             </div>
             <div>
                 <Overview 
-                    symbol={stockSymbol} 
+                    symbol={symbol.symbol} 
                     price={quote.pc}
                     change={quote.d}  
                     changePercent={quote.dp}
