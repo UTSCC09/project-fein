@@ -6,20 +6,22 @@ import { useRef } from 'react'
 import { HomeIcon, MagnifyingGlassIcon, UserIcon } from '@heroicons/react/24/outline'
 
 export function SignUpForm(props) {
-    const { addUser } = props;
+    const { addUser, setMessage } = props;
     const userRef = useRef(null);
     const passRef = useRef(null);
+    const formRef = useRef(null);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const username = userRef.current.value;
         const password = passRef.current.value;
-        const x = await addUser(username, password)
-        console.log(x);
+        const user = await addUser(username, password)
+        user instanceof Object ? setMessage("Successfully created user") : setMessage(user);
+        formRef.current.reset();
     }
 
     return (
-        <form id='login-form' onSubmit={handleSubmit}>
+        <form id='login-form' onSubmit={handleSubmit} ref={formRef} >
             <div className='form-header'>Lets Get Investing</div>
             <input
                 type="text"

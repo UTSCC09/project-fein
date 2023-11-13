@@ -23,27 +23,6 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 const base_path = "https://finnhub.io/api/v1"
 
-
-function addUser(username, password) {
-    return new Promise(function (resolve, reject) {
-        User.findOne({ username: username })
-            .then(user => {
-                if (user)
-                    return reject("username " + username + " already exists");
-                genSalt(10, function (err, salt) {
-                    hash(password, salt, function (err, hash) {
-                        User.findOneAndUpdate({ username: username }, { username: username, hash: hash, fein_bucks: 3000 }, { upsert: true })
-                            .then(() => resolve(username))
-                            .catch((err) => reject(err));
-                    });
-                });
-            })
-            .catch(err => {
-                return reject(err);
-            });
-    })
-}
-
 function login(username, password) {
     return new Promise(function (resolve, reject) {
         User.findOne({ username: username })
@@ -55,7 +34,7 @@ function login(username, password) {
                         return reject(err);
                     if (!valid)
                         return reject("access denied");
-                    return resolve(username);
+                    return resolve(user);
                 });
             })
             .catch(err => reject(err));
@@ -114,10 +93,21 @@ app.post("/api/signup/", checkUsername, function (req, res, next) {
         return res.status(400).end("password is missing");
     let username = req.body.username;
     let password = req.body.password;
-    // check if user already exists in the database
-    addUser(username, password)
-        .then(username => res.json(username))
-        .catch(err => res.status(500).end(err))
+    User.findOne({ username: username })
+        .then(user => {
+            if (user)
+                return res.status(409).end("username " + username + " already exists");
+            genSalt(10, function (err, salt) {
+                hash(password, salt, function (err, hash) {
+                    User.findOneAndUpdate({ username: username }, { username: username, hash: hash, fein_bucks: 3000 }, { upsert: true })
+                        .then(() => res.json({ username: username }))
+                        .catch((err) => res.status(500).end(err));
+                });
+            });
+        })
+        .catch(err => {
+            return res.status(500).end(err);
+        });
 });
 
 app.post('/api/signin/', checkUsername, function (req, res, next) {
@@ -128,15 +118,15 @@ app.post('/api/signin/', checkUsername, function (req, res, next) {
     let password = req.body.password;
     // retrieve user from the database
     login(username, password)
-        .then(username => {
-            req.session.user = username;
-            res.setHeader('Set-Cookie', serialize('username', user._id, {
+        .then(user => {
+            req.session.user = user.username;
+            res.setHeader('Set-Cookie', serialize('username', user.username, {
                 path: '/',
                 maxAge: 60 * 60 * 24 * 7, // 1 week in number of seconds
                 // secure: true,
                 // sameSite: true
             }));
-            return res.json(username);
+            return res.json(user);
         })
         .catch(err => res.status(500).end(err));
     // users.findOne({ _id: username }, function (err, user) {
@@ -209,25 +199,6 @@ app.get('/api/candle/:symbol/:resolution/:from/:to/', async function (req, res, 
     }
     res.json(await data.json());
 });
-
-// app.get("/api/items/", async function (req, res, next) {
-//     const items = await getItems(req.params.page, req.params.limit);
-//     return res.json(items);
-// });
-
-// app.post("/api/items/", async function (req, res, next) {
-//     await addItem(req.body.content);
-//     const items = await getItems(req.params.page, req.params.limit);
-//     return res.json(items);
-// });
-
-// app.delete("/api/items/:id/", async function (req, res, next) {
-//     await deleteItem(req.params.id);
-//     const items = await getItems(req.params.page, req.params.limit);
-//     return res.json(items);
-// });
-
-
 
 const server = createServer(app).listen(PORT, function (err) {
     if (err) console.log(err);

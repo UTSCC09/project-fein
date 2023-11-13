@@ -1,10 +1,14 @@
-function send(method, url, data) {
-    return fetch(`${process.env.NEXT_PUBLIC_BACKEND}${url}`, {
+async function send(method, url, data) {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}${url}`, {
         method: method,
         headers: { "Content-Type": "application/json" },
         body: (data) ? JSON.stringify(data) : null,
     })
-        .then(x => x.json())
+    //console.log(res);
+    if (!res.ok) {
+        return await res.text();
+    }
+    return res.json();
 }
 
 export function getUsername() {
@@ -14,32 +18,32 @@ export function getUsername() {
     );
 }
 
-export function addUser(username, password) {
-    return send("POST", "/api/signup/", { username: username, password: password });
+export async function addUser(username, password) {
+    return await send("POST", "/api/signup/", { username: username, password: password });
 }
 
-export function signin(username, password) {
-    return send("POST", "/api/signin/", { username: username, password: password });
-
-}
-
-export function signout() {
-    return send("GET", "/api/signout/");
+export async function signin(username, password) {
+    return await send("POST", "/api/signin/", { username: username, password: password });
 
 }
 
-export function supportedStocks() {
-    return send("GET", "/api/supported_stock/");
+export async function signout() {
+    return await send("GET", "/api/signout/");
+
 }
 
-export function companyProfile(symbol) {
-    return send("GET", "/api/company_profile/" + symbol + "/");
+export async function supportedStocks() {
+    return await send("GET", "/api/supported_stock/");
 }
 
-export function companyPrice(symbol) {
-    return send("GET", "/api/price/" + symbol + "/");
+export async function companyProfile(symbol) {
+    return await send("GET", "/api/company_profile/" + symbol + "/");
 }
 
-export function companyCandle(symbol, resolution, from, to) {
-    return send("GET", "/api/candle/" + symbol + "/" + resolution + "/" + from + "/" + to + "/");
+export async function companyPrice(symbol) {
+    return await send("GET", "/api/price/" + symbol + "/");
+}
+
+export async function companyCandle(symbol, resolution, from, to) {
+    return await send("GET", "/api/candle/" + symbol + "/" + resolution + "/" + from + "/" + to + "/");
 }
