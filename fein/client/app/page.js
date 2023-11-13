@@ -24,8 +24,8 @@ export default function HomePage() {
             <Navbar />
             <div className="flex flex-col">
                 <div className="flex flex-row self-center">
-                    <h1 class={darkMode ? "title_dark" : "title"}> Welcome to </h1>
-                    <h1 class="title_2">FEIN</h1>
+                    <h1 className={darkMode ? "title_dark" : "title"}> Welcome to </h1>
+                    <h1 className="title_2">FEIN</h1>
                 </div>
                 <Hero />
                 <div className="flex flex-row mt-12">

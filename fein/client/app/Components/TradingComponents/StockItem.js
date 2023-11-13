@@ -16,7 +16,6 @@ export function StockItem(stock) {
         await setStockSymbol(stock.symbol);
     }
 
-    console.log(stock.symbol);
     return (
         
         <Link className={darkMode ? "stock_item_dark": "stock_item"} onClick={() => handleClick()} href={`trading/stock/${stock.symbol}`}>

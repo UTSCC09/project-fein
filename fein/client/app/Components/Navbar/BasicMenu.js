@@ -25,13 +25,13 @@ export function BasicMenu() {
     <div className="self-center">
       <Button
         id="basic-button"
-        class="navbar_element"
+        className="navbar_element"
         aria-controls={open ? 'basic-menu' : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
       >
-        <Cog6ToothIcon class="navbar_icon"/>
+        <Cog6ToothIcon className="navbar_icon"/>
 
       </Button>
       <Menu

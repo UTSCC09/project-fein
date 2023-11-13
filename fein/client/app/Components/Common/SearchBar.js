@@ -33,7 +33,7 @@ const SearchBar = (nav) => {
         <>
             <input 
                 type="text" value={input} 
-                class="search_bar"
+                className="search_bar"
                 placeholder='Search for a stock...'
                 onChange={(event) => setInput(event.target.value)}
             />
@@ -42,9 +42,9 @@ const SearchBar = (nav) => {
             >
                 {
                     (nav) ? (
-                        <div class="navbar_element"><MagnifyingGlassIcon class="search_icon_nav" /></div>
+                        <div className="navbar_element"><MagnifyingGlassIcon className="search_icon_nav" /></div>
                     ) : (
-                        <div class="navbar_element"><MagnifyingGlassIcon class="search_icon" /></div>
+                        <div className="navbar_element"><MagnifyingGlassIcon className="search_icon" /></div>
                     )
                 }
             </button>

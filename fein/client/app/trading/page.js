@@ -11,7 +11,7 @@ import { useThemeContext } from "../Context/ThemeContext.js";
 export default function TradingPage() {
     const { darkMode } = useThemeContext();
     return (
-        <div class={darkMode ? "trading_dark" : "trading"}>
+        <div className={darkMode ? "trading_dark" : "trading"}>
             <Navbar />
             <div className="flex-grow">
 
