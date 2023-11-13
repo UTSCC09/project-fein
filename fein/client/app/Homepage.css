@@ -1,0 +1,44 @@
+.basic_background {
+    background-color: #e1eefc;
+    min-height: 100vh; 
+}
+
+.title {
+    font-size: 3rem;
+    color: #000000;
+    text-align: center;
+    margin-top: 15px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 900;
+    transition: all 0.2s ease-in-out;
+}
+
+.title_dark {
+    font-size: 3rem;
+    text-align: center;
+    margin-top: 15px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 900;
+    color: #ffffff;
+    transition: all 0.2s ease-in-out;
+}
+
+.title_2 {
+    font-size: 3rem;
+    font-weight: 900;
+    margin-left: 10px;
+    color: #3cbb01;
+    text-align: center;
+    margin-top: 15px;
+    font-family: 'Raleway', sans-serif
+}
+
+.trade_button {
+    width: 20%;
+    align-self: center;
+    justify-self: center;
+}
+
+.trade_button:hover {
+    transform: scale(1.02);
+}

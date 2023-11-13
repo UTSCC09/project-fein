@@ -1,0 +1,16 @@
+.spinner {
+    height: 120px;
+    width: 120px;
+    border: 6px solid #ccc;
+    border-color: rgb(5, 160, 18) transparent rgb(5, 160, 18) transparent;
+    border-radius: 50%;
+    animation: spin 1.2s ease infinite;
+    align-self: center;
+    justify-self: center;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

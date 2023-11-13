@@ -1,0 +1,27 @@
+.basic_background {
+    background-color: #e1eefc;
+    min-height: 100vh;
+    /* position: relative; */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.5s ease;
+}
+
+.fein_logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-decoration: none;
+    color: #000000;
+    background-color: #e1eefc;
+    margin: 1rem;
+    padding: 1rem;
+    align-self: center;
+    transition: all 0.1s ease-in-out;
+}
+
+.fein_logo:hover {
+    color: #999999;
+    cursor: pointer;
+}

@@ -1,0 +1,116 @@
+.no_style {
+    text-decoration: none;
+    align-self: center;
+}
+
+.navbar_element {
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 500;
+    padding: 0.5rem 0.5rem;
+    width: 40px;
+    height: 40px;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+    align-self: center;
+}
+
+.navbar_trading {
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    background-color: #3db903;
+    border-radius: 10px;
+    min-width: 40px;
+    min-height: 40px;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+    align-self: center;
+    justify-self: center;
+    align-self: center;
+    color: white;
+    margin-right: 20px;
+}
+
+.navbar_trading:hover {
+    background-color: white;
+    color: #3cbb01;
+    cursor: pointer;
+}
+
+
+.navbar_icon {
+    color: #fff;
+    height: 24px;
+    width: 24px;
+    transition: all 0.2s ease-in-out;
+}
+
+.navbar_icon:hover {
+    color: #51ff00;
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.nav_logo {
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: #fff;
+    margin-left: 1rem;
+    padding: 1rem;
+    align-self: center;
+    transition: all 0.1s ease-in-out;
+    display: flex;
+}
+
+.nav_logo:hover {
+    color: #51ff00;
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.nav_trend {
+    font-size: 1rem;
+    font-weight: 600;
+    height: 24px;
+    width: 24px;
+    text-decoration: none;
+    color: #fff;
+    align-self: center;
+    transition: all 0.2s ease-in-out;
+}
+
+.nav_search_bar {
+    border: none;
+    border-radius: 40px;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin: 0.8rem 0;
+    width: 40%;
+    background-color:#e1eefc;
+    color: rgb(0, 0, 0);
+    transition: all 0.2s ease-in-out;
+}
+
+.nav_search_bar:focus {
+    width: 50%;
+}
+
+.sign {
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: #fff;
+    padding: 10px;
+    align-self: center;
+    transition: all 0.2s ease-in-out;
+}
+
+.sign:hover {
+    color: #51ff00;
+    transform: scale(1.1);
+    cursor: pointer;
+}

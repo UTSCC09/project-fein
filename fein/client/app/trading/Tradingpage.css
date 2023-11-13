@@ -1,0 +1,42 @@
+.stock_info {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    width: 70%;
+    margin: auto;
+    font-size: 1.5rem;
+}
+
+.mock_stock {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #afafaf;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.mock_price {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #afafaf;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.trading_dark {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #1e1f1e;
+    color: white;
+}
+
+.trading {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}

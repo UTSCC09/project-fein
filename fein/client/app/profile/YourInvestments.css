@@ -1,0 +1,74 @@
+.investment_title {
+    font-size: 30px;
+    font-weight: 600;
+    justify-self: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.investment_no_stocks {
+    font-size: 20px;
+    font-weight: 300;
+    justify-self: center;
+    margin-bottom: 20px;
+    margin-left: 12%;
+}
+
+.stock_name {
+    font-size: 20px;
+    font-weight: 400;
+    justify-self: center;
+    margin-bottom: 20px;
+    width: 30%;
+
+}
+
+.stock_quantity {
+    font-size: 20px;
+    font-weight: 400;
+    justify-self: center;
+    margin-bottom: 20px;
+    width: 30%;
+
+}
+
+.stock_price {
+    font-size: 20px;
+    font-weight: 400;
+    justify-self: center;
+    margin-bottom: 20px;
+    width: 30%;
+}
+
+.profile_stock_item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.stock_name_table {
+    font-size: 20px;
+    font-weight: 600;
+    justify-self: center;
+    margin-bottom: 20px;
+    width: 30%;
+
+}
+
+.stock_quantity_table {
+    font-size: 20px;
+    font-weight: 600;
+    justify-self: center;
+    margin-bottom: 20px;
+    width: 30%;
+
+}
+
+.stock_price_table {
+    font-size: 20px;
+    font-weight: 600;
+    justify-self: center;
+    margin-bottom: 20px;
+    width: 30%;
+}
+
