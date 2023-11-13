@@ -4,6 +4,8 @@ import "./SignUpPage.css"
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
+import { addUser } from '../../api/api.mjs'
+
 
 // Component imports
 
@@ -15,7 +17,7 @@ export default function SignUpPage() {
         <div className="bg-fein">
             <h1 className="fein_logo"> <Link href="/"> FEIN </Link> </h1>
             <div className="basic_background">
-                <SignUpForm />
+                <SignUpForm addUser={(username, password) => addUser(username, password)} />
             </div>
         </div>
 
