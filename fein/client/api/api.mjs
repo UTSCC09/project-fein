@@ -7,6 +7,13 @@ function send(method, url, data) {
         .then(x => x.json())
 }
 
+export function getUsername() {
+    return document.cookie.replace(
+        /(?:(?:^|.*;\s*)username\s*\=\s*([^;]*).*$)|^.*$/,
+        "$1",
+    );
+}
+
 export function addUser(username, password) {
     return send("POST", "/api/signup/", { username: username, password: password });
 }

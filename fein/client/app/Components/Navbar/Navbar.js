@@ -11,13 +11,17 @@ import Link from 'next/link';
 
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { MaterialUISwitch } from './MaterialUISwitch';
-
+import { getUsername } from '../../../api/api.mjs'
 
 export function Navbar() {
 
     const [user, setUser] = useState(null);
     const {darkMode, toggleDarkMode} = useThemeContext();
 
+    useEffect(() => {
+        const userName = getUsername();
+        setUser(userName);
+    }, []);
 
     return (
         <nav className="flex bg-navbar sticky top-0 z-50">
@@ -25,7 +29,7 @@ export function Navbar() {
             <div className="flex px-4 py-2 w-full justify-start text">
                 <SearchBar nav={true}/>
             </div>
-            { !user ? (
+            { user ? (
                 <div className="flex px-4 py-2 w-full justify-end">
                     <Link href="/trading" className="navbar_trading"> Trade Now </Link>
                     <div className="self-center">
