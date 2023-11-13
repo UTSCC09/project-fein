@@ -42,7 +42,7 @@ function Chart() {
         function getDateRange() {
             const {days, weeks, months, years} = chartConfig[filter];
             const endDate = new Date();
-            const startDate = createDate(endDatem, -days, -weeks, -months, -years);
+            const startDate = createDate(endDate, -days, -weeks, -months, -years);
             const startTimestampUnix = convertDateToUnixTimestamp(startDate);
             const endTimestampUnix = convertDateToUnixTimestamp(endDate);
 
