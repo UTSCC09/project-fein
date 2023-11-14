@@ -42,7 +42,7 @@ function login(username, password) {
 }
 
 const checkUsername = function (req, res, next) {
-    if (!validator.isAlphanumeric(req.body.username)) return res.status(400).end("bad input");
+    if (!validator.isAlphanumeric(req.body.username)) return res.status(400).end("Username not alphanumeric");
     next();
 };
 

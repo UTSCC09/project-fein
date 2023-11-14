@@ -16,7 +16,7 @@ export function SignUpForm(props) {
         const username = userRef.current.value;
         const password = passRef.current.value;
         const user = await addUser(username, password)
-        user instanceof Object ? setMessage("Successfully created user") : setMessage(user);
+        user instanceof Object ? setMessage({ err: false, message: "Successfully created user" }) : setMessage({ err: true, message: user });
         formRef.current.reset();
     }
 
