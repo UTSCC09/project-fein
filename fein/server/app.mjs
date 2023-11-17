@@ -46,7 +46,7 @@ app.use(
 );
 
 app.use(function (req, res, next) {
-    const username = (req.session.user) ? req.session.user.username : '';
+    const username = (req.session.username) ? req.session.username : '';
     res.setHeader('Set-Cookie', serialize('username', username, {
         path: '/',
         maxAge: 60 * 60 * 24 * 7 // 1 week in number of seconds
@@ -80,9 +80,13 @@ app.post("/api/signup/", checkUsername, function (req, res, next) {
             genSalt(10, function (err, salt) {
                 hash(password, salt, function (err, hash) {
                     User.findOneAndUpdate({ username: username }, { username: username, hash: hash, fein_bucks: 3000 }, { upsert: true })
-                        .then(() => res.json({ username: username }))
+                        .then(() => {
+                            req.session.username = username;
+                            res.json({ username: username });
+                        })
                         .catch((err) => res.status(500).end(err));
                 });
+
             });
         })
         .catch(err => {
@@ -94,7 +98,7 @@ app.post('/api/signin/', checkUsername, function (req, res, next) {
     // extract data from HTTP request
     if (!('username' in req.body)) return res.status(400).end('username is missing');
     if (!('password' in req.body)) return res.status(400).end('password is missing');
-    let username = req.body.username;
+    const username = req.body.username;
     let password = req.body.password;
     // retrieve user from the database
     User.findOne({ username: username })
@@ -105,14 +109,15 @@ app.post('/api/signin/', checkUsername, function (req, res, next) {
                 if (err) return res.status(500).end(err);
                 if (!valid) return res.status(401).end("access denied");
                 // start a session
-                req.session.user = user;
-                res.setHeader('Set-Cookie', serialize('username', user.username, {
-                    path: '/',
-                    maxAge: 60 * 60 * 24 * 7, // 1 week in number of seconds
-                    // secure: true,
-                    // sameSite: true
-                }));
-                return res.json({ username: user.username });
+                req.session.username = username;
+                res.setHeader(
+                    'Set-Cookie',
+                    serialize('username', username, {
+                      path: "/",
+                      maxAge: 60 * 60 * 24 * 7,
+                    })
+                );
+                return res.json({ username: username });
             });
         })
         .catch(err => {
@@ -128,8 +133,8 @@ app.get('/api/signout/', function (req, res, next) {
         // secure: true,
         // sameSite: true
     }));
-    //return res.redirect("/");
-    return res.json({});
+    return res.redirect("/");
+    // return res.json({});
 });
 
 app.get('/api/supported_stock/', async function (req, res, next) {   //gonna implement caching for this later

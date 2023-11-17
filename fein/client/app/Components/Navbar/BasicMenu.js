@@ -4,6 +4,8 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { Cog6ToothIcon } from '@heroicons/react/24/outline'
 
+import { signout } from '../../../api/api.mjs'
+
 import Link from 'next/link';
 
 import './Navbar.css';
@@ -19,6 +21,11 @@ export function BasicMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleLogout = () => {
+    signout();
+    setAnchorEl(null);
+  }
 
 
   return (
@@ -45,7 +52,7 @@ export function BasicMenu() {
       >
         <MenuItem> <Link href="/settings"> Settings </Link></MenuItem>
         <MenuItem onClick={handleClose}>Accessibility</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
     </div>
   );
