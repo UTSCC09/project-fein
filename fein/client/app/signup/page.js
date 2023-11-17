@@ -17,7 +17,7 @@ import { SignUpForm } from "../Components/SignUpForm/SignUpForm";
 export default function SignUpPage() {
     const [message, setMessage] = useState({});
     const toastOptions = {
-        position: 'top-right',
+        position: 'top-center',
         autoClose: 5000,
         hideProgressBar: true,
         closeOnClick: true,
@@ -38,11 +38,12 @@ export default function SignUpPage() {
             <div className="basic_background">
                 <SignUpForm addUser={(username, password) => addUser(username, password)} setMessage={setMessage} />
             </div>
-            {Object.keys.length != 0 ? (
+            {/* {Object.keys.length != 0 ? (
                 <ToastContainer />
             ) : (
                 <p></p>
-            )}
+            )} */}
+            <ToastContainer />
         </div>
 
     );
