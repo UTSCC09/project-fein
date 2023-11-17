@@ -20,26 +20,7 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log("Connected to Mongoose"))
     .catch((err) => console.log(err));
 
-
 const base_path = "https://finnhub.io/api/v1"
-
-function login(username, password) {
-    return new Promise(function (resolve, reject) {
-        User.findOne({ username: username })
-            .then(user => {
-                if (!user)
-                    return reject("access denied");
-                compare(password, user.hash, function (err, valid) {
-                    if (err)
-                        return reject(err);
-                    if (!valid)
-                        return reject("access denied");
-                    return resolve(user);
-                });
-            })
-            .catch(err => reject(err));
-    });
-}
 
 const checkUsername = function (req, res, next) {
     if (!validator.isAlphanumeric(req.body.username)) return res.status(400).end("Username not alphanumeric");
@@ -47,7 +28,7 @@ const checkUsername = function (req, res, next) {
 };
 
 const isAuthenticated = function (req, res, next) {
-    if (!req.session.user) return res.status(401).end("access denied");
+    if (!req.session.user.username) return res.status(401).end("access denied");
     next();
 };
 
@@ -56,16 +37,16 @@ app.use(
         secret: "Yarrggghh",
         resave: false,
         saveUninitialized: true,
-        // cookie: {
-        //     // httpOnly: true, // prevent the session cookie from being read by Javascript onn the browser
-        //     // secure: false,  // prevent the cookie to be sent with http, should be set to true when https is enabled
-        //     // samesite: 'strict' // prevent the cookie from being sent with cross-domain requests, should be set to lax when frontend is served on different domain
-        // }
+        cookie: {
+            //httpOnly: true, // prevent the session cookie from being read by Javascript onn the browser
+            // secure: false,  // prevent the cookie to be sent with http, should be set to true when https is enabled
+            // samesite: 'strict' // prevent the cookie from being sent with cross-domain requests, should be set to lax when frontend is served on different domain
+        }
     })
 );
 
 app.use(function (req, res, next) {
-    const username = (req.session.user) ? req.session.user._id : '';
+    const username = (req.session.user) ? req.session.user.username : '';
     res.setHeader('Set-Cookie', serialize('username', username, {
         path: '/',
         maxAge: 60 * 60 * 24 * 7 // 1 week in number of seconds
@@ -86,7 +67,6 @@ app.use(function (req, res, next) {
 });
 
 app.post("/api/signup/", checkUsername, function (req, res, next) {
-    // extract data from HTTP request
     if (!("username" in req.body))
         return res.status(400).end("username is missing");
     if (!("password" in req.body))
@@ -117,35 +97,27 @@ app.post('/api/signin/', checkUsername, function (req, res, next) {
     let username = req.body.username;
     let password = req.body.password;
     // retrieve user from the database
-    login(username, password)
+    User.findOne({ username: username })
         .then(user => {
-            req.session.user = user.username;
-            res.setHeader('Set-Cookie', serialize('username', user.username, {
-                path: '/',
-                maxAge: 60 * 60 * 24 * 7, // 1 week in number of seconds
-                // secure: true,
-                // sameSite: true
-            }));
-            return res.json(user);
+            if (!user)
+                return res.status(401).end("access denied");
+            compare(password, user.hash, function (err, valid) {
+                if (err) return res.status(500).end(err);
+                if (!valid) return res.status(401).end("access denied");
+                // start a session
+                req.session.user = user;
+                res.setHeader('Set-Cookie', serialize('username', user.username, {
+                    path: '/',
+                    maxAge: 60 * 60 * 24 * 7, // 1 week in number of seconds
+                    // secure: true,
+                    // sameSite: true
+                }));
+                return res.json({ username: user.username });
+            });
         })
-        .catch(err => res.status(500).end(err));
-    // users.findOne({ _id: username }, function (err, user) {
-    //     if (err) return res.status(500).end(err);
-    //     if (!user) return res.status(401).end("access denied");
-    //     compare(password, user.hash, function (err, valid) {
-    //         if (err) return res.status(500).end(err);
-    //         if (!valid) return res.status(401).end("access denied");
-    //         // start a session
-    //         req.session.user = user;
-    //         res.setHeader('Set-Cookie', serialize('username', user._id, {
-    //             path: '/',
-    //             maxAge: 60 * 60 * 24 * 7, // 1 week in number of seconds
-    //             // secure: true,
-    //             // sameSite: true
-    //         }));
-    //         return res.json(username);
-    //     });
-    // });
+        .catch(err => {
+            return res.status(500).end(err);
+        });
 });
 
 app.get('/api/signout/', function (req, res, next) {
@@ -174,30 +146,27 @@ app.get('/api/company_profile/:symbol/', async function (req, res, next) {   //g
     const url = `${base_path}/stock/profile2?symbol=${req.params.symbol}&token=cl71pi9r01qvnckae940cl71pi9r01qvnckae94g`
     const data = await fetch(url);
     if (!data.ok) {
-        const message = `An error has occured: ${response.status}`;
-        throw new Error(message);
+        return res.status(500).end(await data.text());
     }
-    res.json(await data.json());
+    return res.json(await data.json());
 });
 
 app.get('/api/price/:symbol/', async function (req, res, next) {   //gonna implement caching for this later
     const url = `${base_path}/quote?symbol=${req.params.symbol}&token=cl71pi9r01qvnckae940cl71pi9r01qvnckae94g`
     const data = await fetch(url);
     if (!data.ok) {
-        const message = `An error has occured: ${response.status}`;
-        throw new Error(message);
+        return res.status(500).end(await data.text());
     }
-    res.json(await data.json());
+    return res.json(await data.json());
 });
 
 app.get('/api/candle/:symbol/:resolution/:from/:to/', async function (req, res, next) {   //gonna implement caching for this later
     const url = `${base_path}/stock/candle?symbol=${req.params.symbol}&resolution=${req.params.resolution}&from=${req.params.from}&to=${req.params.to}&token=cl71pi9r01qvnckae940cl71pi9r01qvnckae94g`
     const data = await fetch(url);
     if (!data.ok) {
-        const message = `An error has occured: ${response.status}`;
-        throw new Error(message);
+        return res.status(500).end(await data.text());
     }
-    res.json(await data.json());
+    return res.json(await data.json());
 });
 
 const server = createServer(app).listen(PORT, function (err) {
