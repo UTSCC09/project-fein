@@ -3,16 +3,19 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { Cog6ToothIcon } from '@heroicons/react/24/outline'
+import { useRouter } from "next/navigation"
 
-import { signout } from '../../../api/api.mjs'
+//import { signout } from '../../../api/api.mjs'
 
 import Link from 'next/link';
 
 import './Navbar.css';
 
-export function BasicMenu() {
+export function BasicMenu(props) {
+  const { signout } = props;
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  //const router = useRouter();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -22,9 +25,9 @@ export function BasicMenu() {
     setAnchorEl(null);
   };
 
-  const handleLogout = () => {
-    signout();
+  const handleLogout = async () => {
     setAnchorEl(null);
+    signout();
   }
 
 
@@ -38,7 +41,7 @@ export function BasicMenu() {
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
       >
-        <Cog6ToothIcon className="navbar_icon"/>
+        <Cog6ToothIcon className="navbar_icon" />
 
       </Button>
       <Menu
