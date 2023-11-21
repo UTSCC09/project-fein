@@ -19,6 +19,7 @@
     "express-session": "^1.17.3",
     "mongoose": "^8.0.0",
     "nodemon": "^3.0.1",
+    "socket.io": "^4.7.2",
     "validator": "^13.11.0"
   }
 }
