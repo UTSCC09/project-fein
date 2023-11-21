@@ -1,10 +1,10 @@
 .profile_page {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100%;
 }
 .profile_page_dark {
-    height: 100vh;
+    height: 100%;
     display: flex;
     flex-direction: column;
     background-color: #1e1f1e;
@@ -33,8 +33,22 @@
 .trade_information {
     display: flex;
     flex-direction: column;
+    width: 40%;
     margin-left: 10%;
-    margin-right: 10%;
+
+    margin-bottom: 20px;
+    border: none;
+    background-color: #383838;
+    padding: 30px;
+    border-radius: 40px;
+}
+
+.trade_information_subtitle {
+    font-size: 24px;
+    font-weight: 600;
+    justify-self: center;
+    margin-bottom: 20px;
+    width: 200px;
 }
 
 .banner_image {
