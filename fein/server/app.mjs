@@ -22,6 +22,51 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 const base_path = "https://finnhub.io/api/v1"
 
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Credentials", true);
+    res.header("Access-Control-Allow-Origin", process.env.FRONTEND);
+    res.header("Access-Control-Allow-Headers", "Content-Type");
+    res.header("Access-Control-Allow-Methods", "*");
+    next();
+});
+
+app.use(
+    session({
+        secret: "Yarrggghh",
+        resave: false,
+        saveUninitialized: true,
+        cookie: {
+            httpOnly: true, // prevent the session cookie from being read by Javascript onn the browser
+            secure: false,
+            samesite: 'none'
+        }
+    })
+);
+
+app.use(function (req, res, next) {
+    console.log(req.session.user);
+    const username = (req.session.user) ? req.session.user.username : '';
+    res.setHeader('Set-Cookie', serialize('username', username, {
+        path: '/',
+        maxAge: 60 * 60 * 24 * 7, // 1 week in number of seconds
+        secure: false,
+        samesite: 'none'
+    }));
+    next();
+});
+
+// app.use(function (req, res, next) {
+//     let cookies = parse(req.headers.cookie || "");
+//     req.username = cookies.username ? cookies.username : null;
+//     console.log("HTTP request", req.username, req.method, req.url, req.body);
+//     next();
+// });
+
+app.use(function (req, res, next) {
+    console.log("HTTP request", req.method, req.url, req.body);
+    next();
+});
+
 const checkUsername = function (req, res, next) {
     if (!validator.isAlphanumeric(req.body.username)) return res.status(400).end("Username not alphanumeric");
     next();
@@ -31,40 +76,6 @@ const isAuthenticated = function (req, res, next) {
     if (!req.session.user.username) return res.status(401).end("access denied");
     next();
 };
-
-app.use(
-    session({
-        secret: "Yarrggghh",
-        resave: false,
-        saveUninitialized: true,
-        cookie: {
-            //httpOnly: true, // prevent the session cookie from being read by Javascript onn the browser
-            // secure: false,  // prevent the cookie to be sent with http, should be set to true when https is enabled
-            // samesite: 'strict' // prevent the cookie from being sent with cross-domain requests, should be set to lax when frontend is served on different domain
-        }
-    })
-);
-
-app.use(function (req, res, next) {
-    const username = (req.session.username) ? req.session.username : '';
-    res.setHeader('Set-Cookie', serialize('username', username, {
-        path: '/',
-        maxAge: 60 * 60 * 24 * 7 // 1 week in number of seconds
-    }));
-    next();
-});
-
-app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", process.env.FRONTEND);
-    res.header("Access-Control-Allow-Headers", "Content-Type");
-    res.header("Access-Control-Allow-Methods", "*");
-    next();
-});
-
-app.use(function (req, res, next) {
-    console.log("HTTP request", req.method, req.url, req.body);
-    next();
-});
 
 app.post("/api/signup/", checkUsername, function (req, res, next) {
     if (!("username" in req.body))
@@ -86,7 +97,6 @@ app.post("/api/signup/", checkUsername, function (req, res, next) {
                         })
                         .catch((err) => res.status(500).end(err));
                 });
-
             });
         })
         .catch(err => {
@@ -109,12 +119,15 @@ app.post('/api/signin/', checkUsername, function (req, res, next) {
                 if (err) return res.status(500).end(err);
                 if (!valid) return res.status(401).end("access denied");
                 // start a session
-                req.session.username = username;
+                req.session.user = user;
+                console.log(req.session.user);
                 res.setHeader(
                     'Set-Cookie',
-                    serialize('username', username, {
-                      path: "/",
-                      maxAge: 60 * 60 * 24 * 7,
+                    serialize('username', user.username, {
+                        path: "/",
+                        maxAge: 60 * 60 * 24 * 7,
+                        secure: false,
+                        samesite: 'none'
                     })
                 );
                 return res.json({ username: username });
@@ -130,19 +143,18 @@ app.get('/api/signout/', function (req, res, next) {
     res.setHeader('Set-Cookie', serialize('username', '', {
         path: '/',
         maxAge: 60 * 60 * 24 * 7, // 1 week in number of seconds
-        // secure: true,
-        // sameSite: true
+        secure: false,
+        samesite: 'none'
     }));
-    return res.redirect("/");
-    // return res.json({});
+    //return res.redirect("/");
+    return res.json({});
 });
 
 app.get('/api/supported_stock/', async function (req, res, next) {   //gonna implement caching for this later
     const url = `${base_path}/stock/symbol?exchange=US&token=cl71pi9r01qvnckae940cl71pi9r01qvnckae94g`
     const data = await fetch(url);
     if (!data.ok) {
-        const message = `An error has occured: ${response.status}`;
-        throw new Error(message);
+        return res.status(500).end(await data.text());
     }
     res.json(await data.json());
 });

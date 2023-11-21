@@ -3,6 +3,7 @@ async function send(method, url, data) {
         method: method,
         headers: { "Content-Type": "application/json" },
         body: (data) ? JSON.stringify(data) : null,
+        credentials: "include"
     })
     //console.log(res);
     if (!res.ok) {
