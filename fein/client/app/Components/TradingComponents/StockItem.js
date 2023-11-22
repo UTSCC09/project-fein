@@ -36,7 +36,7 @@ export function StockItem(stock) {
     return (
         
         <Link className={darkMode ? "stock_item_dark": "stock_item"} onClick={() => handleClick()} href={`trading/stock/${stock.symbol}`}>
-            <Image className="w-24" width="20" height="20" src={stockDetails.logo} alt="Stock Image" />
+            <Image className="w-12" width={12} height={12} src={stockDetails.logo} alt="Stock Image" />
             <div className="px-2 mx-8">{stock.symbol}</div>
             <div className="px-2">{stock.currency}</div>
         </Link>
