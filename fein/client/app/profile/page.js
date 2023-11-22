@@ -10,20 +10,27 @@ import { YourInvestments } from "./YourInvestments.js";
 import banner from "../../public/Assets/banner.jpeg";
 import { useThemeContext } from "../Context/ThemeContext.js";
 import { MockStocks } from "../MockData/MockStocks.js";
+import { signout, getUsername } from '../../api/api.mjs'
+
 
 import Image from 'next/image';
 
 
 export default function ProfilePage() {
     const { darkMode } = useThemeContext();
+    const [user, setUser] = useState('');
+    useEffect(() => {
+        const username = getUsername();
+        setUser(username);
+    }, [user])
 
     return (
         <div className={`transition-all ease-in-out ${darkMode ? "profile_page_dark" : "profile_page"}`}>
-            <Navbar />
+            <Navbar user={user} signout={() => signout().then(setUser)} />
             <Image className="banner_image" src={banner} alt="Your Banner"></Image>
             <div className="flex-grow">
                 <div className="flex flex-col">
-                    <h1 className="username_title"> John Doe </h1>
+                    <h1 className="username_title"> {user} </h1>
                     <h1 className="username_description"> Description </h1>
                 </div>
 

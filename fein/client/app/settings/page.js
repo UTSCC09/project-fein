@@ -1,6 +1,6 @@
 'use client'
 
-import React, {useState} from 'react';
+import React, {useState, useEffect } from 'react';
 import './Settings.css';
 import { useThemeContext } from "../Context/ThemeContext.js";
 
@@ -10,7 +10,7 @@ import { ProfileSettings } from "../Components/Settings/ProfileSettings";
 import { AccountSettings } from "../Components/Settings/AccountSettings";
 import { PrivacySettings } from "../Components/Settings/PrivacySettings";
 import { StockSettings } from "../Components/Settings/StockSettings";
-
+import { signout, getUsername } from '../../api/api.mjs'
 
 
 export default function Settings() {
@@ -19,6 +19,12 @@ export default function Settings() {
     const [accountSettings, setAccountSettings] = useState(false);
     const [privacySettings, setPrivacySettings] = useState(false);
     const [stockSettings, setStockSettings] = useState(false);
+
+    const [user, setUser] = useState('');
+    useEffect(() => {
+        const username = getUsername();
+        setUser(username);
+    }, [user])
 
     function changeProfile() {
         setProfileSettings(true);
@@ -51,7 +57,7 @@ export default function Settings() {
 
     return(
         <div>
-            <Navbar />
+            <Navbar user={user} signout={() => signout().then(setUser)} />
             <div className={`${darkMode ? "settings_page_dark" : "settings_page"}`}>
                 <div className={`${darkMode ? "settings_bar_dark" : "settings_bar"}`}>
                     <div>

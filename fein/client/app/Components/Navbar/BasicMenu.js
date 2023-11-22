@@ -15,7 +15,7 @@ export function BasicMenu(props) {
   const { signout } = props;
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  //const router = useRouter();
+  const router = useRouter();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -28,6 +28,7 @@ export function BasicMenu(props) {
   const handleLogout = async () => {
     setAnchorEl(null);
     signout();
+    router.push('/');
   }
 
 
