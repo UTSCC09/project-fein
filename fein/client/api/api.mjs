@@ -45,6 +45,6 @@ export async function companyPrice(symbol) {
     return await send("GET", "/api/price/" + symbol + "/");
 }
 
-export async function companyCandle(symbol, resolution, from, to) {
-    return await send("GET", "/api/candle/" + symbol + "/" + resolution + "/" + from + "/" + to + "/");
+export async function companyCandle(symbol, resolution) {
+    return await send("GET", "/api/candle/" + symbol + "/" + resolution + "/");
 }

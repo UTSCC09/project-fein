@@ -44,7 +44,7 @@ app.use(
 );
 
 app.use(function (req, res, next) {
-    console.log(req.session.user);
+    //console.log(req.session.user);
     const username = (req.session.user) ? req.session.user.username : '';
     res.setHeader('Set-Cookie', serialize('username', username, {
         path: '/',
@@ -120,7 +120,7 @@ app.post('/api/signin/', checkUsername, function (req, res, next) {
                 if (!valid) return res.status(401).end("access denied");
                 // start a session
                 req.session.user = user;
-                console.log(req.session.user);
+                //console.log(req.session.user);
                 res.setHeader(
                     'Set-Cookie',
                     serialize('username', user.username, {
@@ -156,11 +156,12 @@ app.get('/api/supported_stock/', async function (req, res, next) {   //gonna imp
     if (!data.ok) {
         return res.status(500).end(await data.text());
     }
-    res.json(await data.json());
+    return res.json(await data.json());
 });
 
 app.get('/api/company_profile/:symbol/', async function (req, res, next) {   //gonna implement caching for this later
     const url = `${base_path}/stock/profile2?symbol=${req.params.symbol}&token=cl71pi9r01qvnckae940cl71pi9r01qvnckae94g`
+    //const url = `${base_path}`
     const data = await fetch(url);
     if (!data.ok) {
         return res.status(500).end(await data.text());
@@ -177,13 +178,25 @@ app.get('/api/price/:symbol/', async function (req, res, next) {   //gonna imple
     return res.json(await data.json());
 });
 
-app.get('/api/candle/:symbol/:resolution/:from/:to/', async function (req, res, next) {   //gonna implement caching for this later
-    const url = `${base_path}/stock/candle?symbol=${req.params.symbol}&resolution=${req.params.resolution}&from=${req.params.from}&to=${req.params.to}&token=cl71pi9r01qvnckae940cl71pi9r01qvnckae94g`
-    const data = await fetch(url);
-    if (!data.ok) {
-        return res.status(500).end(await data.text());
+app.get('/api/candle/:symbol/:resolution/', async function (req, res, next) {   //gonna implement caching for this later
+    let outputsize;
+    if (req.params.resolution === '1h') {
+        outputsize = '24';
+    } else if (req.params.resolution === '1day') {
+        outputsize = '7';
+    } else if (req.params.resolution === '1week') {
+        outputsize = '4';
+    } else if (req.params.resolution === '1month') {
+        outputsize = '12';
     }
-    return res.json(await data.json());
+    const url = `https://api.twelvedata.com/heikinashicandles?symbol=${req.params.symbol}&interval=${req.params.resolution}&outputsize=${outputsize}&apikey=${process.env.TWELVE_DATA_API_KEY}`
+    const fetched_data = await fetch(url);
+    const data = await fetched_data.json()
+    //console.log(data);
+    if (!data.status === "ok") {
+        return res.status(500).end(data.message);
+    }
+    return res.json(data);
 });
 
 const server = createServer(app).listen(PORT, function (err) {

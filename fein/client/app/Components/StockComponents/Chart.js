@@ -26,36 +26,37 @@ function Chart() {
     const { stockSymbol } = useStockContext();
     const [data, setData] = useState([]);
     const [filter, setFilter] = useState("1W");
-    
+
 
     const formatData = (data) => {
-        if(!data.c) return;
-        return data.c.map((item, index) => {
+        if (!data.values) return;
+        return data.values.reverse().map((item, index) => {
+            console.log(item);
             return {
-                value: item.toFixed(2),
-                date: convertUnixTimestamptoDate(data.t[index]),
+                value: parseFloat(item.heikincloses).toFixed(2),
+                date: item.datetime,
             };
         });
     }
 
     useEffect(() => {
         function getDateRange() {
-            const {days, weeks, months, years} = chartConfig[filter];
+            const { days, weeks, months, years } = chartConfig[filter];
             const endDate = new Date();
             const startDate = createDate(endDate, -days, -weeks, -months, -years);
             const startTimestampUnix = convertDateToUnixTimestamp(startDate);
             const endTimestampUnix = convertDateToUnixTimestamp(endDate);
 
-            return {startTimestampUnix, endTimestampUnix};
+            return { startTimestampUnix, endTimestampUnix };
         };
 
         async function updateChart() {
             try {
-                const {startTimestampUnix, endTimestampUnix} = getDateRange();
+                const { startTimestampUnix, endTimestampUnix } = getDateRange();
                 const resolution = chartConfig[filter].resolution;
-                const result = await companyCandle(stockSymbol, resolution, startTimestampUnix, endTimestampUnix);
+                const result = await companyCandle(stockSymbol, resolution);
                 setData(formatData(result));
-            } catch(error) {
+            } catch (error) {
                 setData({});
                 console.log(error);
             }
@@ -64,13 +65,13 @@ function Chart() {
         updateChart();
 
     }, [stockSymbol, filter]);
-    
-    return(
+
+    return (
         <Card>
             <ul className="flex absolute top-2 right-2 z-40">
                 {Object.keys(chartConfig).map((key) => (
                     <li key={key}>
-                        <ChartFilter text={key} active={filter === key} onClick={() =>  {
+                        <ChartFilter text={key} active={filter === key} onClick={() => {
                             setFilter(key);
                         }} />
                     </li>
@@ -80,22 +81,22 @@ function Chart() {
             <ResponsiveContainer>
                 <AreaChart data={data}>
                     <defs>
-                        <linearGradient id="chartColor" x1="0" y1= "0" x2="0" y2="1">
-                            <stop offset="5%" stopColor={darkMode ? "#00ba00" : "#00a300"} stopOpacity={0.8}/>
-                            <stop offset="95%" stopColor="#029c02" stopOpacity={0}/>
+                        <linearGradient id="chartColor" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%" stopColor={darkMode ? "#00ba00" : "#00a300"} stopOpacity={0.8} />
+                            <stop offset="95%" stopColor="#029c02" stopOpacity={0} />
                         </linearGradient>
                     </defs>
-                    <Area 
-                        type="monotone" 
-                        dataKey="value" 
+                    <Area
+                        type="monotone"
+                        dataKey="value"
                         stroke="#2e2e2e"
                         fillOpacity={1}
                         strokeWidth={0.5}
                         fill="url(#chartColor)"
                     />
                     <Tooltip />
-                    <XAxis dataKey={"date"}/>
-                    <YAxis domain={["dataMin", "dataMax"]}/>
+                    <XAxis dataKey={"date"} />
+                    <YAxis domain={["dataMin", "dataMax"]} />
                 </AreaChart>
             </ResponsiveContainer>
         </Card>
