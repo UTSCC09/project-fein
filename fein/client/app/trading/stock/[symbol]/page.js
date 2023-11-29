@@ -37,7 +37,7 @@ export default function StockPage() {
             <Navbar user={user} signout={() => signout().then(setUser)} />
             <div className="flex">
                 <Dashboard symbol={params.symbol} />
-                <Chat />
+                <Chat/>
             </div>
 
         </div>
