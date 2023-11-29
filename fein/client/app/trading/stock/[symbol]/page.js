@@ -9,11 +9,15 @@ import { useStockContext } from '../../../Context/StockContext.js';
 import { useSearchParams } from 'next/navigation';
 import { useParams } from 'next/navigation';
 import { signout, getUsername } from '../../../../api/api.mjs'
+import { useThemeContext } from '../../../Context/ThemeContext.js';
+
+import Chat from '../../../Components/StockComponents/Chat.js';
 
 export default function StockPage() {
 
     const params = useParams();
     const { stockSymbol, setStockSymbol } = useStockContext();
+    const { darkMode } = useThemeContext();
 
     const [user, setUser] = useState('');
     useEffect(() => {
@@ -29,9 +33,13 @@ export default function StockPage() {
     // }, [stockSymbol]);
 
     return(
-        <div>
+        <div className={darkMode ? "stock_dark" : "stock"}>
             <Navbar user={user} signout={() => signout().then(setUser)} />
-            <Dashboard symbol={params.symbol} />
+            <div className="flex">
+                <Dashboard symbol={params.symbol} />
+                <Chat />
+            </div>
+
         </div>
     );
 }

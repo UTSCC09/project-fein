@@ -3,7 +3,7 @@ import Card from './Card';
 import { useThemeContext } from '../../Context/ThemeContext';
 
 
-const Details = ({ details }) => {
+function Details ({ details }) {
 
     const { darkMode } = useThemeContext();
 

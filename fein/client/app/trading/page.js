@@ -21,10 +21,7 @@ export default function TradingPage() {
     return (
         <div className={darkMode ? "trading_dark" : "trading"}>
             <Navbar user={user} signout={() => signout().then(setUser)} />
-  
             <AllStocks />
-
-            
         </div>
     );
 }

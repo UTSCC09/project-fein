@@ -8,10 +8,13 @@ import { useParams } from 'react-router-dom';
 import SearchBar from '../../Components/Common/SearchBar.js';
 import Dashboard from '../../Components/StockComponents/Dashboard.js';
 import { signout, getUsername } from '../../api/api.mjs'
+import { useThemeContext } from '../../Context/ThemeContext.js';
 
 export default function StockPage() {
 
     const { id } = useParams();
+
+    const { darkMode } = useThemeContext();
 
     const [user, setUser] = useState('');
     useEffect(() => {
@@ -20,7 +23,7 @@ export default function StockPage() {
     }, [user])
 
     return(
-        <div>
+        <div className={darkMode ? "stock_dark" : "stock"}>
             <Navbar user={user} signout={() => signout().then(setUser)} />
             <Dashboard />
         </div>

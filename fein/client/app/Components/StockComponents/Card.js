@@ -1,7 +1,7 @@
 import React from 'react';
 import  { useThemeContext } from '../../Context/ThemeContext';
 
-const Card = ({ children }) => {
+function Card ({ children }) {
     const { darkMode } = useThemeContext();
     return (
         <div className={`w-full h-full rounded-md relative p-8 border-2 bg-gray-300 ${darkMode ? 

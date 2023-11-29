@@ -14,7 +14,7 @@
     padding: 10px;
     border-bottom: 1px solid #afafaf;
     cursor: pointer;
-    transition: all 0.2s ease-in-out;
+
 }
 
 .mock_price {
@@ -24,7 +24,7 @@
     padding: 10px;
     border-bottom: 1px solid #afafaf;
     cursor: pointer;
-    transition: all 0.2s ease-in-out;
+
 }
 
 .trading_dark {

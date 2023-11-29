@@ -1,0 +1,15 @@
+.stock_dark {
+    height: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #1e1f1e;
+    color: white;
+}
+
+.stock {
+    min-height: 100vh;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
