@@ -14,7 +14,7 @@ import { useThemeContext } from '../../../Context/ThemeContext.js';
 import Chat from '../../../Components/StockComponents/Chat.js';
 
 export default function StockPage() {
-
+    const [message, setMessage] = useState({});
     const params = useParams();
     const { stockSymbol, setStockSymbol } = useStockContext();
     const { darkMode } = useThemeContext();
@@ -32,14 +32,18 @@ export default function StockPage() {
     //     updateStock();
     // }, [stockSymbol]);
 
-    return(
+    return (
         <div className={darkMode ? "stock_dark" : "stock"}>
             <Navbar user={user} signout={() => signout().then(setUser)} />
             <div className="flex">
-                <Dashboard symbol={params.symbol} />
+                <Dashboard symbol={params.symbol} setMessage={setMessage} />
                 <Chat />
             </div>
-
+            {message.err ? (
+                <div className={darkMode ? "error_box_dark" : "error_box"}>
+                    {message.message}
+                </div>
+            ) : (<></>)}
         </div>
     );
 }
