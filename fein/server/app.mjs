@@ -8,7 +8,7 @@ import { parse, serialize } from "cookie";
 import { genSalt, hash, compare } from "bcrypt";
 import validator from "validator";
 import User from "./models/user.mjs";
-
+import { Server } from 'socket.io';
 
 const PORT = 4000;
 const app = express();
@@ -203,3 +203,26 @@ const server = createServer(app).listen(PORT, function (err) {
     if (err) console.log(err);
     else console.log("HTTP server on http://localhost:%s", PORT);
 });
+
+const ioHandler = (req, res) => {
+    if(!res.socket.server.io) {
+      console.log("ioHandler started")
+      const io = new Server(res.socket.server);
+    
+      io.on('connection', (socket) => {
+        console.log(`Socket ${socket.id} connected`); 
+    
+        socket.on('message', (message) => {
+          io.emit('message', message);
+        });
+    
+        socket.on('disconnect', () => {
+          console.log(`Socket ${socket.id} disconnected`);
+        });
+      });
+      res.socket.server.io = io;
+    }
+    res.end();
+  };
+  
+  export default ioHandler;
