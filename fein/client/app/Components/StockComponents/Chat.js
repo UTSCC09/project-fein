@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'next/navigation';
 import io from 'socket.io-client';
 import { getUsername } from '../../../api/api.mjs'
@@ -10,8 +10,16 @@ export default function Chat() {
     const params = useParams();
     const userName = getUsername();
     const roomId = params.symbol;
+    const scrollableDiv = useRef(null);
 
     var socket = io.connect('http://localhost:3001');
+
+    const scrollToBottom = () => {
+        if(scrollableDiv.current) {
+            const { scrollHeight, clientHeight } = scrollableDiv.current;
+            scrollableDiv.current.scrollTop = scrollHeight - clientHeight;
+        }
+    };
 
     useEffect(() => {
         const handleJoin = () => {
@@ -43,6 +51,7 @@ export default function Chat() {
         socket.on('receive-message', (message) => {
             setChat((prevChat) => [...prevChat, message]);
         });
+        scrollToBottom();
     }, [socket]);
 
     return (
@@ -50,14 +59,14 @@ export default function Chat() {
             <div className="justify-self-center self-center rounded-3xl px-4 py-6 bg-navbar max-h-2/3 w-full flex flex-col">
                 <h1 className="py-4 px-8 text-white justify-self-center self-center">{params.symbol + " "}Chat</h1>
                 <div className="">
-                    <div className=" bg-gray-300 text-black flex flex-col h-80 max-h-96 overflow-y-scroll">
-                        <div className="flex flex-col">
-                            {chat.map(( {roomID, user, message }, index) => (
-                                <div key={index}>
-                                    <p>{user + ": " + message}</p>
-                                </div>
-                            ))}
-                        </div>
+                    <div ref={scrollableDiv} className=" bg-gray-300 text-black flex flex-col h-80 max-h-96 overflow-y-scroll">
+
+                        {chat.map(( {roomID, user, message }, index) => (
+                            <div key={index}>
+                                <p>{user + ": " + message}</p>
+                            </div>
+                        ))}
+
                     </div>
 
                     <form className="flex" onSubmit={(e) => sendData(e)}>
