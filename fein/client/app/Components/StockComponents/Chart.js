@@ -73,7 +73,7 @@ function Chart(props) {
         <Card>
             {data.length != 0 ? (
                 <>
-                    <ul className="flex absolute top-2 right-2 z-40">
+                    <ul className="flex absolute top-2 right-8 z-40">
                         {Object.keys(chartConfig).map((key) => (
                             <li key={key}>
                                 <ChartFilter text={key} active={filter === key} onClick={() => {
