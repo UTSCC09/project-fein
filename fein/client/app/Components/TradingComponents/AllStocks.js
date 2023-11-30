@@ -4,7 +4,7 @@ import React, { useState, useEffect, useContext } from "react";
 import './AllStocks.css';
 
 import { StockItem } from "./StockItem";
-import  { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 import { MockStocks } from '../../MockData/MockStocks'
 import SearchBar from "../Common/SearchBar";
 import { useThemeContext } from "../../Context/ThemeContext";
@@ -13,43 +13,44 @@ import { Suspense } from "react";
 
 import { supportedStocks } from '../../../api/api.mjs';
 
-export function AllStocks() {
-
+export function AllStocks(props) {
+    const { setMessage } = props;
     const [results, setResults] = useState([]);
 
     useEffect(() => {
         const updateResults = async () => {
-            try {
-                const data = await supportedStocks();
+            const data = await supportedStocks();
+            //console.log(data);
+            if (Array.isArray(data)) {
                 setResults(data);
-    
-            } catch(error) {
+                setMessage({ err: false })
+            } else {
                 setResults([]);
-                console.log(error);
+                setMessage({ err: true, message: data })
             }
         };
         updateResults();
     }, []);
 
     let displayStocks = [];
-    if(results) { 
+    if (results) {
         displayStocks = results.slice(0, 10);
     }
-    
+
     const { darkMode } = useThemeContext();
     return (
         <div className={darkMode ? "all_stocks_dark" : "all_stocks"}>
             <div className="flex flex-row">
                 <h1 className={darkMode ? "all_stocks_header_dark" : "all_stocks_header"}>All Stocks</h1>
                 <div className="flex px-4 py-2 w-full justify-start text">
-            </div>
+                </div>
             </div>
             <h2 className={darkMode ? "all_stocks_subheader_dark" : "all_stocks_subheader"}>Top 10 Stocks</h2>
 
             <div>
-                    {displayStocks?.map((stock) => (
-                        <StockItem {...stock} key={stock.symbol}/>
-                    ))}
+                {displayStocks?.map((stock) => (
+                    <StockItem stock={stock} key={stock.symbol} setMessage={setMessage} />
+                ))}
             </div>
 
 

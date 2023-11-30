@@ -11,17 +11,24 @@ import { signout, getUsername } from '../../api/api.mjs'
 
 export default function TradingPage() {
     const { darkMode } = useThemeContext();
-
+    const [message, setMessage] = useState({});
     const [user, setUser] = useState('');
+
+
     useEffect(() => {
         const username = getUsername();
         setUser(username);
-    }, [user])
+    }, [user]);
 
     return (
         <div className={darkMode ? "trading_dark" : "trading"}>
             <Navbar user={user} signout={() => signout().then(setUser)} />
-            <AllStocks />
+            <AllStocks setMessage={setMessage} />
+            {message.err ? (
+                <div className={darkMode ? "error_box_dark" : "error_box"}>
+                    {message.message}
+                </div>
+            ) : (<></>)}
         </div>
     );
 }
