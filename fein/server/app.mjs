@@ -9,6 +9,7 @@ import { genSalt, hash, compare } from "bcrypt";
 import validator from "validator";
 import User from "./models/user.mjs";
 import { Server } from 'socket.io';
+import http from 'http';
 
 const PORT = 4000;
 const app = express();
@@ -204,25 +205,36 @@ const server = createServer(app).listen(PORT, function (err) {
     else console.log("HTTP server on http://localhost:%s", PORT);
 });
 
-const ioHandler = (req, res) => {
-    if(!res.socket.server.io) {
-      console.log("ioHandler started")
-      const io = new Server(res.socket.server);
-    
-      io.on('connection', (socket) => {
-        console.log(`Socket ${socket.id} connected`); 
-    
-        socket.on('message', (message) => {
-          io.emit('message', message);
-        });
-    
-        socket.on('disconnect', () => {
-          console.log(`Socket ${socket.id} disconnected`);
-        });
-      });
-      res.socket.server.io = io;
+// Socket.io stuff
+
+
+const httpServer = http.createServer(app);
+const io = new Server(httpServer, {
+    cors: {
+      origin: "*",
+      methods: ["GET", "POST"]
     }
-    res.end();
-  };
-  
-  export default ioHandler;
+  });
+
+
+io.on('connection', (socket) => {
+    console.log(`Socket ${socket.id} connected`); 
+
+    socket.on('join-room', (room) => {
+        console.log(`user with id-${socket.id} joined room - ${roomId}`)
+        socket.join(roomId);
+    });
+
+    socket.on('send-message', (message) => {
+        socket.to(message.roomId).emit('receive-message', message);
+    });
+
+    socket.on('disconnect', () => {
+        console.log(`Socket ${socket.id} disconnected`);
+    });
+});
+const PORT2 = 3001;
+httpServer.listen(PORT2, () => {
+  console.log(`Socket.io server is running on port ${PORT2}`);
+});
+
