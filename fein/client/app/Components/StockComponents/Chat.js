@@ -9,6 +9,7 @@ import { getUsername } from '../../../api/api.mjs'
 export default function Chat() {
     const params = useParams();
     const userName = getUsername();
+    const roomId = params.symbol;
 
     var socket = io.connect('http://localhost:3001');
 
@@ -16,7 +17,7 @@ export default function Chat() {
         const handleJoin = () => {
             if (userName !== "" && roomId !== "") {
                 console.log(userName, "userName", roomId, "roomId");
-                socket.emit("join_room", roomId);
+                socket.emit("join-room", roomId);
             } 
         }
         handleJoin();
@@ -50,10 +51,10 @@ export default function Chat() {
                 <h1 className="py-4 px-8 text-white justify-self-center self-center">{params.symbol + " "}Chat</h1>
                 <div className="">
                     <div className=" bg-gray-300 text-black flex flex-col h-80 max-h-96 overflow-y-scroll">
-                        <div className="flex">
-                            {chat.map(( {roomID, userName, message }, index) => (
-                                <div>
-                                    <p key={index}>{userName + ": " + message}</p>
+                        <div className="flex flex-col">
+                            {chat.map(( {roomID, user, message }, index) => (
+                                <div key={index}>
+                                    <p>{user + ": " + message}</p>
                                 </div>
                             ))}
                         </div>

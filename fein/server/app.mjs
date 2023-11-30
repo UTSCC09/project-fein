@@ -220,13 +220,13 @@ const io = new Server(httpServer, {
 io.on('connection', (socket) => {
     console.log(`Socket ${socket.id} connected`); 
 
-    socket.on('join-room', (room) => {
+    socket.on('join-room', (roomId) => {
         console.log(`user with id-${socket.id} joined room - ${roomId}`)
         socket.join(roomId);
     });
 
     socket.on('send-message', (message) => {
-        socket.to(message.roomId).emit('receive-message', message);
+        socket.to(message.roomID).emit('receive-message', message);
     });
 
     socket.on('disconnect', () => {
