@@ -27,7 +27,7 @@ app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Credentials", true);
     res.header("Access-Control-Allow-Origin", process.env.FRONTEND);
     res.header("Access-Control-Allow-Headers", "Content-Type");
-    res.header("Access-Control-Allow-Methods", "*");
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
     next();
 });
 
@@ -91,9 +91,9 @@ app.post("/api/signup/", checkUsername, function (req, res, next) {
                 return res.status(409).end("username " + username + " already exists");
             genSalt(10, function (err, salt) {
                 hash(password, salt, function (err, hash) {
-                    User.findOneAndUpdate({ username: username }, { username: username, hash: hash, fein_bucks: 3000 }, { upsert: true })
+                    User.findOneAndUpdate({ username: username }, { username: username, hash: hash, fein_bucks: -1 }, { upsert: true })
                         .then(() => {
-                            req.session.username = username;
+                            //req.session.username = username;
                             res.json({ username: username });
                         })
                         .catch((err) => res.status(500).end(err));
@@ -151,7 +151,7 @@ app.get('/api/signout/', function (req, res, next) {
     return res.json({});
 });
 
-app.get('/api/supported_stock/', async function (req, res, next) {   //gonna implement caching for this later
+app.get('/api/supported_stock/', isAuthenticated, async function (req, res, next) {   //gonna implement caching for this later
     const url = `${base_path}/stock/symbol?exchange=US&token=cl71pi9r01qvnckae940cl71pi9r01qvnckae94g`
     const data = await fetch(url);
     if (!data.ok) {
@@ -160,7 +160,7 @@ app.get('/api/supported_stock/', async function (req, res, next) {   //gonna imp
     return res.json(await data.json());
 });
 
-app.get('/api/company_profile/:symbol/', async function (req, res, next) {   //gonna implement caching for this later
+app.get('/api/company_profile/:symbol/', isAuthenticated, async function (req, res, next) {   //gonna implement caching for this later
     const url = `${base_path}/stock/profile2?symbol=${req.params.symbol}&token=cl71pi9r01qvnckae940cl71pi9r01qvnckae94g`
     //const url = `${base_path}`
     const data = await fetch(url);
@@ -170,7 +170,7 @@ app.get('/api/company_profile/:symbol/', async function (req, res, next) {   //g
     return res.json(await data.json());
 });
 
-app.get('/api/price/:symbol/', async function (req, res, next) {   //gonna implement caching for this later
+app.get('/api/price/:symbol/', isAuthenticated, async function (req, res, next) {   //gonna implement caching for this later
     const url = `${base_path}/quote?symbol=${req.params.symbol}&token=cl71pi9r01qvnckae940cl71pi9r01qvnckae94g`
     const data = await fetch(url);
     if (!data.ok) {
@@ -179,8 +179,8 @@ app.get('/api/price/:symbol/', async function (req, res, next) {   //gonna imple
     return res.json(await data.json());
 });
 
-app.get('/api/candle/:symbol/:resolution/', async function (req, res, next) {   //gonna implement caching for this later
-    let outputsize;
+app.get('/api/candle/:symbol/:resolution/', isAuthenticated, async function (req, res, next) {   //gonna implement caching for this later
+    let outputsize = '-1';
     if (req.params.resolution === '1h') {
         outputsize = '24';
     } else if (req.params.resolution === '1day') {
@@ -200,6 +200,38 @@ app.get('/api/candle/:symbol/:resolution/', async function (req, res, next) {   
     return res.json(data);
 });
 
+app.get('/api/fein_bucks/:username/', isAuthenticated, async function (req, res, next) {
+    const username = req.params.username;
+    User.findOne({ username: username })
+        .then(user => {
+            if (!user)
+                return res.status(401).end("username does not exist")
+            if (username !== req.session.user.username)
+                return res.status(403).end("forbidden");
+            console.log(user.fein_bucks);
+            return res.json({ fein_bucks: user.fein_bucks })
+        })
+        .catch(err => {
+            return res.status(500).end(err);
+        });
+});
+
+app.patch('/api/add_bucks/', isAuthenticated, async function (req, res, next) {
+    if (!('username' in req.body)) return res.status(400).end('username is missing');
+    if (!('add_amount' in req.body)) return res.status(400).end('add_amount is missing');
+    const username = req.body.username;
+    const add_amount = req.body.add_amount;
+    if (username !== req.session.user.username) return res.status(403).end("forbidden");
+    User.findOneAndUpdate({ username: username }, { $inc: { fein_bucks: add_amount } }, { new: true })
+        .then(updatedDoc => {
+            if (!updatedDoc) return res.status(401).end("no user with that username found");
+            return res.json({ usernaem: updatedDoc.username, fein_bucks: updatedDoc.fein_bucks })
+        })
+        .catch(err => {
+            return res.status(500).end(err);
+        })
+});
+
 const server = createServer(app).listen(PORT, function (err) {
     if (err) console.log(err);
     else console.log("HTTP server on http://localhost:%s", PORT);
@@ -211,14 +243,14 @@ const server = createServer(app).listen(PORT, function (err) {
 const httpServer = http.createServer(app);
 const io = new Server(httpServer, {
     cors: {
-      origin: "*",
-      methods: ["GET", "POST"]
+        origin: "*",
+        methods: ["GET", "POST"]
     }
-  });
+});
 
 
 io.on('connection', (socket) => {
-    console.log(`Socket ${socket.id} connected`); 
+    console.log(`Socket ${socket.id} connected`);
 
     socket.on('join-room', (roomId) => {
         console.log(`user with id-${socket.id} joined room - ${roomId}`)
@@ -235,6 +267,6 @@ io.on('connection', (socket) => {
 });
 const PORT2 = 3001;
 httpServer.listen(PORT2, () => {
-  console.log(`Socket.io server is running on port ${PORT2}`);
+    console.log(`Socket.io server is running on port ${PORT2}`);
 });
 

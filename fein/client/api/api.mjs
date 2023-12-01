@@ -48,3 +48,12 @@ export async function companyPrice(symbol) {
 export async function companyCandle(symbol, resolution) {
     return await send("GET", "/api/candle/" + symbol + "/" + resolution + "/");
 }
+
+export async function getFeinBucks(username) {
+    return await send("GET", "/api/fein_bucks/" + username + "/");
+}
+
+export async function addFunds(username, add_amount) {
+    return await send("PATCH", "/api/add_bucks/", { username: username, add_amount: add_amount });
+
+}

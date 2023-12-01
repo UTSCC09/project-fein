@@ -27,7 +27,7 @@ export function BasicMenu(props) {
 
   const handleLogout = async () => {
     setAnchorEl(null);
-    signout();
+    await signout();
     router.push('/');
   }
 
