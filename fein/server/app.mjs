@@ -259,6 +259,7 @@ io.on('connection', (socket) => {
 
     socket.on('send-message', (message) => {
         socket.to(message.roomID).emit('receive-message', message);
+        console.log(message);
     });
 
     socket.on('disconnect', () => {

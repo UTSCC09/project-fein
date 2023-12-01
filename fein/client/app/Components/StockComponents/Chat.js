@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, use } from 'react';
 import { useParams } from 'next/navigation';
 import io from 'socket.io-client';
 import { getUsername } from '../../../api/api.mjs'
@@ -47,23 +47,36 @@ export default function Chat() {
         }
     };
 
-    useEffect(() =>  {
-        socket.on('receive-message', (message) => {
+    useEffect(() => {
+        const handleReceiveMessage = (message) => {
             setChat((prevChat) => [...prevChat, message]);
-        });
+            scrollToBottom(); // Move scrollToBottom here
+        };
+        socket.on('receive-message', handleReceiveMessage);
+        return function cleanup() {
+            socket.off("receive-message", handleReceiveMessage);
+        };
+    }, []);
+
+    useEffect(() => {
         scrollToBottom();
-    }, [socket]);
+    }, [chat]);
 
     return (
         <div className="mr-20 w-1/5 h-screen flex">
             <div className="justify-self-center self-center rounded-3xl px-4 py-6 bg-navbar max-h-2/3 w-full flex flex-col">
-                <h1 className="py-4 px-8 text-white justify-self-center self-center">{params.symbol + " "}Chat</h1>
+                <h1 className="py-4 px-8 text-white font-bold text-lg justify-self-center self-center">{params.symbol + " "}Chat</h1>
                 <div className="">
                     <div ref={scrollableDiv} className=" bg-gray-300 text-black flex flex-col h-80 max-h-96 overflow-y-scroll">
 
                         {chat.map(( {roomID, user, message }, index) => (
                             <div key={index}>
-                                <p>{user + ": " + message}</p>
+                                {user === getUsername() ? (
+                                    <p className="text-green-700">{user + "(You): " + message}</p>
+                                ) : (
+                                    <p className="text-black">{user + ": " + message}</p>
+                                )
+                                }
                             </div>
                         ))}
 
@@ -77,7 +90,7 @@ export default function Chat() {
                             value={currentMessage}
                             onChange={(e) => setCurrentMessage(e.target.value)}
                         />
-                        <button className="p-2 bg-gray-300 text-black">Send</button>
+                        <button type="submit" className="p-2 bg-gray-300 text-black">Send</button>
                     </form>
 
                 </div>
