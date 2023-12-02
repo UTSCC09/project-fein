@@ -120,6 +120,34 @@ const setCompanyCandle = async (symbol, resolution, outputsize, callback) => {
     })
 }
 
+const getSearchQuery = (query, callback) => {
+    memcached.get(`query_${query}`, function (err, data) {
+        if (err) return callback(err, null);
+        if (data == null) return callback(null, null);
+        console.log("got query from cache")
+        return callback(null, data)
+    });
+}
+
+const setSearchQuery = async (query, callback) => {
+    const url = `${base_path}/search?q=${query}&token=cl71pi9r01qvnckae940cl71pi9r01qvnckae94g`
+    const data = await fetch(url);
+    if (!data.ok) {
+        return callback(await data.text(), null);
+    }
+    const response = await data.json()
+    getStocks(function (err, data) {
+        if (err) return callback(err, null);
+        response.result = response.result.filter((itemRes) => data.some((itemData) => itemData.symbol === itemRes.symbol));
+        response.count = response.result.length;
+        memcached.set(`query_${query}`, response, 60 * 60 * 24, function (err) {
+            if (err) return callback(err, null)
+            console.log("got query from fetch and stored in cache")
+            return callback(null, response);
+        })
+    })
+}
+
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Credentials", true);
     res.header("Access-Control-Allow-Origin", process.env.FRONTEND);
@@ -249,14 +277,25 @@ app.get('/api/signout/', function (req, res, next) {
 });
 
 app.get('/api/search/:query/', isAuthenticated, async function (req, res, next) {
-    const url = `${base_path}/search?q=${req.params.query}&token=cl71pi9r01qvnckae940cl71pi9r01qvnckae94g`
-    const data = await fetch(url);
-    if (!data.ok) {
-        return res.status(500).end(await data.text());
-    }
-    const x = await data.json();
-    console.log(x);
-    return res.json(x);
+    // const url = `${base_path}/search?q=${req.params.query}&token=cl71pi9r01qvnckae940cl71pi9r01qvnckae94g`
+    // const data = await fetch(url);
+    // if (!data.ok) {
+    //     return res.status(500).end(await data.text());
+    // }
+    // const x = await data.json();
+    // console.log(x);
+    // return res.json(x);
+    getSearchQuery(req.params.query, async function (err, data) {
+        if (err) return res.status(500).end(err);
+        if (data === null) {
+            await setSearchQuery(req.params.query, function (err, data) {
+                if (err) return res.status(500).end(err);
+                return res.json(data);
+            })
+        } else {
+            return res.json(data);
+        }
+    })
 });
 
 app.get('/api/supported_stock/', isAuthenticated, async function (req, res, next) {
