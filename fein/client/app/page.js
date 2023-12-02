@@ -55,7 +55,7 @@ export default function HomePage() {
                         <h1 className={darkMode ? "title_dark" : "title"}> Welcome to </h1>
                         <h1 className="title_2">FEIN</h1>
                     </div>
-                    <Hero />
+                    <Hero user={user}/>
                     <div className="flex flex-row mt-12">
                         <TopStocks />
                         <Summary />
