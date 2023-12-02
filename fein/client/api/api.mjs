@@ -57,3 +57,19 @@ export async function addFunds(username, add_amount) {
     return await send("PATCH", "/api/add_bucks/", { username: username, add_amount: add_amount });
 
 }
+
+export async function changePrivacy(username, privacy) {
+    return await send("PATCH", "/api/change_privacy/", { username: username, privacy: privacy });
+}
+
+export async function getPrivacy(username) {
+    return await send("GET", "/api/get_privacy/" + username + "/");
+}
+
+export async function changeUsername(username, new_username) {
+    return await send("PATCH", "/api/change_username/", { username: username, new_username: new_username });
+}
+
+export async function changePassword(username, new_password) {
+    return await send("PATCH", "/api/change_password/", { username: username, new_password: new_password });
+}
