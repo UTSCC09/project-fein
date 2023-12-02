@@ -33,6 +33,10 @@ export async function signout() {
 
 }
 
+export async function searchStocks(query) {
+    return await send("GET", "/api/search/" + query + "/");
+}
+
 export async function supportedStocks() {
     return await send("GET", "/api/supported_stock/");
 }

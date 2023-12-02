@@ -5,7 +5,7 @@ import './SearchBar.css'
 import { MockStocks } from '../../MockData/MockStocks'
 import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import SearchResults from './SearchResults';
-import { supportedStocks } from '../../../api/api.mjs';
+import { searchStocks } from '../../../api/api.mjs';
 
 const SearchBar = (nav) => {
     const [input, setInput] = useState('');
@@ -15,11 +15,18 @@ const SearchBar = (nav) => {
         setInput('');
         setResults([]);
     };
+
+    const sendSearch = async (e) => {
+        updateResults();
+    }
+
     const updateResults = async () => {
         try {
             if(input) {
                 console.log("input: " + input);
-                const searchResults = await supportedStocks(input);
+                const searchResults = await searchStocks(input);
+                console.log("searchResults: " + searchResults);
+                
                 const result = searchResults.result;
                 setResults(result);
             }
@@ -35,7 +42,12 @@ const SearchBar = (nav) => {
                 type="text" value={input} 
                 className="search_bar"
                 placeholder='Search for a stock...'
-                onChange={(event) => setInput(event.target.value)}
+                onChange={(event) => {setInput(event.target.value)}}
+                onKeyDown={(event) => {
+                    if(event.key === 'Enter') {
+                        updateResults()}
+                    }
+                }
             />
             <button
                 onClick={updateResults}
@@ -48,7 +60,7 @@ const SearchBar = (nav) => {
                     )
                 }
             </button>
-            {input && results.length > 0 ?  <SearchResults results={results}/> : null}
+            {input && results && results.length > 0 ?  <SearchResults results={results}/> : null}
         </>
     );
 }

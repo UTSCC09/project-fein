@@ -248,6 +248,17 @@ app.get('/api/signout/', function (req, res, next) {
     return res.json({});
 });
 
+app.get('/api/search/:query/', isAuthenticated, async function (req, res, next) {
+    const url = `${base_path}/search?q=${req.params.query}&token=cl71pi9r01qvnckae940cl71pi9r01qvnckae94g`
+    const data = await fetch(url);
+    if (!data.ok) {
+        return res.status(500).end(await data.text());
+    }
+    const x = await data.json();
+    console.log(x);
+    return res.json(x);
+});
+
 app.get('/api/supported_stock/', isAuthenticated, async function (req, res, next) {
     // const url = `${base_path}/stock/symbol?exchange=US&token=cl71pi9r01qvnckae940cl71pi9r01qvnckae94g`
     // const data = await fetch(url);
