@@ -24,6 +24,17 @@ export default function ProfilePage() {
         setUser(username);
     }, [user])
 
+    if(!user) {
+        return (
+            <div className={`transition-all ease-in-out ${darkMode ? "profile_page_dark" : "profile_page"}`}>
+                <Navbar user={user} signout={() => signout().then(setUser)} />
+                <div className="flex flex-row justify-center">
+                    <h1 className={`${darkMode ? "text-black" : "text-black"} font-bold text-xl absolute top-64`}>Please sign in or sign up to view this page.</h1>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className={`transition-all ease-in-out ${darkMode ? "profile_page_dark" : "profile_page"}`}>
             <Navbar user={user} signout={() => signout().then(setUser)} />

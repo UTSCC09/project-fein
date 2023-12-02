@@ -35,15 +35,23 @@ export default function StockPage() {
     return (
         <div className={darkMode ? "stock_dark" : "stock"}>
             <Navbar user={user} signout={() => signout().then(setUser)} />
-            <div className="flex">
-                <Dashboard symbol={params.symbol} setMessage={setMessage} />
-                <Chat />
-            </div>
-            {message.err ? (
-                <div className={darkMode ? "error_box_dark" : "error_box"}>
-                    {message.message}
+            {!user ? (
+                <div className="flex flex-row justify-center">
+                    <h1 className={`${darkMode ? "text-white" : "text-black"} font-bold text-xl absolute top-64`}>Please sign in or sign up to view this page.</h1>
                 </div>
-            ) : (<></>)}
+            ) : (<div>
+                    <div className="flex">
+                        <Dashboard symbol={params.symbol} setMessage={setMessage} />
+                        <Chat />
+                    </div>
+                    {message.err ? (
+                        <div className={darkMode ? "error_box_dark" : "error_box"}>
+                            {message.message}
+                        </div>
+                    ) : (<></>)}
+                </div>
+            )}
+
         </div>
     );
 }

@@ -54,6 +54,20 @@ export default function Settings() {
         setStockSettings(true);
     }
 
+    if(!user) {
+        return (
+            <div>
+                <Navbar user={user} signout={() => signout().then(setUser)} />
+                <div className={`${darkMode ? "settings_page_dark" : "settings_page"} justify-center `}>
+                    <div className="flex flex-row justify-center absolute top-64">
+                        <h1 className={`${darkMode ? "text-white" : "text-black"} font-bold text-xl`}>Please sign in or sign up to view this page.</h1>
+                    </div>
+                </div>
+            </div>
+
+        );
+    }
+
 
     return(
         <div>
