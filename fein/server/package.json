@@ -4,8 +4,8 @@
   "description": "",
   "main": "app.mjs",
   "scripts": {
-    "prod": "env-cmd node app.mjs",
-    "dev": "env-cmd nodemon app.mjs",
+    "prod": "env-cmd node index.mjs",
+    "dev": "env-cmd nodemon index.mjs",
     "test": "npx mocha"
   },
   "author": "",
