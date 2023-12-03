@@ -6,14 +6,14 @@ export const ThemeContext = createContext();
 
 export default function ThemeContextProvider({children}) {
     const [darkMode, setDarkMode] = useState(true);
-    useEffect(() => {
-        setDarkMode(localStorage.getItem('darkMode') === 'true' ? true : false);
-    }, []);
+    // useEffect(() => {
+    //     setDarkMode(localStorage.getItem('darkMode') === 'true' ? true : false);
+    // }, []);
 
 
-    useEffect(() => { 
-        localStorage.setItem('darkMode', darkMode);
-    }, [darkMode]);
+    // useEffect(() => { 
+    //     localStorage.setItem('darkMode', darkMode);
+    // }, [darkMode]);
 
     const toggleDarkMode = () => {
         setDarkMode(!darkMode);
