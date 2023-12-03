@@ -2,7 +2,7 @@ FROM --platform=linux/amd64 node:lts-slim as build
 
 RUN mkdir -p /app
 WORKDIR /app
-COPY .server /app
+COPY ./server /app
 RUN npm install
 
 FROM --platform=linux/amd64 node:lts-slim as main

@@ -3,7 +3,7 @@ FROM --platform=linux/amd64 node:lts-slim as build
 RUN mkdir -p /app
 WORKDIR /app
 
-COPY .client /app
+COPY ./client /app
 RUN npm install
 RUN npm run build
 
