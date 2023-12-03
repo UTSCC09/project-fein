@@ -3,7 +3,7 @@
 import "./SignUpPage.css"
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { toast, ToastContainer } from "react-toastify"
+import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 
 import { addUser } from '../../api/api.mjs'
