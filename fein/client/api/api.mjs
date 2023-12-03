@@ -62,6 +62,11 @@ export async function addFunds(username, add_amount) {
 
 }
 
+export async function buyStock(username, symbol, amount) {
+    return await send("POST", "/api/buy_stock/", { username: username, symbol: symbol, amount: amount });
+
+}
+
 export async function changePrivacy(username, privacy) {
     return await send("PATCH", "/api/change_privacy/", { username: username, privacy: privacy });
 }
