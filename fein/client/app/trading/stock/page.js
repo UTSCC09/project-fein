@@ -25,7 +25,7 @@ export default function StockPage() {
     return(
         <div className={darkMode ? "stock_dark" : "stock"}>
             <Navbar user={user} signout={() => signout().then(setUser)} />
-            <Dashboard />
+            "Stock Page"
         </div>
     );
 }
