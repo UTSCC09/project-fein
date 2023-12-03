@@ -9,6 +9,7 @@ import { genSalt, hash, compare } from "bcrypt";
 import validator from "validator";
 import User from "./models/user.mjs";
 import Stock from "./models/stock.mjs"
+import Position from "./models/position.mjs";
 import { Server } from 'socket.io';
 import http from 'http';
 import Memcached from "memcached";
@@ -170,7 +171,6 @@ app.use(
 );
 
 app.use(function (req, res, next) {
-    //console.log(req.session.user);
     const username = (req.session.user) ? req.session.user.username : '';
     res.setHeader('Set-Cookie', serialize('username', username, {
         path: '/',
@@ -277,14 +277,6 @@ app.get('/api/signout/', function (req, res, next) {
 });
 
 app.get('/api/search/:query/', isAuthenticated, async function (req, res, next) {
-    // const url = `${base_path}/search?q=${req.params.query}&token=cl71pi9r01qvnckae940cl71pi9r01qvnckae94g`
-    // const data = await fetch(url);
-    // if (!data.ok) {
-    //     return res.status(500).end(await data.text());
-    // }
-    // const x = await data.json();
-    // console.log(x);
-    // return res.json(x);
     getSearchQuery(req.params.query, async function (err, data) {
         if (err) return res.status(500).end(err);
         if (data === null) {
@@ -299,14 +291,6 @@ app.get('/api/search/:query/', isAuthenticated, async function (req, res, next) 
 });
 
 app.get('/api/supported_stock/', isAuthenticated, async function (req, res, next) {
-    // const url = `${base_path}/stock/symbol?exchange=US&token=cl71pi9r01qvnckae940cl71pi9r01qvnckae94g`
-    // const data = await fetch(url);
-    // if (!data.ok) {
-    //     return res.status(500).end(await data.text());
-    // }
-    // const x = await data.json();
-    // console.log(x.length);
-    // return res.json(x);
     getStocks(function (err, data) {
         if (err) return res.status(500).end(err);
         //console.log("made it");
@@ -315,13 +299,6 @@ app.get('/api/supported_stock/', isAuthenticated, async function (req, res, next
 });
 
 app.get('/api/company_profile/:symbol/', isAuthenticated, async function (req, res, next) {
-    // const url = `${base_path}/stock/profile2?symbol=${req.params.symbol}&token=cl71pi9r01qvnckae940cl71pi9r01qvnckae94g`
-    // //const url = `${base_path}`
-    // const data = await fetch(url);
-    // if (!data.ok) {
-    //     return res.status(500).end(await data.text());
-    // }
-    // return res.json(await data.json());
     getCompanyProfile(req.params.symbol, async function (err, data) {
         if (err) return res.status(500).end(err);
         if (data === null) {
@@ -336,12 +313,6 @@ app.get('/api/company_profile/:symbol/', isAuthenticated, async function (req, r
 });
 
 app.get('/api/price/:symbol/', isAuthenticated, async function (req, res, next) {
-    // const url = `${base_path}/quote?symbol=${req.params.symbol}&token=cl71pi9r01qvnckae940cl71pi9r01qvnckae94g`
-    // const data = await fetch(url);
-    // if (!data.ok) {
-    //     return res.status(500).end(await data.text());
-    // }
-    // return res.json(await data.json());
     getCompanyPrice(req.params.symbol, async function (err, data) {
         if (err) return res.status(500).end(err);
         if (data === null) {
@@ -366,14 +337,7 @@ app.get('/api/candle/:symbol/:resolution/', isAuthenticated, async function (req
     } else if (req.params.resolution === '1month') {
         outputsize = '12';
     }
-    // const url = `https://api.twelvedata.com/heikinashicandles?symbol=${req.params.symbol}&interval=${req.params.resolution}&outputsize=${outputsize}&apikey=${process.env.TWELVE_DATA_API_KEY}`
-    // const fetched_data = await fetch(url);
-    // const data = await fetched_data.json()
-    // //console.log(data);
-    // if (!data.status === "ok") {
-    //     return res.status(500).end(data.message);
-    // }
-    // return res.json(data);
+
     getCompanyCandle(req.params.symbol, req.params.resolution, outputsize, async function (err, data) {
         if (err) return res.status(500).end(err);
         if (data === null) {
@@ -408,6 +372,7 @@ app.patch('/api/add_bucks/', isAuthenticated, async function (req, res, next) {
     if (!('add_amount' in req.body)) return res.status(400).end('add_amount is missing');
     const username = req.body.username;
     const add_amount = req.body.add_amount;
+    if (isNaN(add_amount)) return res.status(400).end('add_amount is not an number');
     if (username !== req.session.user.username) return res.status(403).end("forbidden");
     User.findOneAndUpdate({ username: username }, { $inc: { fein_bucks: add_amount } }, { new: true })
         .then(updatedDoc => {
@@ -417,6 +382,83 @@ app.patch('/api/add_bucks/', isAuthenticated, async function (req, res, next) {
         .catch(err => {
             return res.status(500).end(err);
         })
+});
+
+const getPriceData = async (symbol) => {
+    return new Promise((resolve, reject) => {
+        getCompanyPrice(symbol, async (err, data) => {
+            if (err) {
+                reject(err);
+            } else if (data === null) {
+                try {
+                    const newData = await setCompanyPrice(symbol);
+                    resolve(newData);
+                } catch (error) {
+                    reject(error);
+                }
+            } else {
+                resolve(data);
+            }
+        });
+    });
+};
+
+app.post('/api/buy_stock/', isAuthenticated, async function (req, res, next) {
+    if (!('username' in req.body)) return res.status(400).end('username is missing');
+    if (!('symbol' in req.body)) return res.status(400).end('symbol is missing');
+    if (!('amount' in req.body)) return res.status(400).end('amount is missing');
+    const username = req.body.username;
+    const symbol = req.body.symbol
+    const amount = req.body.amount;
+    if (isNaN(amount)) return res.status(400).end('amount is not an number');
+    if (username !== req.session.user.username) return res.status(403).end("forbidden");
+    User.findOne({ username: username })
+        .then((user) => {
+            if (!user)
+                return res.status(409).end("username " + username + " doesn't exists");
+            getPriceData(symbol)
+                .then(price_data => {
+                    console.log(price_data);
+                    if (user.fein_bucks < (amount * price_data.pc).toFixed(2)) return res.status(409).end("username " + username + " doesn't have enough");
+                    Position.findOne({ username: username, symbol: symbol })
+                        .then(position => {
+                            if (!position) {
+                                Position.findOneAndUpdate({ username: username, symbol: symbol }, { username: username, symbol: symbol, numShares: amount, totalSpent: (amount * price_data.pc).toFixed(2) }, { upsert: true })
+                                    .then((addedDocument) => {
+                                        //console.log(addedDocument)
+                                        User.findOneAndUpdate({ username: username }, { $inc: { fein_bucks: -((amount * price_data.pc).toFixed(2)) } }, { new: true })
+                                            .then(updatedDoc => {
+                                                console.log("made it 2")
+                                                return res.json({ username: username, fein_bucks: updatedDoc.fein_bucks });
+                                            })
+                                            .catch(err => {
+                                                return res.status(500).end(err);
+                                            })
+                                    })
+                                    .catch((err) => res.status(500).end(err));
+                            } else {
+                                Position.findOneAndUpdate({ username: username, symbol: symbol }, { $inc: { numShares: amount, totalSpent: (amount * price_data.pc).toFixed(2) } }, { new: true })
+                                    .then((updatedPosition) => {
+                                        User.findOneAndUpdate({ username: username }, { $inc: { fein_bucks: -((amount * price_data.pc).toFixed(2)) } }, { new: true })
+                                            .then(updatedDoc => {
+                                                return res.json({ username: username, fein_bucks: updatedDoc.fein_bucks });
+                                            })
+                                            .catch(err => {
+                                                return res.status(500).end(err);
+                                            })
+                                    })
+                                    .catch((err) => res.status(500).end(err));
+                            }
+                        })
+                        .catch(err => {
+                            return res.status(500).end(err);
+                        });
+                })
+                .catch((err) => res.status(500).end(err))
+        })
+        .catch(err => {
+            return res.status(500).end(err);
+        });
 });
 
 const server = createServer(app).listen(PORT, function (err) {
