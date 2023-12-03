@@ -25,8 +25,7 @@ const SearchBar = (nav) => {
             if(input) {
                 console.log("input: " + input);
                 const searchResults = await searchStocks(input);
-                console.log("searchResults: " + searchResults);
-                
+            
                 const result = searchResults.result;
                 setResults(result);
             }
