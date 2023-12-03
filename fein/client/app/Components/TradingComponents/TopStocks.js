@@ -13,17 +13,17 @@ export function TopStocks(stocks) {
     const displayStocks = MockStocks.result.slice(0, 7);
     const { darkMode, setDarkMode } = useThemeContext();
     return(
-        <div class={darkMode ? "top_section_dark" : "top_section"}>
-            <h1 class="top_stocks">
+        <div className={darkMode ? "top_section_dark" : "top_section"}>
+            <h1 className="top_stocks">
                 Top Stocks For You
             </h1>
-            <div class="top_stocks_container">
+            <div className="top_stocks_container">
                 {displayStocks?.map((stock) => (
-                    <TopStockItem {...stock} />
+                    <TopStockItem {...stock} key={stock.ticker} />
                 ))}
             </div>
 
-            <button class={darkMode ? "top_stocks_button_dark" : "top_stocks_button"}>
+            <button className={darkMode ? "top_stocks_button_dark" : "top_stocks_button"}>
                 See More
             </button>
 

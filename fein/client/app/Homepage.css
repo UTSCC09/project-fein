@@ -1,6 +1,6 @@
 .basic_background {
     background-color: #e1eefc;
-    min-height: 100vh; 
+    min-height: 100vh;
 }
 
 .title {
@@ -41,4 +41,9 @@
 
 .trade_button:hover {
     transform: scale(1.02);
+}
+
+.add_fund_form {
+    margin-top: 3%;
+    max-height: 10%;
 }

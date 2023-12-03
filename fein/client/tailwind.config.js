@@ -18,7 +18,8 @@ module.exports = {
         highlight: "#36ab00",
         darkMode: "#1e1f1e",
         darkModeCard: "#3d3d3d",
-        fein: "#e1eefc"
+        fein: "#e1eefc",
+        feinDark: "#1e1e1e",
       },
       fontFamily: {
         fein: ["Raleway", "sans-serif"],

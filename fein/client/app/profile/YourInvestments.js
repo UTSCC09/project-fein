@@ -14,15 +14,15 @@ export function YourInvestments({stocks}) {
     }
     return(
         <div>
-            <h1 class="investment_title"> Your Investments </h1>
-            <div class="profile_stock_item">
+            <h1 className="investment_title"> Your Investments </h1>
+            <div className="profile_stock_item">
                 <h1 className="stock_name_table"> Name </h1>
                 <h1 className="stock_quantity_table"> Shares </h1>
                 <h1 className="stock_price_table"> Price </h1>
             </div>
 
             {stocks.map((stock) => (
-                <div className="profile_stock_item">
+                <div className="profile_stock_item" key={stock.ticker}>
                     <h1 className="stock_name"> {stock.name} </h1>
                     <h1 className="stock_quantity"> {stock.quantity} </h1>
                     <h1 className="stock_price"> {stock.price} </h1>

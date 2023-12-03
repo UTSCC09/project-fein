@@ -21,10 +21,10 @@ export function YourStocks({stocks}) {
                 <h1 className="your_stocks_title"> Your investments: </h1>
                 <div className="flex flex-col">
                     {displayStocks?.map((stock) => (
-                        <StockCard {...stock} />
+                        <StockCard {...stock} key={stock.ticker}/>
                     ))}
                 </div>
-                <Link href="/profile" class="view_profile"> View More in Your Profile </Link>
+                <Link href="/profile" className="view_profile"> View More in Your Profile </Link>
             </div>
 
         </div>

@@ -1,6 +1,6 @@
 'use client'
 
-import React, {useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './Navbar.css';
 import { HomeIcon, MagnifyingGlassIcon, UserIcon, Cog6ToothIcon, ArrowTrendingUpIcon } from '@heroicons/react/24/outline'
 import { BasicMenu } from './BasicMenu';
@@ -11,39 +11,45 @@ import Link from 'next/link';
 
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { MaterialUISwitch } from './MaterialUISwitch';
+import { getUsername } from '../../../api/api.mjs'
 
+export function Navbar(props) {
 
-export function Navbar() {
+    const { user, signout } = props;
 
-    const [user, setUser] = useState(null);
-    const {darkMode, toggleDarkMode} = useThemeContext();
+    //const [user, setUser] = useState(null);
+    const { darkMode, toggleDarkMode } = useThemeContext();
 
+    // useEffect(() => {
+    //     const userName = getUsername();
+    //     setUser(userName);
+    // }, []);
 
     return (
         <nav className="flex bg-navbar sticky top-0 z-50">
-            <Link href="/" class="nav_logo"> FEIN </Link>
+            <Link href="/" className="nav_logo"> FEIN </Link>
             <div className="flex px-4 py-2 w-full justify-start text">
-                <SearchBar nav={true}/>
+                <SearchBar nav={true} />
             </div>
-            { !user ? (
+            {user ? (
                 <div className="flex px-4 py-2 w-full justify-end">
-                    <Link href="/trading" class="navbar_trading"> Trade Now </Link>
+                    <Link href="/trading" className="navbar_trading"> Trade Now </Link>
                     <div className="self-center">
                         <FormControlLabel
-                            control={<MaterialUISwitch sx={{ m: 1 }} name="darkMode" checked={darkMode} onChange={toggleDarkMode}/>}
+                            control={<MaterialUISwitch sx={{ m: 1 }} name="darkMode" checked={darkMode} onChange={toggleDarkMode} />}
                             label=""
                         />
                     </div>
-                    <Link href="/" class="navbar_element">
+                    <Link href="/" className="navbar_element">
                         <HomeIcon className="navbar_icon" />
                     </Link>
-                    <Link href="/profile" class="navbar_element"><UserIcon className="navbar_icon"/></Link>
-                    <BasicMenu/>
+                    <Link href="/profile" className="navbar_element"><UserIcon className="navbar_icon" /></Link>
+                    <BasicMenu signout={signout} />
                 </div>
             ) : (
                 <div className="flex px-4 py-2 w-full justify-end">
                     <Link href="/login" className="sign"> Signin </Link>
-                    <Link href="/signup" class="sign"> Signup </Link>
+                    <Link href="/signup" className="sign"> Signup </Link>
                 </div>
             )}
         </nav>
