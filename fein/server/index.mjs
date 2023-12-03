@@ -1,6 +1,6 @@
-import { rmSync } from "fs";
+import { readFileSync } from "fs";
 import { join } from "path";
-import { createServer } from "http";
+import { createServer } from "https";
 import express from "express";
 import mongoose, { get } from "mongoose"
 import session from "express-session";
@@ -11,7 +11,7 @@ import User from "./models/user.mjs";
 import Stock from "./models/stock.mjs"
 import Position from "./models/position.mjs";
 import { Server } from 'socket.io';
-import http from 'http';
+//import http from 'http';
 import Memcached from "memcached";
 
 const PORT = 4000;
@@ -164,7 +164,7 @@ app.use(
         saveUninitialized: true,
         cookie: {
             httpOnly: true, // prevent the session cookie from being read by Javascript onn the browser
-            secure: false,
+            secure: true,
             samesite: 'none'
         }
     })
@@ -175,7 +175,7 @@ app.use(function (req, res, next) {
     res.setHeader('Set-Cookie', serialize('username', username, {
         path: '/',
         maxAge: 60 * 60 * 24 * 7, // 1 week in number of seconds
-        secure: false,
+        secure: true,
         samesite: 'none'
     }));
     next();
@@ -252,7 +252,7 @@ app.post('/api/signin/', checkUsername, function (req, res, next) {
                     serialize('username', user.username, {
                         path: "/",
                         maxAge: 60 * 60 * 24 * 7,
-                        secure: false,
+                        secure: true,
                         samesite: 'none'
                     })
                 );
@@ -269,7 +269,7 @@ app.get('/api/signout/', function (req, res, next) {
     res.setHeader('Set-Cookie', serialize('username', '', {
         path: '/',
         maxAge: 60 * 60 * 24 * 7, // 1 week in number of seconds
-        secure: false,
+        secure: true,
         samesite: 'none'
     }));
     //return res.redirect("/");
@@ -359,7 +359,7 @@ app.get('/api/fein_bucks/:username/', isAuthenticated, async function (req, res,
                 return res.status(401).end("username does not exist")
             if (username !== req.session.user.username)
                 return res.status(403).end("forbidden");
-            console.log(user.fein_bucks);
+            //console.log(user.fein_bucks);
             return res.json({ fein_bucks: user.fein_bucks })
         })
         .catch(err => {
@@ -461,16 +461,24 @@ app.post('/api/buy_stock/', isAuthenticated, async function (req, res, next) {
         });
 });
 
-const server = createServer(app).listen(PORT, function (err) {
+const privateKey = readFileSync('server.key');
+const certificate = readFileSync('server.crt');
+const config = {
+    key: privateKey,
+    cert: certificate
+};
+
+createServer(config, app).listen(PORT, function (err) {
     if (err) console.log(err);
-    else console.log("HTTP server on http://localhost:%s", PORT);
+    else console.log("HTTPS server on https://localhost:%s", PORT);
 });
 
 // Socket.io stuff
 
 
-const httpServer = http.createServer(app);
-const io = new Server(httpServer, {
+
+const httpsServer = createServer(config, app);
+const io = new Server(httpsServer, {
     cors: {
         origin: "*",
         methods: ["GET", "POST"]
@@ -479,24 +487,23 @@ const io = new Server(httpServer, {
 
 
 io.on('connection', (socket) => {
-    console.log(`Socket ${socket.id} connected`);
+    //console.log(`Socket ${socket.id} connected`);
 
     socket.on('join-room', (roomId) => {
-        console.log(`user with id-${socket.id} joined room - ${roomId}`)
+        //console.log(`user with id-${socket.id} joined room - ${roomId}`)
         socket.join(roomId);
     });
 
     socket.on('send-message', (message) => {
-        socket.to(message.roomID).emit('receive-message', message);
+        //socket.to(message.roomID).emit('receive-message', message);
         console.log(message);
     });
 
     socket.on('disconnect', () => {
-        console.log(`Socket ${socket.id} disconnected`);
+        //console.log(`Socket ${socket.id} disconnected`);
     });
 });
 const PORT2 = 3001;
-httpServer.listen(PORT2, () => {
+httpsServer.listen(PORT2, () => {
     console.log(`Socket.io server is running on port ${PORT2}`);
 });
-
