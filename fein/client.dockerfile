@@ -4,7 +4,6 @@ RUN mkdir -p /app
 WORKDIR /app
 
 COPY ./client /app
-COPY ./.env /app
 RUN npm install
 RUN npm run build
 
