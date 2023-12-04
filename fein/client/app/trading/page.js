@@ -20,7 +20,7 @@ export default function TradingPage() {
         setUser(username);
     }, [user]);
 
-    if(!user) {
+    if (!user) {
         return (
             <div>
                 <Navbar user={user} signout={() => signout().then(setUser)} />

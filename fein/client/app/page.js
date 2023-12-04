@@ -47,7 +47,7 @@ export default function HomePage() {
             <Navbar user={user} signout={() => signout().then(setUser(''))} />
             {userFeinBucks === -1 && user !== '' ? (
                 <div className='add_fund_form'>
-                    <AddFundForm user={user} setUserFeinBucks={setUserFeinBucks} addFunds={addFunds} />
+                    <AddFundForm user={user} setUserFeinBucks={setUserFeinBucks} text={"How much Fein Bucks would you like to start with?"} />
                 </div>
             ) : (
                 <div className="flex flex-col">
@@ -55,7 +55,7 @@ export default function HomePage() {
                         <h1 className={darkMode ? "title_dark" : "title"}> Welcome to </h1>
                         <h1 className="title_2">FEIN</h1>
                     </div>
-                    <Hero user={user}/>
+                    <Hero user={user} />
                     <div className="flex flex-row mt-12">
                         <TopStocks />
                         <Summary />

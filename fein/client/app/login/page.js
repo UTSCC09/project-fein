@@ -28,7 +28,7 @@ export default function LoginPage() {
 
     return (
         <div className="bg-fein">
-            <Link href="/" class="fein_logo"> FEIN </Link>
+            <Link href="/" className="fein_logo"> FEIN </Link>
             <div className="basic_background">
                 <LoginForm signin={(username, password) => signin(username, password)} setMessage={setMessage} />
             </div>

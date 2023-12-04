@@ -2,59 +2,61 @@
 
 import React, { useState } from "react";
 import Link from 'next/link';
-import './addFundForm.css';
+import './SellStocksForm.css';
 import { useRef } from 'react'
+import { toast, ToastContainer } from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from "next/navigation"
 import { HomeIcon, MagnifyingGlassIcon, UserIcon } from '@heroicons/react/24/outline'
-import { addFunds } from '../../../api/api.mjs'
+import { sellStock } from '../../../api/api.mjs'
 
-export function AddFundForm(props) {
-    const { user, setUserFeinBucks, text, setShowAddFundsForms } = props;
+export function SellStocksForm(props) {
+    const { user, setShowSellStocksForm } = props;
     const [message, setMessage] = useState({});
+    const symbolRef = useRef(null)
     const amountRef = useRef(null);
     const formRef = useRef(null);
     //const router = useRouter();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const symbol = (symbolRef.current.value).toUpperCase();
         const amount = amountRef.current.value;
         if (!isNaN(amount)) {
-            const data = await addFunds(user, parseFloat(amount) + 1);
+            const data = await sellStock(user, symbol, amount);
             console.log(data);
             if (data instanceof Object) {
                 setMessage({ err: false });
-                setUserFeinBucks(data.fein_bucks)
-                if ('setShowAddFundsForms' in props) {
-                    setShowAddFundsForms(false);
-                }
+                setShowSellStocksForm(false)
             } else {
                 setMessage({ err: true, message: data });
             }
         } else {
-            setMessage({ err: true, message: "Enter a number" });
+            setMessage({ err: true, message: "Amount must be a number" });
         }
 
-        // const username = userRef.current.value;
-        // const password = passRef.current.value;
-        // const user = await signin(username, password)
-        // if (user instanceof Object) {
-        //     setMessage({ err: false });
-        //     router.replace("/");
-        // } else {
-        //     setMessage({ err: true, message: user });
-        // }
         formRef.current.reset();
     }
 
     return (
         <form id='login-form' onSubmit={handleSubmit} ref={formRef}>
-            <div className='form-header'>{text}</div>
+            <div className='form-header'>Selling Stocks</div>
             <input
                 type="text"
                 id="post-username"
                 className="form-element"
-                name="username"
+                name="symbol"
+                ref={symbolRef}
+                placeholder="Enter symbol"
+                required
+            />
+            <input
+                type="text"
+                id="post-username"
+                className="form-element"
+                name="amount"
                 ref={amountRef}
+                placeholder="Enter amount"
                 required
             />
 

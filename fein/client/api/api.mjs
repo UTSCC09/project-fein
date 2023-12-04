@@ -37,8 +37,8 @@ export async function searchStocks(query) {
     return await send("GET", "/api/search/" + query + "/");
 }
 
-export async function supportedStocks() {
-    return await send("GET", "/api/supported_stock/");
+export async function supportedStocks(page) {
+    return await send("GET", "/api/supported_stock/" + page + "/");
 }
 
 export async function companyProfile(symbol) {
@@ -64,7 +64,14 @@ export async function addFunds(username, add_amount) {
 
 export async function buyStock(username, symbol, amount) {
     return await send("POST", "/api/buy_stock/", { username: username, symbol: symbol, amount: amount });
+}
 
+export async function sellStock(username, symbol, amount) {
+    return await send("POST", "/api/sell_stock/", { username: username, symbol: symbol, amount: amount });
+}
+
+export async function getInvestments(username) {
+    return await send("GET", "/api/positions/" + username + "/");
 }
 
 export async function changePrivacy(username, privacy) {

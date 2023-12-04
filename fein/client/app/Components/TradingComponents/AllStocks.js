@@ -16,10 +16,11 @@ import { supportedStocks } from '../../../api/api.mjs';
 export function AllStocks(props) {
     const { setMessage } = props;
     const [results, setResults] = useState([]);
+    const [page, setPage] = useState(1);
 
     useEffect(() => {
         const updateResults = async () => {
-            const data = await supportedStocks();
+            const data = await supportedStocks(1);
             //console.log(data);
             if (Array.isArray(data)) {
                 setResults(data);
@@ -32,9 +33,31 @@ export function AllStocks(props) {
         updateResults();
     }, []);
 
-    let displayStocks = [];
-    if (results) {
-        displayStocks = results.slice(0, 10);
+    // let displayStocks = [];
+    // if (results) {
+    //     displayStocks = results.slice(0, 10);
+    // }
+
+    useEffect(() => {
+        const updateResults = async () => {
+            const data = await supportedStocks(page);
+            if (Array.isArray(data)) {
+                setResults(data);
+                setMessage({ err: false })
+            } else {
+                setResults([]);
+                setMessage({ err: true, message: data })
+            }
+        };
+        updateResults();
+    }, [page]);
+
+    const nextPage = () => {
+        if (page + 1 <= 20) setPage(lastPage => lastPage + 1);
+    }
+
+    const prevPage = () => {
+        if (page - 1 >= 1) setPage(lastPage => lastPage - 1)
     }
 
     const { darkMode } = useThemeContext();
@@ -48,16 +71,16 @@ export function AllStocks(props) {
             <h2 className={darkMode ? "all_stocks_subheader_dark" : "all_stocks_subheader"}>Top 10 Stocks</h2>
 
             <div>
-                {displayStocks?.map((stock) => (
+                {results?.map((stock) => (
                     <StockItem stock={stock} key={stock.symbol} setMessage={setMessage} />
                 ))}
             </div>
 
 
             <div className="flex flex-row w-full justify-between">
-                <button className={darkMode ? "all_stocks_nav_dark" : "all_stocks_nav"}> Back </button>
-                <h1 className={darkMode ? "all_stocks_page_dark" : "all_stocks_page"}> Page 1 of 1 </h1>
-                <button className={darkMode ? "all_stocks_nav_dark" : "all_stocks_nav"}> Next </button>
+                <button className={darkMode ? "all_stocks_nav_dark" : "all_stocks_nav"} onClick={prevPage}> Back </button>
+                <h1 className={darkMode ? "all_stocks_page_dark" : "all_stocks_page"}> Page {page} of 20 </h1>
+                <button className={darkMode ? "all_stocks_nav_dark" : "all_stocks_nav"} onClick={nextPage}> Next </button>
             </div>
         </div>
     );

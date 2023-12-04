@@ -28,24 +28,28 @@ export function Navbar(props) {
     return (
         <nav className="flex bg-navbar sticky top-0 z-50">
             <Link href="/" className="nav_logo"> FEIN </Link>
-            <div className="flex px-4 py-2 w-full justify-start text">
-                <SearchBar nav={true} />
-            </div>
+
             {user ? (
-                <div className="flex px-4 py-2 w-full justify-end">
-                    <Link href="/trading" className="navbar_trading"> Trade Now </Link>
-                    <div className="self-center">
-                        <FormControlLabel
-                            control={<MaterialUISwitch sx={{ m: 1 }} name="darkMode" checked={darkMode} onChange={toggleDarkMode} />}
-                            label=""
-                        />
+                <>
+                    <div className="flex px-4 py-2 w-full justify-start text">
+                        <SearchBar nav={true} />
                     </div>
-                    <Link href="/" className="navbar_element">
-                        <HomeIcon className="navbar_icon" />
-                    </Link>
-                    <Link href="/profile" className="navbar_element"><UserIcon className="navbar_icon" /></Link>
-                    <BasicMenu signout={signout} />
-                </div>
+                    <div className="flex px-4 py-2 w-full justify-end">
+                        <Link href="/trading" className="navbar_trading"> Trade Now </Link>
+                        <div className="self-center">
+                            <FormControlLabel
+                                control={<MaterialUISwitch sx={{ m: 1 }} name="darkMode" checked={darkMode} onChange={toggleDarkMode} />}
+                                label=""
+                            />
+                        </div>
+                        <Link href="/" className="navbar_element">
+                            <HomeIcon className="navbar_icon" />
+                        </Link>
+                        <Link href="/profile" className="navbar_element"><UserIcon className="navbar_icon" /></Link>
+                        <BasicMenu signout={signout} />
+                    </div>
+                </>
+
             ) : (
                 <div className="flex px-4 py-2 w-full justify-end">
                     <Link href="/login" className="sign"> Signin </Link>
@@ -55,4 +59,3 @@ export function Navbar(props) {
         </nav>
     );
 }
-

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "env-cmd next dev",
+    "dev": "env-cmd next dev --experimental-https",
     "build": "env-cmd next build",
     "start": "env-cmd next start",
     "lint": "next lint"
