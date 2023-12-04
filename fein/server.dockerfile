@@ -1,13 +1,3 @@
-FROM alpine:latest
-RUN adduser -D -u 1001 memcached
-RUN apk update && \
-    apk add --no-cache memcached
-
-USER memcached
-
-CMD ["memcached", "-m", "64"]
-
-
 FROM node:16 as build
 
 RUN mkdir -p /app
