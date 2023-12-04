@@ -8,11 +8,6 @@
     "start": "env-cmd next start",
     "lint": "next lint"
   },
-  "proxy": {
-    "target": "https://localhost:4000",
-    "secure": false,
-    "changeOrigin": true
-  },
   "dependencies": {
     "@coreui/react": "^5.0.0-beta.0",
     "@emotion/react": "^11.11.1",

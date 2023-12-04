@@ -13,6 +13,7 @@ import Position from "./models/position.mjs";
 import { Server } from 'socket.io';
 //import http from 'http';
 import Memcached from "memcached";
+import cors from "cors";
 
 const PORT = 4000;
 const app = express();
@@ -27,6 +28,11 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 const base_path = "https://finnhub.io/api/v1"
 
 const memcached = new Memcached('localhost:11211');
+
+app.use(cors({
+    origin: process.env.FRONTEND,
+    credentials: true
+}));
 
 const warmCache = function () {
     console.log("Retrieving stocks from the database");
