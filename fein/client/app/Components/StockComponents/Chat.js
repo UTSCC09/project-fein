@@ -55,6 +55,8 @@ export default function Chat() {
         socket.on('receive-message', handleReceiveMessage);
         return function cleanup() {
             socket.off("receive-message", handleReceiveMessage);
+            socket.off("join-room");
+            socket.off("send-message");
         };
     }, []);
 

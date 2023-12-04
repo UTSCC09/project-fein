@@ -11,7 +11,7 @@ import User from "./models/user.mjs";
 import Stock from "./models/stock.mjs"
 import Position from "./models/position.mjs";
 import { Server } from 'socket.io';
-//import http from 'http';
+import http from 'http';
 import Memcached from "memcached";
 import cors from "cors";
 
@@ -483,10 +483,10 @@ createServer(config, app).listen(PORT, function (err) {
 
 
 
-const httpsServer = createServer(config, app);
-const io = new Server(httpsServer, {
+const httpServer = http.createServer(app);
+const io = new Server(httpServer, {
     cors: {
-        origin: "*",
+        origin: process.env.FRONTEND,
         methods: ["GET", "POST"]
     }
 });
@@ -510,6 +510,6 @@ io.on('connection', (socket) => {
     });
 });
 const PORT2 = 3001;
-httpsServer.listen(PORT2, () => {
+httpServer.listen(PORT2, () => {
     console.log(`Socket.io server is running on port ${PORT2}`);
 });
