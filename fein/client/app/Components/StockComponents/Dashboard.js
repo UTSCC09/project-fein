@@ -141,7 +141,7 @@ function Dashboard(props) {
                             ref={amountRef}
                         />
                         <button className="mx-4 border-2 rounded-md w-36 p-2 font-semibold text-black border-gray-300 bg-gray-300 hover:text-white hover:bg-highlight" onClick={handleClick}>Buy</button>
-                        <p className="self-center justify_self-center mx-4">Current Fein Bucks: {userFeinBucks.toFixed(2)} </p>
+                        <p className="self-center justify_self-center mx-4">Current Fein Bucks: {userFeinBucks} </p>
                         <p className="self-center justify_self-center mx-4">Cost: {(amount * quote.pc).toFixed(2)} </p>
                         <ToastContainer />
                     </div>

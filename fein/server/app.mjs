@@ -88,13 +88,18 @@ const setCompanyPrice = async (symbol, callback) => {
     const url = `${base_path}/quote?symbol=${symbol}&token=cl71pi9r01qvnckae940cl71pi9r01qvnckae94g`
     const data = await fetch(url);
     if (!data.ok) {
-        return callback(await data.text(), null);
+        if (typeof callback === "function") return callback(await data.text(), null);
+        return await data.text();
     }
     const result = await data.json()
     memcached.set(`${symbol}_price`, result, 60 * 60 * 2, function (err) {
-        if (err) return callback(err, null)
+        if (err) {
+            if (typeof callback === "function") return callback(err, null);
+            return err;
+        }
         console.log("got price from fetch and stored in cache")
-        return callback(null, result);
+        if (typeof callback === "function") return callback(null, result);
+        return result;
     })
 }
 
@@ -353,6 +358,7 @@ app.get('/api/candle/:symbol/:resolution/', isAuthenticated, async function (req
 
 app.get('/api/fein_bucks/:username/', isAuthenticated, async function (req, res, next) {
     const username = req.params.username;
+    if (username !== req.session.user.username) return res.status(403).end("forbidden");
     User.findOne({ username: username })
         .then(user => {
             if (!user)
@@ -459,6 +465,24 @@ app.post('/api/buy_stock/', isAuthenticated, async function (req, res, next) {
         .catch(err => {
             return res.status(500).end(err);
         });
+});
+
+app.get('/api/positions/:username/', isAuthenticated, async function (req, res, next) {
+    const username = req.params.username;
+    if (username !== req.session.user.username) return res.status(403).end("forbidden");
+    Position.find({ username: username }).exec()
+        .then(async (positions) => {
+            if (positions.length === 0) {
+                return res.json({ result: [] })
+            }
+            let resultList = []
+            for (const position of positions) {
+                const price_data = await getPriceData(position.symbol)
+                resultList.push({ ...position, current_value: (position.numShares * price_data.pc).toFixed(2) })
+            }
+            return res.json({ result: resultList })
+        })
+        .catch((err) => res.status(500).end(err));
 });
 
 const server = createServer(app).listen(PORT, function (err) {

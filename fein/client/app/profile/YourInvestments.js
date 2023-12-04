@@ -1,10 +1,10 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import './YourInvestments.css';
 
 
 
-export function YourInvestments({stocks}) {
-    if (!stocks) {
+export function YourInvestments({ stocks }) {
+    if (stocks.length == 0) {
         return (
             <div className="flex flex-col">
                 <h1 className="investment_title"> Your stocks: </h1>
@@ -12,20 +12,24 @@ export function YourInvestments({stocks}) {
             </div>
         );
     }
-    return(
+    return (
         <div>
             <h1 className="investment_title"> Your Investments </h1>
             <div className="profile_stock_item">
-                <h1 className="stock_name_table"> Name </h1>
+                <h1 className="stock_name_table"> Symbol </h1>
                 <h1 className="stock_quantity_table"> Shares </h1>
-                <h1 className="stock_price_table"> Price </h1>
+                <h1 className="stock_price_table"> Total Spent </h1>
+                <h1 className="stock_price_table"> Current Value </h1>
+                <h1 className="stock_price_table"> Net Gain </h1>
             </div>
 
             {stocks.map((stock) => (
-                <div className="profile_stock_item" key={stock.ticker}>
-                    <h1 className="stock_name"> {stock.name} </h1>
-                    <h1 className="stock_quantity"> {stock.quantity} </h1>
-                    <h1 className="stock_price"> {stock.price} </h1>
+                <div className="profile_stock_item" key={stock._doc.symbol}>
+                    <h1 className="stock_name"> {stock._doc.symbol} </h1>
+                    <h1 className="stock_quantity"> {stock._doc.numShares} </h1>
+                    <h1 className="stock_price"> {(stock._doc.totalSpent).toFixed(2)} </h1>
+                    <h1 className="stock_price"> {stock.current_value} </h1>
+                    <h1 className="stock_price"> {parseFloat(stock.current_value) - (stock._doc.totalSpent).toFixed(2)} </h1>
                 </div>
             ))}
         </div>

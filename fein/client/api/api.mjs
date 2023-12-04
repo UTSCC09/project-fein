@@ -67,6 +67,10 @@ export async function buyStock(username, symbol, amount) {
 
 }
 
+export async function getInvestments(username) {
+    return await send("GET", "/api/positions/" + username + "/");
+}
+
 export async function changePrivacy(username, privacy) {
     return await send("PATCH", "/api/change_privacy/", { username: username, privacy: privacy });
 }

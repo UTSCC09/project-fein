@@ -6,9 +6,10 @@ import './addFundForm.css';
 import { useRef } from 'react'
 import { useRouter } from "next/navigation"
 import { HomeIcon, MagnifyingGlassIcon, UserIcon } from '@heroicons/react/24/outline'
+import { addFunds } from '../../../api/api.mjs'
 
 export function AddFundForm(props) {
-    const { user, setUserFeinBucks, addFunds } = props;
+    const { user, setUserFeinBucks, text, setShowAddFundsForms } = props;
     const [message, setMessage] = useState({});
     const amountRef = useRef(null);
     const formRef = useRef(null);
@@ -23,6 +24,9 @@ export function AddFundForm(props) {
             if (data instanceof Object) {
                 setMessage({ err: false });
                 setUserFeinBucks(data.fein_bucks)
+                if ('setShowAddFundsForms' in props) {
+                    setShowAddFundsForms(false);
+                }
             } else {
                 setMessage({ err: true, message: data });
             }
@@ -44,7 +48,7 @@ export function AddFundForm(props) {
 
     return (
         <form id='login-form' onSubmit={handleSubmit} ref={formRef}>
-            <div className='form-header'>How much Fein Bucks would you like to start with?</div>
+            <div className='form-header'>{text}</div>
             <input
                 type="text"
                 id="post-username"

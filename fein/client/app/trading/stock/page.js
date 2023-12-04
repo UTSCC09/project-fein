@@ -7,7 +7,7 @@ import { Navbar } from "../../Components/Navbar/Navbar.js";
 import { useParams } from 'react-router-dom';
 import SearchBar from '../../Components/Common/SearchBar.js';
 import Dashboard from '../../Components/StockComponents/Dashboard.js';
-import { signout, getUsername } from '../../api/api.mjs'
+import { signout, getUsername } from '../../../api/api.mjs'
 import { useThemeContext } from '../../Context/ThemeContext.js';
 
 export default function StockPage() {
@@ -22,7 +22,7 @@ export default function StockPage() {
         setUser(username);
     }, [user])
 
-    return(
+    return (
         <div className={darkMode ? "stock_dark" : "stock"}>
             <Navbar user={user} signout={() => signout().then(setUser)} />
             <Dashboard />
