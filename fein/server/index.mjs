@@ -194,6 +194,14 @@ app.use(function (req, res, next) {
 //     next();
 // });
 
+app.options("/*", function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+    res.header("Access-Control-Allow-Headers", "Content-Type");
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
+    res.header("Access-Control-Allow-Credentials", true);
+    res.send();
+  });
+
 app.use(function (req, res, next) {
     console.log("HTTP request", req.method, req.url, req.body);
     next();
