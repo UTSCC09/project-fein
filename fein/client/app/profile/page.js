@@ -117,7 +117,7 @@ export default function ProfilePage() {
                             </div>
 
                             <div className="trade_information">
-                                <YourInvestments stocks={investments} />
+                                <YourInvestments stocks={typeof investments !== 'undefined' ? investments : []} />
                             </div>
                             <button className="mx-4 border-2 rounded-md w-36 p-2 font-semibold text-black border-gray-300 bg-gray-300 hover:text-white hover:bg-highlight" onClick={handleClick}>Add Funds</button>
                             <button className="mx-4 border-2 rounded-md w-36 p-2 font-semibold text-black border-gray-300 bg-gray-300 hover:text-white hover:bg-highlight" onClick={handleClick2}>Sell Stocks</button>

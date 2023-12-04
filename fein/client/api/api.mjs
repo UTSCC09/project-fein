@@ -37,8 +37,8 @@ export async function searchStocks(query) {
     return await send("GET", "/api/search/" + query + "/");
 }
 
-export async function supportedStocks() {
-    return await send("GET", "/api/supported_stock/");
+export async function supportedStocks(page) {
+    return await send("GET", "/api/supported_stock/" + page + "/");
 }
 
 export async function companyProfile(symbol) {

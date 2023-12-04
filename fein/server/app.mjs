@@ -303,11 +303,11 @@ app.get('/api/search/:query/', isAuthenticated, async function (req, res, next) 
     })
 });
 
-app.get('/api/supported_stock/', isAuthenticated, async function (req, res, next) {
+app.get('/api/supported_stock/:page', isAuthenticated, async function (req, res, next) {
     getStocks(function (err, data) {
         if (err) return res.status(500).end(err);
         //console.log("made it");
-        return res.json(data)
+        return res.json(data.slice(0 + 10 * (req.params.page - 1), 10 + 10 * (req.params.page - 1)))
     })
 });
 
@@ -520,24 +520,6 @@ app.post('/api/sell_stock/', isAuthenticated, async function (req, res, next) {
             return res.status(500).end(err);
         });
 });
-
-// app.get('/api/positions/:username/', isAuthenticated, async function (req, res, next) {
-//     const username = req.params.username;
-//     if (username !== req.session.user.username) return res.status(403).end("forbidden");
-//     Position.find({ username: username }).exec()
-//         .then(async (positions) => {
-//             if (positions.length === 0) {
-//                 return res.json({ result: [] })
-//             }
-//             let resultList = []
-//             for (const position of positions) {
-//                 const price_data = await getPriceData(position.symbol)
-//                 resultList.push({ ...position, current_value: (position.numShares * price_data.pc).toFixed(2) })
-//             }
-//             return res.json({ result: resultList })
-//         })
-//         .catch((err) => res.status(500).end(err));
-// });
 
 app.get('/api/positions/:username/', isAuthenticated, async function (req, res, next) {
     try {
