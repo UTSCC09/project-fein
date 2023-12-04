@@ -1,8 +1,5 @@
 FROM alpine:latest
-
-# Create a non-root user for Memcached
 RUN adduser -D -u 1001 memcached
-
 RUN apk update && \
     apk add --no-cache memcached
 
