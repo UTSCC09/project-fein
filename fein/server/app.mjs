@@ -198,6 +198,14 @@ app.use(function (req, res, next) {
     next();
 });
 
+app.options("/*", function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", process.env.FRONTEND);
+    res.header("Access-Control-Allow-Headers", "Content-Type");
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
+    res.header("Access-Control-Allow-Credentials", true);
+    res.send();
+});
+
 const checkUsername = function (req, res, next) {
     if (!validator.isAlphanumeric(req.body.username)) return res.status(400).end("Username not alphanumeric");
     next();
@@ -379,6 +387,7 @@ app.patch('/api/add_bucks/', isAuthenticated, async function (req, res, next) {
     const username = req.body.username;
     const add_amount = req.body.add_amount;
     if (isNaN(add_amount)) return res.status(400).end('add_amount is not an number');
+    if (add_amount < 1) return res.status(400).end('invalid amount');
     if (username !== req.session.user.username) return res.status(403).end("forbidden");
     User.findOneAndUpdate({ username: username }, { $inc: { fein_bucks: add_amount } }, { new: true })
         .then(updatedDoc => {
@@ -417,6 +426,7 @@ app.post('/api/buy_stock/', isAuthenticated, async function (req, res, next) {
     const symbol = req.body.symbol
     const amount = req.body.amount;
     if (isNaN(amount)) return res.status(400).end('amount is not an number');
+    if (amount < 1) return res.status(400).end('invalid amount');
     if (username !== req.session.user.username) return res.status(403).end("forbidden");
     User.findOne({ username: username })
         .then((user) => {
@@ -467,23 +477,89 @@ app.post('/api/buy_stock/', isAuthenticated, async function (req, res, next) {
         });
 });
 
-app.get('/api/positions/:username/', isAuthenticated, async function (req, res, next) {
-    const username = req.params.username;
+app.post('/api/sell_stock/', isAuthenticated, async function (req, res, next) {
+    if (!('username' in req.body)) return res.status(400).end('username is missing');
+    if (!('symbol' in req.body)) return res.status(400).end('symbol is missing');
+    if (!('amount' in req.body)) return res.status(400).end('amount is missing');
+    const username = req.body.username;
+    const symbol = req.body.symbol
+    const amount = req.body.amount;
+    if (isNaN(amount)) return res.status(400).end('amount is not an number');
+    if (amount < 1) return res.status(400).end('invalid amount');
     if (username !== req.session.user.username) return res.status(403).end("forbidden");
-    Position.find({ username: username }).exec()
-        .then(async (positions) => {
-            if (positions.length === 0) {
-                return res.json({ result: [] })
-            }
-            let resultList = []
-            for (const position of positions) {
-                const price_data = await getPriceData(position.symbol)
-                resultList.push({ ...position, current_value: (position.numShares * price_data.pc).toFixed(2) })
-            }
-            return res.json({ result: resultList })
+    User.findOne({ username: username })
+        .then((user) => {
+            if (!user)
+                return res.status(409).end("username " + username + " doesn't exists");
+            getPriceData(symbol)
+                .then(price_data => {
+                    console.log(price_data);
+                    Position.findOne({ username: username, symbol: symbol })
+                        .then(position => {
+                            if (!position) return res.status(409).end(username + " doesn't have this stock");
+                            if (amount > position.numShares) return res.status(409).end(username + " selling more shares than owned");
+                            Position.findOneAndUpdate({ username: username, symbol: symbol }, { $inc: { numShares: -amount }, $set: { totalSpent: ((position.totalSpent / position.numShares) * (position.numShares - amount)).toFixed(2) } }, { new: true })
+                                .then((updatedPosition) => {
+                                    User.findOneAndUpdate({ username: username }, { $inc: { fein_bucks: ((amount * price_data.pc).toFixed(2)) } }, { new: true })
+                                        .then(updatedDoc => {
+                                            return res.json(updatedPosition);
+                                        })
+                                        .catch(err => {
+                                            return res.status(500).end(err);
+                                        })
+                                })
+                                .catch((err) => res.status(500).end(err));
+                        })
+                        .catch(err => {
+                            return res.status(500).end(err);
+                        });
+                })
+                .catch((err) => res.status(500).end(err))
         })
-        .catch((err) => res.status(500).end(err));
+        .catch(err => {
+            return res.status(500).end(err);
+        });
 });
+
+// app.get('/api/positions/:username/', isAuthenticated, async function (req, res, next) {
+//     const username = req.params.username;
+//     if (username !== req.session.user.username) return res.status(403).end("forbidden");
+//     Position.find({ username: username }).exec()
+//         .then(async (positions) => {
+//             if (positions.length === 0) {
+//                 return res.json({ result: [] })
+//             }
+//             let resultList = []
+//             for (const position of positions) {
+//                 const price_data = await getPriceData(position.symbol)
+//                 resultList.push({ ...position, current_value: (position.numShares * price_data.pc).toFixed(2) })
+//             }
+//             return res.json({ result: resultList })
+//         })
+//         .catch((err) => res.status(500).end(err));
+// });
+
+app.get('/api/positions/:username/', isAuthenticated, async function (req, res, next) {
+    try {
+        const username = req.params.username;
+        if (username !== req.session.user.username) {
+            return res.status(403).end("forbidden");
+        }
+        const positions = await Position.find({ username: username }).exec();
+        if (positions.length === 0) {
+            return res.json({ result: [] });
+        }
+        const resultList = [];
+        for (const position of positions) {
+            const price_data = await getPriceData(position.symbol);
+            resultList.push({ ...position, current_value: (position.numShares * price_data.pc).toFixed(2) });
+        }
+        return res.json({ result: resultList });
+    } catch (err) {
+        return res.status(500).end(err.message || "Internal Server Error");
+    }
+});
+
 
 const server = createServer(app).listen(PORT, function (err) {
     if (err) console.log(err);

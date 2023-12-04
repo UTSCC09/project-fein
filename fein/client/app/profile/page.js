@@ -10,8 +10,9 @@ import { YourInvestments } from "./YourInvestments.js";
 import banner from "../../public/Assets/banner.jpeg";
 import { useThemeContext } from "../Context/ThemeContext.js";
 import { MockStocks } from "../MockData/MockStocks.js";
-import { signout, getUsername, getInvestments, getFeinBucks } from '../../api/api.mjs'
+import { signout, getUsername, getInvestments, getFeinBucks, companyPrice } from '../../api/api.mjs'
 import { AddFundForm } from '../Components/AddFundsForm/addFundForm'
+import { SellStocksForm } from '../Components/SellStocksForm/SellStocksForm'
 
 
 import Image from 'next/image';
@@ -22,8 +23,9 @@ export default function ProfilePage() {
     const [user, setUser] = useState('');
     const [investments, setInvestments] = useState([])
     const [userFeinBucks, setUserFeinBucks] = useState(-2);
-    const [netGain, setNetGain] = useState(0)
+    const [netGain, setNetGain] = useState(-77)
     const [showAddFundsform, setShowAddFundsForms] = useState(false)
+    const [showSellStocksForm, setShowSellStocksForm] = useState(false)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -45,8 +47,31 @@ export default function ProfilePage() {
         fetchData();
     }, [])
 
+    useEffect(() => {
+        const fetchData = async () => {
+            const username = getUsername();
+            if (username != '') {
+                setUser(username);
+                const userAmount = await getFeinBucks(username)
+                setUserFeinBucks(userAmount.fein_bucks)
+                const result = await getInvestments(username);
+                console.log(result);
+                setInvestments(result.result)
+                let sum = 0;
+                result.result.forEach(stock => {
+                    sum += parseFloat(stock.current_value) - (stock._doc.totalSpent).toFixed(2)
+                });
+                setNetGain(sum)
+            }
+        }
+        fetchData();
+    }, [showSellStocksForm])
+
     const handleClick = () => {
         setShowAddFundsForms(true);
+    }
+    const handleClick2 = () => {
+        setShowSellStocksForm(true);
     }
 
     if (!user) {
@@ -65,37 +90,42 @@ export default function ProfilePage() {
             {showAddFundsform ? (
                 <AddFundForm user={user} setUserFeinBucks={setUserFeinBucks} text={"How much Fein Bucks would you like to add?"} setShowAddFundsForms={setShowAddFundsForms} />
             ) : (
-                <div>
-                    <Navbar user={user} signout={() => signout().then('')} />
-                    <Image className="banner_image" src={banner} alt="Your Banner"></Image>
-                    <div className="flex-grow">
-                        <div className="flex flex-col">
-                            <h1 className="username_title"> {user} </h1>
-                            <h1 className="username_description"> Description </h1>
-                        </div>
+                showSellStocksForm ? (
+                    <SellStocksForm user={user} setShowSellStocksForm={setShowSellStocksForm} />
+                ) : (
+                    <div>
+                        <Navbar user={user} signout={() => signout().then('')} />
+                        <Image className="banner_image" src={banner} alt="Your Banner"></Image>
+                        <div className="flex-grow">
+                            <div className="flex flex-col">
+                                <h1 className="username_title"> {user} </h1>
+                                <h1 className="username_description"> Description </h1>
+                            </div>
 
-                        <div className="trade_information">
-                            <h1 className="investment_title"> Summary </h1>
-                            <div className="flex flex-row">
-                                <div className="flex flex-col">
-                                    <h1 className="trade_information_subtitle"> Fein Bucks </h1>
-                                    <h1 className="trade_information_subtitle"> Net Gain </h1>
-                                </div>
-                                <div className="flex flex-col">
-                                    <h1 className="trade_information_subtitle"> {userFeinBucks} </h1>
-                                    <h1 className="trade_information_subtitle"> {netGain} </h1>
+                            <div className="trade_information">
+                                <h1 className="investment_title"> Summary </h1>
+                                <div className="flex flex-row">
+                                    <div className="flex flex-col">
+                                        <h1 className="trade_information_subtitle"> Fein Bucks </h1>
+                                        <h1 className="trade_information_subtitle"> Net Gain </h1>
+                                    </div>
+                                    <div className="flex flex-col">
+                                        <h1 className="trade_information_subtitle"> {userFeinBucks} </h1>
+                                        <h1 className="trade_information_subtitle"> {netGain} </h1>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div className="trade_information">
-                            <YourInvestments stocks={investments} />
+                            <div className="trade_information">
+                                <YourInvestments stocks={investments} />
+                            </div>
+                            <button className="mx-4 border-2 rounded-md w-36 p-2 font-semibold text-black border-gray-300 bg-gray-300 hover:text-white hover:bg-highlight" onClick={handleClick}>Add Funds</button>
+                            <button className="mx-4 border-2 rounded-md w-36 p-2 font-semibold text-black border-gray-300 bg-gray-300 hover:text-white hover:bg-highlight" onClick={handleClick2}>Sell Stocks</button>
                         </div>
-                        <button className="mx-4 border-2 rounded-md w-36 p-2 font-semibold text-black border-gray-300 bg-gray-300 hover:text-white hover:bg-highlight" onClick={handleClick}>Add Funds</button>
                     </div>
-                </div>
+                )
             )}
 
-        </div>
+        </div >
     );
 }

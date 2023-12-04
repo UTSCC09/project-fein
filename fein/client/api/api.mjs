@@ -64,7 +64,10 @@ export async function addFunds(username, add_amount) {
 
 export async function buyStock(username, symbol, amount) {
     return await send("POST", "/api/buy_stock/", { username: username, symbol: symbol, amount: amount });
+}
 
+export async function sellStock(username, symbol, amount) {
+    return await send("POST", "/api/sell_stock/", { username: username, symbol: symbol, amount: amount });
 }
 
 export async function getInvestments(username) {
