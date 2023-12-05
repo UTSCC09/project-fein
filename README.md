@@ -1,84 +1,41 @@
 # FEIN
 
-### Table of Contents
-- [Team Members](#team-members)
-- [Description](#webapp-description)
-- [Key Features](#key-features)
-- [Additional Features](#additional-features)
-- [Technology Stack](#technology-stack)
-- [Technical Challenges](#top-5-technical-challenges)
+## Project URL
 
+**Task:** Provide the link to your deployed application. Please make sure the link works. 
 
+## Project Video URL 
 
-## Team Members
-* Austin Bartolome
-* Avik Chakraborty
+**Task:** Provide the link to your youtube video. Please make sure the link works. 
 
+## Project Description
 
-## WebApp Description
-Do you have an interest in becoming a master at analyzing and managing stocks? Have you always wanted to gain experience with the stock market and learn statistical patterns, but don't necessarily want to use REAL money? If this is the case, this web application may be perfect for you. We aim to provide users with a platform to practice buying and selling stocks or currencies using our own fake currency system, while maintaining the integrity and realism of stock market interaction. We provide access to several graphs for users to analyze and an interface to buy and sell shares, as well as a live chat room for every stock. Our fake currency system will mock several different currency conversions and give users the simulation and experience of earning and losing money. This allows users to have a realistic trading experience without incurring risk. Additional features will be implemented to keep users interested and continually learning more about the stock market.
+Our app aims to provide users with a platform to practice buying and selling stocks using our own fake currency system, while maintaining the integrity and realism of stock market interaction. The app support 200 stocks that users can buy, sell, and look at graphs of the price over a selected amount of time, while giving some overview information of the companies themselves. The app being made for the purposes of learning to trade on the stock market also allows user to communicate in live chatrooms independant to each stock to learn more from others. The app will allow the user to see a summary of all their shares purchased, as well as any net gains or losses.
 
-## Key Features
+## Development
 
-### Live Graph Anaylzer and Company Information Retrieval
+The app is built using Next js on the frontend using Tailwind.css, and the Rechart library to graph stock price data. On the backend we used express framework, MongoDb as the database and the Mongoose library to connect to it, sockets to create the live chat feature, a lot of the normal libraries from class labs (ex. express-session, cookie, bcrypt etc.), Finnhub and twelve data APIs to get stock information, and memcached to cache that data. The code is designed in a way such that the frontend calls the backend using functions in api.mjs and then the backend does all the fetching from database, cache, or APIs, frontend handles the response to display to user.   
 
-We will provide a visual representation of a company's stock price in the form of a graph. This will allow users to analyze statistic patterns themselves and buy and sell accordingly. We will also provide basic information on a company including their name and description.
+## Deployment
 
-### Live Community Chatroom
+**Task:** Explain how you have deployed your application. 
 
-Our platform will allow users to sign up and chat with other users currently viewing the information and graph for a certain stock. It also will give users looking to buy or sell this stock, a place to discuss the possible patterns and movement of that stock. This will create a community for our users to learn and grow together.
+## Challenges
 
-### Mock Currencies with Live Stock Market
+**Task:** What is the top 3 most challenging things that you have learned/developed for you app? Please restrict your answer to only three items. 
 
-To give users the experience of risk-free trading, we will create a free currency system for our users to invest with. This currency will either go up or down parallel to all stock prices available. We will give users the option to decide how much money they would like to invest, where the amount of money they either gained or lost is tracked in their trade history. 
+1. There is a lot of asynchronous things happening on the backend such as getting data from database or fetching from a third party API or working with memcached. It required a lot of debugging to get things working sometimes
+2. Stock APIs are very limited (at least the free tier) and getting around that was challenging
+3. 
 
+## Contributions
 
-## Additional Features
+Avik Chakraborty: Did most of backend (all of the endpoints, session and cookie configuration, security of the app, created the MongoDB database, working with memcached) and some of the frontend (signup, login, displaying on profile page, selling and buying stocks functionality), and helped with some of the deployment
 
-### Current Stocks and Watchlist
+Austin Bartolome: Did most of the frontend (the next js and tailwind configuration, the routing, creating the "look" of the app, most of the components, the stock price Graphs using Recharts), did all the sockets stuff on the backend, and most of the deployment work
 
-We aim to give users an interface that recommends them stocks based on their trade history and a watchlist that they can add several stocks to, to keep track of all the companies they would like to buy or sell from.
+# One more thing? 
 
-### Trade History
-
-We will document all user trade history, allowig them to access this data to review challenges, mistakes, and successes with their trades. This data will also be used to give users recommendations for future trades.
-
-### Challenge of the Day: Guess Stock Increase or Decrease
-
-To further keep users on top of their learning experience, we will give them a challenge everyday for a random company stock, in which they will guess the amount and direction a stock will go towards within 24 hours.
-
-### Documentation, Tutorials, and Quizzes
-
-The app will be designed to emphasize on practice, however we will provide additional tutorials and links to learn more about stock trading, as well as quizzes to test users on their ability to analyze stocks.
-
-
-## Technology Stack
-### Development
-* **React.js** for UI and UX components
-* **Express.js** for routing and API requests
-* **Node.js** for further package installations
-* **Tailwind CSS** for easy and dynamic CSS styling
-
-### Database
-* **Mongo DB** to keep track of user information
-
-### API's
-* **YahooFinance API** to gain access to live stock information
-
-
-## Top 5 Technical Challenges
-
-For this project, we have analyzed and concluded that our greatest challenges are as follows:
-
-- Figuring out how to create real-time chat rooms (sockets)
-- Learning how to utilize the YahooFinance API
-- Learning more technical aspects of finance to properly create quizzes and recommendations
-- Figuring out how to create events that happen daily within the app (ex. Daily challenge)
-- Figuring out the algorithm to recommend users stocks
-
-## Other
-
-
-
-
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/KRLE_tfD)
+During development the we were just using Finnhub for our stock API, but the endpoint to get the candle information of the stock was made a premium feature midway development so we had to spend some time searching for alternatives and where we found twelve data. 
+Also working with memcached was really painful especially when deploying and took a lot of time.
+We also created the idea for the app when we had 3 people in the group, but one of the members had to drop the course and we stuck with it with just the two of us. Please keep this in consideration.
