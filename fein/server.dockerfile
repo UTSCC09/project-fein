@@ -1,13 +1,25 @@
-FROM node:16 as build
+# Stage 1: Build the application
+FROM --platform=linux/amd64 node:21.1.0 as build
 
 RUN mkdir -p /app
 WORKDIR /app
 COPY ./server /app
+COPY ./.env /app
 RUN npm install
-RUN npm rebuild bcrypt --build-from-source
+RUN npm uninstall bcrypt
+RUN npm install bcrypt
 
-FROM node:14-alpine as main
+# Stage 2: Create the final image
+FROM --platform=linux/amd64 node:21.1.0 as main
 WORKDIR /app
 COPY --from=build /app /app
-EXPOSE 3001 4000 11211
-CMD ["npm", "run", "prod"]
+
+# Install Memcached
+RUN apt-get update && \
+    apt-get install -y memcached
+
+# Expose ports for the application and Memcached
+EXPOSE 3001 4000
+
+# Start both the Node.js application and Memcached
+CMD ["sh", "-c", "memcached -u root -m 64 & npm run prod"]
