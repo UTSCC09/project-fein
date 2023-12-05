@@ -10,6 +10,7 @@ import { useSearchParams } from 'next/navigation';
 import { useParams } from 'next/navigation';
 import { signout, getUsername } from '../../../../api/api.mjs'
 import { useThemeContext } from '../../../Context/ThemeContext.js';
+import { useRouter } from "next/navigation"
 
 import Chat from '../../../Components/StockComponents/Chat.js';
 
@@ -18,11 +19,16 @@ export default function StockPage() {
     const params = useParams();
     const { stockSymbol, setStockSymbol } = useStockContext();
     const { darkMode } = useThemeContext();
+    const router = useRouter();
 
     const [user, setUser] = useState('');
     useEffect(() => {
         const username = getUsername();
-        setUser(username);
+        if (username != '') {
+            setUser(username);
+        } else {
+            router.push('/');
+        }
     }, [user])
 
     // useEffect(() => {
