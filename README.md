@@ -2,7 +2,7 @@
 
 ## Project URL
 
-**Task:** Provide the link to your deployed application. Please make sure the link works. 
+https://fein.vercel.app/
 
 ## Project Video URL 
 
@@ -18,7 +18,7 @@ The app is built using Next js on the frontend using Tailwind.css, and the Recha
 
 ## Deployment
 
-**Task:** Explain how you have deployed your application. 
+We tried to have the front end on vercel and backend on google cloud vm and it works but the cookie for some reason isn't being sent and we couldn't figure it out it time  
 
 ## Challenges
 
