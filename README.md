@@ -26,7 +26,7 @@ The app is built using Next js on the frontend using Tailwind.css, and the Recha
 
 1. There is a lot of asynchronous things happening on the backend such as getting data from database or fetching from a third party API or working with memcached. It required a lot of debugging to get things working sometimes
 2. Stock APIs are very limited (at least the free tier) and getting around that was challenging
-3. 
+3. Setting up the dockers and having them compatible with the VM for deploying.
 
 ## Contributions
 
