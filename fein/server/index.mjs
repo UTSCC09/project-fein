@@ -30,7 +30,7 @@ const base_path = "https://finnhub.io/api/v1"
 const memcached = new Memcached('localhost:11211');
 
 app.use(cors({
-    origin: process.env.FRONTEND + "*",
+    origin: process.env.FRONTEND,
     credentials: true
 }));
 
@@ -162,7 +162,7 @@ const setSearchQuery = async (query, callback) => {
 
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Credentials", true);
-    res.header("Access-Control-Allow-Origin", process.env.FRONTEND + "*");
+    res.header("Access-Control-Allow-Origin", process.env.FRONTEND);
     res.header("Access-Control-Allow-Headers", "Content-Type");
     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
     next();
@@ -200,7 +200,7 @@ app.use(function (req, res, next) {
 // });
 
 app.options("/*", function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", process.env.FRONTEND + "*");
+    res.header("Access-Control-Allow-Origin", process.env.FRONTEND);
     res.header("Access-Control-Allow-Headers", "Content-Type");
     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
     res.header("Access-Control-Allow-Credentials", true);
