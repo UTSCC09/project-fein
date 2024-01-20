@@ -2,7 +2,7 @@
 
 ## Project URL
 
-https://fein.vercel.app/
+https://fein.vercel.app/ (backend deployment down)
 
 ## Project Video URL 
 
@@ -15,10 +15,6 @@ Our app aims to provide users with a platform to practice buying and selling sto
 ## Development
 
 The app is built using Next js on the frontend using Tailwind.css, and the Rechart library to graph stock price data. On the backend we used express framework, MongoDb as the database and the Mongoose library to connect to it, sockets to create the live chat feature, a lot of the normal libraries from class labs (ex. express-session, cookie, bcrypt etc.), Finnhub and twelve data APIs to get stock information, and memcached to cache that data. The code is designed in a way such that the frontend calls the backend using functions in api.mjs and then the backend does all the fetching from database, cache, or APIs, frontend handles the response to display to user.   
-
-## Deployment
-
-We tried to have the front end on vercel and backend on google cloud vm and it works but the cookie for some reason isn't being sent and we couldn't figure it out it time  
 
 ## Challenges
 
@@ -34,8 +30,3 @@ Avik Chakraborty: Did most of backend (all of the endpoints, session and cookie 
 
 Austin Bartolome: Did most of the frontend (the next js and tailwind configuration, the routing, creating the "look" of the app, most of the components, the stock price Graphs using Recharts), did all the sockets stuff on the backend, and most of the deployment work
 
-# One more thing? 
-
-During development the we were just using Finnhub for our stock API, but the endpoint to get the candle information of the stock was made a premium feature midway development so we had to spend some time searching for alternatives and where we found twelve data. 
-Also working with memcached was really painful especially when deploying and took a lot of time.
-We also created the idea for the app when we had 3 people in the group, but one of the members had to drop the course and we stuck with it with just the two of us. Please keep this in consideration.
